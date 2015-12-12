@@ -186,9 +186,17 @@
 
 ;; spell checking
 (use-package flyspell
+  :diminish flyspell-mode
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
+;; syntax checking
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :config
+  (add-hook 'prog-mode-hook 'flycheck-mode))
 
 ;; fancy mode line with `spaceline'
 (use-package spaceline
