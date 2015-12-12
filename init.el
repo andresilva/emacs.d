@@ -80,18 +80,19 @@
 (use-package god-mode
   :ensure t
   :demand t
+  :diminish god-local-mode
   :init
   (defun my-update-cursor ()
-    (setq cursor-type (if (or god-local-mode buffer-read-only)
-			  'box
-			'bar)))
+    (setq cursor-type
+	  (if (bound-and-true-p god-local-mode)
+	      'box
+	    'bar)))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
   (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil)
   :config
-  (god-mode-all)
-  :bind ("<escape>" . god-mode-all))
+  (god-mode-all))
 
 ;; `key-chord' for ergonomic shortcuts
 (use-package key-chord
@@ -107,3 +108,18 @@
 ;; smooth scrolling
 (use-package smooth-scrolling
   :ensure t)
+
+;; fancy mode line with `spaceline'
+(use-package spaceline
+  :ensure t
+  :init
+  (defun my-spaceline-highlight-face-god-state ()
+    (if (bound-and-true-p god-local-mode)
+	'spaceline-evil-normal
+      'spaceline-evil-insert))
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode)
+  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
+  (setq powerline-default-separator 'bar))
