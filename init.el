@@ -66,6 +66,12 @@
 ;; newline at end of file
 (setq require-final-newline t)
 
+;; delete selection with a keypress
+(delete-selection-mode t)
+
+;; clean up obsolete buffers
+(require 'midnight)
+
 ;; setup `hippie-expand' expand functions
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
@@ -81,6 +87,13 @@
 ;; use `hippie-expand' instead of `dabbrev'
 (bind-keys ("M-/" . hippie-expand)
            ("C-ç" . hippie-expand))
+
+;; revert buffers automatically (also enabled for non-file buffers)
+(setq global-auto-revert-non-file-buffers t)
+(global-auto-revert-mode t)
+
+;; fill-column line length
+(setq-default fill-column 100)
 
 ;; kill region or current line
 (require 'rect)
