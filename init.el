@@ -169,8 +169,8 @@
          ("C-x C-b" . helm-buffers-list)
          ("C-x b"   . helm-mini)
          ("M-y"     . helm-show-kill-ring)
-         ("S-a"     . helm-projectile-ag)
-         ("S-f"     . helm-projectile-find-file)))
+         ("s-a"     . helm-projectile-ag)
+         ("s-f"     . helm-projectile-find-file)))
 
 ;; the best git client ever
 (use-package magit
@@ -280,6 +280,66 @@
   (require 'spaceline-config)
   (spaceline-emacs-theme)
   (spaceline-helm-mode))
+
+(defun my-comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
+
+(defun my-insert-at-sign ()
+  "Inserts an at sign into the buffer."
+  (interactive)
+  (insert "@"))
+
+(defun my-insert-euro-sign ()
+  "Inserts an euro sign into the buffer."
+  (interactive)
+  (insert "€"))
+
+(defun my-toggle-fullscreen ()
+  "Toggles the current window to full screen. Supports both OSX
+and X11 environment. On OSX it does so using the 'old-style'
+fullscreen."
+  (interactive)
+  (cond
+   ((eq system-type 'darwin)
+    (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
+   ((eq window-system 'x)
+    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
+                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+   (error "Unable to toggle fullscreen")))
+
+(defun my-move-beginning-of-line (arg)
+  "Move point back to indentation of beginning of line.  Move
+point to the first non-whitespace character on this line.  If
+point is already there, move to the beginning of the line.
+Effectively toggle between the first non-whitespace character and
+the beginning of the line.  If ARG is not nil or 1, move forward
+ARG - 1 lines first. If point reaches the beginning or end of the
+buffer, stop there."
+  (interactive "^p")
+  (setq arg (or arg 1))
+  ;; Move lines first
+  (when (/= arg 1)
+    (let ((line-move-visual nil))
+      (forward-line (1- arg))))
+  (let ((orig-point (point)))
+    (back-to-indentation)
+    (when (= orig-point (point))
+      (move-beginning-of-line 1))))
+
+(bind-keys ("C-x ç" . my-comment-or-uncomment-region-or-line)
+           ("C-a"   . my-move-beginning-of-line)
+           ("s-2"   . my-insert-at-sign)
+           ("s-3"   . my-insert-euro-sign)
+           ("<f5>"  . my-toggle-fullscreen)
+           ("s-l"   . goto-line))
 
 ;; start server if one isn't already running
 (use-package server
