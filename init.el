@@ -80,6 +80,7 @@
 ;; use `helm' for interactive completion
 (use-package helm
   :ensure t
+  :demand t
   :diminish helm-mode
   :config
   (require 'helm-config)
@@ -98,8 +99,8 @@
 	helm-lisp-fuzzy-completion t
 	helm-mode-fuzzy-match t
 	helm-completion-in-region-fuzzy-match t)
-  (helm-mode 1)
-  (helm-autoresize-mode 1)
+  (helm-mode)
+  (helm-autoresize-mode)
   (use-package helm-projectile
     :ensure t
     :config
@@ -150,6 +151,14 @@
 ;; smooth scrolling
 (use-package smooth-scrolling
   :ensure t)
+
+;; anzu
+(use-package anzu
+  :ensure t
+  :diminish anzu-mode
+  :config
+  (setq anzu-cons-mode-line-p nil)
+  (global-anzu-mode))
 
 ;; fancy mode line with `spaceline'
 (use-package spaceline
