@@ -26,7 +26,7 @@
   :init
   (load-theme 'zenburn :no-confirm))
 
-;; projectile
+;; project navigation with `projectile'
 (use-package projectile
   :ensure t
   :config
@@ -76,9 +76,10 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
-;; `god-mode' for vim-like modal editing
+;; `god-mode' for modal editing
 (use-package god-mode
   :ensure t
+  :demand t
   :init
   (defun my-update-cursor ()
     (setq cursor-type (if (or god-local-mode buffer-read-only)
@@ -86,10 +87,22 @@
 			'bar)))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
-  :config
   (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil)
+  :config
+  (god-mode-all)
   :bind ("<escape>" . god-mode-all))
+
+;; `key-chord' for ergonomic shortcuts
+(use-package key-chord
+  :ensure t
+  :init
+  (setq key-chord-two-keys-delay 0.2)
+  (setq key-chord-one-key-delay 0.3)
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "jj" 'god-mode-all)
+  (key-chord-define-global "jk" 'god-mode-all))
 
 ;; smooth scrolling
 (use-package smooth-scrolling
