@@ -59,6 +59,13 @@
 ;; disable startup screen
 (setq inhibit-startup-screen t)
 
+;; no tabs please (but make it look like it)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 8)
+
+;; newline at end of file
+(setq require-final-newline t)
+
 ;; kill region or current line
 (require 'rect)
 (defadvice kill-region (before smart-cut activate compile)
