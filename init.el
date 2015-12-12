@@ -160,6 +160,12 @@
   (setq anzu-cons-mode-line-p nil)
   (global-anzu-mode))
 
+;; window-numbering
+(use-package window-numbering
+  :ensure t
+  :config
+  (window-numbering-mode))
+
 ;; fancy mode line with `spaceline'
 (use-package spaceline
   :ensure t
@@ -173,4 +179,5 @@
   (spaceline-emacs-theme)
   (spaceline-helm-mode)
   (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
+  (setq spaceline-window-numbers-unicode t)
   (setq powerline-default-separator 'bar))
