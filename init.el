@@ -166,6 +166,19 @@
   :config
   (window-numbering-mode))
 
+;; scala
+(use-package scala-mode2
+  :ensure t
+  :config
+  (use-package ensime
+    :ensure t
+    :config
+    (setq ensime-sem-high-enabled-p nil)
+    (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
+
+  :mode (("\\.scala\\'" . scala-mode)
+	 ("\\.sbt\\'"   . scala-mode)))
+
 ;; fancy mode line with `spaceline'
 (use-package spaceline
   :ensure t
