@@ -1,3 +1,7 @@
+;; reduce the frequency of garbage collection by making it happen on
+;; every 20MB of allocated data (the default is on every 0.76MB)
+(setq gc-cons-threshold (* 20 1000 1000))
+
 ;; setup `package' but do not auto-load installed packages
 (require 'package)
 (setq package-enable-at-startup nil)
