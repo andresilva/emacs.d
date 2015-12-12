@@ -31,16 +31,16 @@
 (when (fboundp 'set-fontset-font)
   ;; window numbers
   (set-fontset-font "fontset-default"
-		    '(#x2776 . #x2793) "Menlo")
+                    '(#x2776 . #x2793) "Menlo")
   ;; mode-line circled letters
   (set-fontset-font "fontset-default"
-		    '(#x24b6 . #x24fe) "Menlo")
+                    '(#x24b6 . #x24fe) "Menlo")
   ;; mode-line additional characters
   (set-fontset-font "fontset-default"
-		    '(#x2295 . #x22a1) "Menlo")
+                    '(#x2295 . #x22a1) "Menlo")
   ;; new version lighter
   (set-fontset-font "fontset-default"
-		    '(#x2190 . #x2200) "Menlo"))
+                    '(#x2190 . #x2200) "Menlo"))
 
 ;; disable scrollbar
 (when (fboundp 'scroll-bar-mode)
@@ -66,7 +66,7 @@
   (interactive
    (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
      (list (line-beginning-position)
-	   (line-beginning-position 2)))))
+           (line-beginning-position 2)))))
 
 ;; use the awesome `zenburn' as default theme
 (use-package zenburn-theme
@@ -88,20 +88,20 @@
   :diminish helm-mode
   :init
   (setq helm-split-window-in-side-p t
-	helm-move-to-line-cycle-in-source t
-	helm-ff-search-library-in-sexp t
-	helm-ff-file-name-history-use-recentf t)
+        helm-move-to-line-cycle-in-source t
+        helm-ff-search-library-in-sexp t
+        helm-ff-file-name-history-use-recentf t)
   ;; enable fuzzy matching
   (setq helm-buffers-fuzzy-matching t
-	helm-recentf-fuzzy-match t
-	helm-locate-fuzzy-match t
-	helm-M-x-fuzzy-match t
-	helm-semantic-fuzzy-match t
-	helm-imenu-fuzzy-match t
-	helm-apropos-fuzzy-match t
-	helm-lisp-fuzzy-completion t
-	helm-mode-fuzzy-match t
-	helm-completion-in-region-fuzzy-match t)
+        helm-recentf-fuzzy-match t
+        helm-locate-fuzzy-match t
+        helm-M-x-fuzzy-match t
+        helm-semantic-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-apropos-fuzzy-match t
+        helm-lisp-fuzzy-completion t
+        helm-mode-fuzzy-match t
+        helm-completion-in-region-fuzzy-match t)
   :config
   (require 'helm-config)
   (helm-mode)
@@ -115,13 +115,13 @@
     (helm-projectile-on))
 
   :bind (("M-x"     . helm-M-x)
-	 ("C-x C-m" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)
-	 ("C-x C-b" . helm-buffers-list)
-	 ("C-x b"   . helm-mini)
-	 ("M-y"     . helm-show-kill-ring)
-	 ("S-a"     . helm-projectile-ag)
-	 ("S-f"     . helm-projectile-find-file)))
+         ("C-x C-m" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x C-b" . helm-buffers-list)
+         ("C-x b"   . helm-mini)
+         ("M-y"     . helm-show-kill-ring)
+         ("S-a"     . helm-projectile-ag)
+         ("S-f"     . helm-projectile-find-file)))
 
 ;; the best git client ever
 (use-package magit
@@ -136,7 +136,7 @@
   (defun my-update-cursor ()
     (set-cursor-color
      (if (bound-and-true-p god-local-mode)
-	 "chartreuse3"
+         "chartreuse3"
        "DarkGoldenrod2")))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
@@ -186,7 +186,8 @@
     (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
   :mode (("\\.scala\\'" . scala-mode)
-	 ("\\.sbt\\'"   . scala-mode)))
+         ("\\.sbt\\'"   . scala-mode)))
+
 
 ;; spell checking
 (use-package flyspell
@@ -208,7 +209,7 @@
   :init
   (defun my-spaceline-highlight-face-god-state ()
     (if (bound-and-true-p god-local-mode)
-	'spaceline-evil-insert
+        'spaceline-evil-insert
       'spaceline-evil-normal))
   (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
 
