@@ -210,6 +210,18 @@
   :config
   (window-numbering-mode))
 
+;; in-buffer auto completion framework
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :init
+  (setq company-idle-delay 0.5)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  :config
+  (global-company-mode))
+
 ;; `scala' programming mode
 (use-package scala-mode2
   :ensure t
