@@ -70,7 +70,7 @@
 (delete-selection-mode t)
 
 ;; clean up obsolete buffers
-(require 'midnight)
+(use-package midnight)
 
 ;; setup `hippie-expand' expand functions
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
@@ -96,13 +96,14 @@
 (setq-default fill-column 100)
 
 ;; kill region or current line
-(require 'rect)
-(defadvice kill-region (before smart-cut activate compile)
-  "When called interactively with no active region, kill a single line instead."
-  (interactive
-   (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
-     (list (line-beginning-position)
-           (line-beginning-position 2)))))
+(use-package rect
+  :config
+  (defadvice kill-region (before smart-cut activate compile)
+    "When called interactively with no active region, kill a single line instead."
+    (interactive
+     (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
+       (list (line-beginning-position)
+             (line-beginning-position 2))))))
 
 ;; use the awesome `zenburn' as default theme
 (use-package zenburn-theme
