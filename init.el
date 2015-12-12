@@ -184,6 +184,12 @@
   :mode (("\\.scala\\'" . scala-mode)
 	 ("\\.sbt\\'"   . scala-mode)))
 
+;; flyspell
+(use-package flyspell
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
 ;; fancy mode line with `spaceline'
 (use-package spaceline
   :ensure t
