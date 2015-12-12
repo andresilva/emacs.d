@@ -341,6 +341,17 @@ buffer, stop there."
            ("<f5>"  . my-toggle-fullscreen)
            ("s-l"   . goto-line))
 
+;; setup modifier keys on OSX
+(when (eq system-type 'darwin)
+  (progn
+    (use-package exec-path-from-shell
+      :ensure t
+      :config
+      (exec-path-from-shell-initialize))
+    (setq ns-function-modifier 'hyper)
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'super)))
+
 ;; start server if one isn't already running
 (use-package server
   :config
