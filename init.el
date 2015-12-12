@@ -111,6 +111,18 @@
   :init
   (load-theme 'zenburn :no-confirm))
 
+;; keep white space tidy
+(use-package whitespace
+  :diminish whitespace-mode
+  :init
+  (defun my-enable-whitespace-mode ()
+    (add-hook 'before-save-hook 'whitespace-cleanup nil t)
+    (whitespace-mode +1))
+  (add-hook 'text-mode-hook 'my-enable-whitespace-mode)
+  (add-hook 'prog-mode-hook 'my-enable-whitespace-mode)
+  (setq whitespace-line-column 100)
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
 ;; project navigation
 (use-package projectile
   :ensure t
