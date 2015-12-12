@@ -66,6 +66,22 @@
 ;; newline at end of file
 (setq require-final-newline t)
 
+;; setup `hippie-expand' expand functions
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+;; use `hippie-expand' instead of `dabbrev'
+(bind-keys ("M-/" . hippie-expand)
+           ("C-ç" . hippie-expand))
+
 ;; kill region or current line
 (require 'rect)
 (defadvice kill-region (before smart-cut activate compile)
