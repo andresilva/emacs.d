@@ -124,20 +124,17 @@
 ;; `god-mode' for modal editing
 (use-package god-mode
   :ensure t
-  :demand t
   :diminish god-local-mode
   :init
   (defun my-update-cursor ()
-    (setq cursor-type
-	  (if (bound-and-true-p god-local-mode)
-	      'box
-	    'bar)))
+    (set-cursor-color
+     (if (bound-and-true-p god-local-mode)
+	 "chartreuse3"
+       "DarkGoldenrod2")))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
   (setq god-exempt-major-modes nil)
-  (setq god-exempt-predicates nil)
-  :config
-  (god-mode-all))
+  (setq god-exempt-predicates nil))
 
 ;; `key-chord' for ergonomic shortcuts
 (use-package key-chord
@@ -160,8 +157,8 @@
   :init
   (defun my-spaceline-highlight-face-god-state ()
     (if (bound-and-true-p god-local-mode)
-	'spaceline-evil-normal
-      'spaceline-evil-insert))
+	'spaceline-evil-insert
+      'spaceline-evil-normal))
   :config
   (require 'spaceline-config)
   (spaceline-emacs-theme)
