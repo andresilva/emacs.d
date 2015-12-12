@@ -19,6 +19,25 @@
 ;; reduce modeline clutter
 (require 'diminish)
 
+;; set default font
+(set-default-font
+ (apply 'font-spec :name "Source Code Pro" '(:size 13 :weight normal :width normal)) nil t)
+
+;; set fallback font
+(when (fboundp 'set-fontset-font)
+  ;; window numbers
+  (set-fontset-font "fontset-default"
+		    '(#x2776 . #x2793) "Menlo")
+  ;; mode-line circled letters
+  (set-fontset-font "fontset-default"
+		    '(#x24b6 . #x24fe) "Menlo")
+  ;; mode-line additional characters
+  (set-fontset-font "fontset-default"
+		    '(#x2295 . #x22a1) "Menlo")
+  ;; new version lighter
+  (set-fontset-font "fontset-default"
+		    '(#x2190 . #x2200) "Menlo"))
+
 ;; kill region or current line
 (require 'rect)
 (defadvice kill-region (before smart-cut activate compile)
