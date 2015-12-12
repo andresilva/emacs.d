@@ -71,13 +71,13 @@
   :init
   (load-theme 'zenburn :no-confirm))
 
-;; project navigation with `projectile'
+;; project navigation
 (use-package projectile
   :ensure t
   :config
   (projectile-global-mode))
 
-;; use `helm' for interactive completion
+;; interactive completion
 (use-package helm
   :ensure t
   :demand t
@@ -119,12 +119,12 @@
 	 ("S-a"     . helm-projectile-ag)
 	 ("S-f"     . helm-projectile-find-file)))
 
-;; the best git client ever is `magit'
+;; the best git client ever
 (use-package magit
   :ensure t
   :bind ("C-x g" . magit-status))
 
-;; `god-mode' for modal editing
+;; modal editing
 (use-package god-mode
   :ensure t
   :diminish god-local-mode
@@ -140,7 +140,7 @@
   (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil))
 
-;; `key-chord' for ergonomic shortcuts
+;; ergonomic shortcuts
 (use-package key-chord
   :ensure t
   :init
@@ -155,7 +155,7 @@
 (use-package smooth-scrolling
   :ensure t)
 
-;; anzu
+;; enhanced `isearch'
 (use-package anzu
   :ensure t
   :diminish anzu-mode
@@ -164,13 +164,13 @@
   :config
   (global-anzu-mode))
 
-;; window-numbering
+;; window numbering and switching
 (use-package window-numbering
   :ensure t
   :config
   (window-numbering-mode))
 
-;; scala
+;; `scala' programming mode
 (use-package scala-mode2
   :ensure t
   :config
@@ -184,7 +184,7 @@
   :mode (("\\.scala\\'" . scala-mode)
 	 ("\\.sbt\\'"   . scala-mode)))
 
-;; flyspell
+;; spell checking
 (use-package flyspell
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
