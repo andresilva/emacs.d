@@ -38,6 +38,23 @@
   (set-fontset-font "fontset-default"
 		    '(#x2190 . #x2200) "Menlo"))
 
+;; disable scrollbar
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
+;; disable toolbar
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+
+;; disable menubar
+(menu-bar-mode -1)
+
+;; disable cursor blinking
+(blink-cursor-mode -1)
+
+;; disable startup screen
+(setq inhibit-startup-screen t)
+
 ;; kill region or current line
 (require 'rect)
 (defadvice kill-region (before smart-cut activate compile)
