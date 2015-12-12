@@ -19,6 +19,15 @@
 ;; reduce modeline clutter
 (require 'diminish)
 
+;; kill region or current line
+(require 'rect)
+(defadvice kill-region (before smart-cut activate compile)
+  "When called interactively with no active region, kill a single line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
+     (list (line-beginning-position)
+	   (line-beginning-position 2)))))
+
 ;; use the awesome `zenburn' as default theme
 (use-package zenburn-theme
   :ensure t
