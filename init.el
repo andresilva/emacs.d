@@ -1,0 +1,96 @@
+;; setup `package' but do not auto-load installed packages
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
+
+;; bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; `use-package' is not needed at runtime
+(eval-when-compile
+  (require 'use-package))
+
+;; required for the `use-package' :bind keyword
+(require 'bind-key)
+
+;; reduce modeline clutter
+(require 'diminish)
+
+;; use the awesome `zenburn' as default theme
+(use-package zenburn-theme
+  :ensure t
+  :defer t
+  :init
+  (load-theme 'zenburn :no-confirm))
+
+;; projectile
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
+
+;; use `helm' for interactive completion
+(use-package helm
+  :ensure t
+  :diminish helm-mode
+  :config
+  (require 'helm-config)
+  (setq helm-split-window-in-side-p t
+	helm-move-to-line-cycle-in-source t
+	helm-ff-search-library-in-sexp t
+	helm-ff-file-name-history-use-recentf t)
+  ;; enable fuzzy matching
+  (setq helm-buffers-fuzzy-matching t
+	helm-recentf-fuzzy-match t
+	helm-locate-fuzzy-match t
+	helm-M-x-fuzzy-match t
+	helm-semantic-fuzzy-match t
+	helm-imenu-fuzzy-match t
+	helm-apropos-fuzzy-match t
+	helm-lisp-fuzzy-completion t
+	helm-mode-fuzzy-match t
+	helm-completion-in-region-fuzzy-match t)
+  (helm-mode 1)
+  (helm-autoresize-mode 1)
+  (use-package helm-projectile
+    :ensure t
+    :config
+    (setq projectile-completion-system 'helm)
+    (setq helm-projectile-fuzzy-match t)
+    (helm-projectile-on))
+
+  :bind (("M-x"     . helm-M-x)
+	 ("C-x C-m" . helm-M-x)
+	 ("C-x C-f" . helm-find-files)
+	 ("C-x C-b" . helm-buffers-list)
+	 ("C-x b"   . helm-mini)
+	 ("M-y"     . helm-show-kill-ring)
+	 ("S-a"     . helm-projectile-ag)
+	 ("S-f"     . helm-projectile-find-file)))
+
+;; the best git client ever is `magit'
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
+
+;; `god-mode' for vim-like modal editing
+(use-package god-mode
+  :ensure t
+  :init
+  (defun my-update-cursor ()
+    (setq cursor-type (if (or god-local-mode buffer-read-only)
+			  'box
+			'bar)))
+  (add-hook 'god-mode-enabled-hook 'my-update-cursor)
+  (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+  :config
+  (setq god-exempt-major-modes nil)
+  (setq god-exempt-predicates nil)
+  :bind ("<escape>" . god-mode-all))
+
+;; smooth scrolling
+(use-package smooth-scrolling
+  :ensure t)
