@@ -82,8 +82,7 @@
   :ensure t
   :demand t
   :diminish helm-mode
-  :config
-  (require 'helm-config)
+  :init
   (setq helm-split-window-in-side-p t
 	helm-move-to-line-cycle-in-source t
 	helm-ff-search-library-in-sexp t
@@ -99,13 +98,16 @@
 	helm-lisp-fuzzy-completion t
 	helm-mode-fuzzy-match t
 	helm-completion-in-region-fuzzy-match t)
+  :config
+  (require 'helm-config)
   (helm-mode)
   (helm-autoresize-mode)
   (use-package helm-projectile
     :ensure t
-    :config
+    :init
     (setq projectile-completion-system 'helm)
     (setq helm-projectile-fuzzy-match t)
+    :config
     (helm-projectile-on))
 
   :bind (("M-x"     . helm-M-x)
@@ -134,6 +136,7 @@
        "DarkGoldenrod2")))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
+
   (setq god-exempt-major-modes nil)
   (setq god-exempt-predicates nil))
 
@@ -156,8 +159,9 @@
 (use-package anzu
   :ensure t
   :diminish anzu-mode
-  :config
+  :init
   (setq anzu-cons-mode-line-p nil)
+  :config
   (global-anzu-mode))
 
 ;; window-numbering
@@ -172,8 +176,9 @@
   :config
   (use-package ensime
     :ensure t
-    :config
+    :init
     (setq ensime-sem-high-enabled-p nil)
+    :config
     (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
   :mode (("\\.scala\\'" . scala-mode)
@@ -187,10 +192,11 @@
     (if (bound-and-true-p god-local-mode)
 	'spaceline-evil-insert
       'spaceline-evil-normal))
+  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
+
+  (setq spaceline-window-numbers-unicode t)
+  (setq powerline-default-separator 'bar)
   :config
   (require 'spaceline-config)
   (spaceline-emacs-theme)
-  (spaceline-helm-mode)
-  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
-  (setq spaceline-window-numbers-unicode t)
-  (setq powerline-default-separator 'bar))
+  (spaceline-helm-mode))
