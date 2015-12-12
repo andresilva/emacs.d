@@ -279,3 +279,9 @@
   (require 'spaceline-config)
   (spaceline-emacs-theme)
   (spaceline-helm-mode))
+
+;; start server if one isn't already running
+(use-package server
+  :config
+  (unless (server-running-p)
+    (server-start)))
