@@ -378,6 +378,12 @@ buffer, stop there."
   (unless (server-running-p)
     (server-start)))
 
+;; fold my `init.el' like an org file
+(use-package outshine
+  :ensure t
+  :init
+  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
+
 ;; print the load time
 (when window-system
   (add-hook 'after-init-hook
