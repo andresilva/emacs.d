@@ -370,6 +370,15 @@
   (global-undo-tree-mode)
   (diminish 'undo-tree-mode))
 
+;; smart pairing
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode
+  :init
+  (add-hook 'prog-mode-hook 'smartparens-mode)
+  :config
+  (show-smartparens-global-mode t))
+
 ;; meaningful names for buffers with the same name
 (use-package uniquify
   :init
@@ -592,6 +601,21 @@ The body of the advice is in BODY."
     :ensure t
     :config
     (push '(company-web-html company-css) company-backends-web-mode))
+  ;; make web-mode play nice with smartparens
+  (setq web-mode-enable-auto-pairing nil)
+  (sp-with-modes '(web-mode)
+                 (sp-local-pair "%" "%"
+                                :unless '(sp-in-string-p)
+                                :post-handlers '(((lambda (&rest _ignored)
+                                                    (just-one-space)
+                                                    (save-excursion (insert " ")))
+                                                  "SPC" "=" "#")))
+                 (sp-local-pair "<% "  " %>" :insert "C-c %")
+                 (sp-local-pair "<%= " " %>" :insert "C-c =")
+                 (sp-local-pair "<%# " " %>" :insert "C-c #")
+                 (sp-local-tag "%" "<% "  " %>")
+                 (sp-local-tag "=" "<%= " " %>")
+                 (sp-local-tag "#" "<%# " " %>"))
   :mode (("\\.phtml\\'"      . web-mode)
          ("\\.tpl\\.php\\'"  . web-mode)
          ("\\.twig\\'"       . web-mode)
