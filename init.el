@@ -265,9 +265,6 @@
   :mode (("\\.scala\\'" . scala-mode)
          ("\\.sbt\\'"   . scala-mode)))
 
-;; org-mode
-
-
 ;; spell checking
 (use-package flyspell
   :diminish flyspell-mode
@@ -354,12 +351,13 @@ buffer, stop there."
     (when (= orig-point (point))
       (move-beginning-of-line 1))))
 
-(bind-keys ("C-x ç" . my-comment-or-uncomment-region-or-line)
-           ("C-a"   . my-move-beginning-of-line)
-           ("s-2"   . my-insert-at-sign)
-           ("s-3"   . my-insert-euro-sign)
-           ("<f5>"  . my-toggle-fullscreen)
-           ("s-l"   . goto-line))
+(bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
+           ("C-a"     . my-move-beginning-of-line)
+           ("s-2"     . my-insert-at-sign)
+           ("s-3"     . my-insert-euro-sign)
+           ("<f5>"    . my-toggle-fullscreen)
+           ("s-l"     . goto-line)
+           ("C-c C-m" . execute-extended-command))
 
 ;; setup modifier keys on OSX
 (when (eq system-type 'darwin)
