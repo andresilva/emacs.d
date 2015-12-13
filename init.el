@@ -222,9 +222,7 @@
   :init (add-hook 'prog-mode-hook 'hl-todo-mode))
 
 ;; enhanced `dired'
-(use-package dired+
-  :defer t
-  :ensure t)
+(use-package dired-x)
 
 ;; smooth scrolling
 (use-package smooth-scrolling
@@ -343,6 +341,7 @@
 
 ;; multiple cursors are easier than macros
 (use-package multiple-cursors
+  :commands mc/edit-lines
   :ensure t)
 
 ;; in-buffer auto completion framework
@@ -361,14 +360,14 @@
 ;; sensible undo
 (use-package undo-tree
   :ensure t
+  :diminish undo-tree-mode
   :init
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
   :config
-  (global-undo-tree-mode)
-  (diminish 'undo-tree-mode))
+  (global-undo-tree-mode))
 
 ;; smart pairing
 (use-package smartparens
