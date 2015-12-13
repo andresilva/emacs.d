@@ -491,6 +491,11 @@
   ;; pomodoro technique for org tasks
   (use-package org-pomodoro
     :ensure t)
+  ;; fancy list bullets
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'org-bullets-mode))
 
   :mode ("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)
   :bind (("C-c l" . org-store-link)
