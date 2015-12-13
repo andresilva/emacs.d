@@ -378,6 +378,31 @@
 
   :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
 
+;;;; rust
+
+;; `rust' programming mode
+(use-package rust-mode
+  :ensure t
+  :init
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
+  :config
+  (use-package racer
+    :ensure t
+    :init
+    (add-hook 'rust-mode-hook 'racer-mode)
+    (add-hook 'racer-mode-hook 'eldoc-mode))
+  (use-package company-racer
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-racer))
+  :mode ("\\.rust\\'" . rust-mode))
+
+;; needed for `cargo' files
+(use-package toml-mode
+  :ensure t
+  :mode ("\\.toml\\'" . toml-mode))
+
 ;;;; emacs lisp
 
 ;; fold my `init.el' like an org file
@@ -426,6 +451,7 @@
 
 ;;;; yaml
 
+;; `yaml' mode
 (use-package yaml-mode
   :ensure t
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
@@ -433,6 +459,7 @@
 
 ;;;; web
 
+;; web programming mode
 (use-package web-mode
   :ensure t
   :config
