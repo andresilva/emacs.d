@@ -234,6 +234,13 @@
   :config
   (global-anzu-mode))
 
+;; enhanced `list-packages'
+(use-package paradox
+  :ensure t
+  :init
+  (setq paradox-github-token t)
+  :commands paradox-list-packages)
+
 ;; start server if one isn't already running
 (use-package server
   :config
@@ -369,7 +376,7 @@
     :config
     (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
-  :mode ("\\.\\(scala\\|sbt\\)$" . scala-mode))
+  :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
 
 ;;;; emacs lisp
 
@@ -395,7 +402,7 @@
   :init
   (setq markdown-command "redcarpet --parse tables")
   (setq markdown-command-needs-filename t)
-  :mode ("\\.md$" . markdown-mode))
+  :mode ("\\.md\\'" . markdown-mode))
 
 ;;;; org
 
@@ -529,7 +536,7 @@
     (setq org-journal-dir "~/org/journal")
     (setq org-journal-enable-encryption t))
 
-  :mode ("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)
+  :mode ("\\.\\(org\\|org_archive\\|txt\\)\\'" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda)
