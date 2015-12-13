@@ -240,6 +240,12 @@
   (unless (server-running-p)
     (server-start)))
 
+;; use rvm ruby version
+(use-package rvm
+  :ensure t
+  :config
+  (rvm-use-default))
+
 ;;; editor
 ;;;; settings
 
@@ -375,6 +381,16 @@
   :commands macrostep-expand
   :init
   (bind-key "C-c e" 'macrostep-expand emacs-lisp-mode-map))
+
+;;;; markdown
+
+;; setup `markdown-mode' to render with redcarpet
+(use-package markdown-mode
+  :ensure t
+  :init
+  (setq markdown-command "redcarpet --parse tables")
+  (setq markdown-command-needs-filename t)
+  :mode ("\\.md$" . markdown-mode))
 
 ;;;; org
 
