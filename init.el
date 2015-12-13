@@ -363,6 +363,7 @@
 ;; fold my `init.el' like an org file
 (use-package outshine
   :ensure t
+  :diminish outline-minor-mode
   :init
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
 
