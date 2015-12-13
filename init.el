@@ -263,6 +263,8 @@
 (use-package flycheck
   :ensure t
   :diminish flycheck-mode
+  :init
+  (setq flycheck-indication-mode nil)
   :config
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
