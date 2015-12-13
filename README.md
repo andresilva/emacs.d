@@ -19,7 +19,8 @@ like in `org-mode`.
 These are my personal keybindings as reported by `use-package`'s function `describe-personal-keybindings`.
 
 Key name    | Command                                             | Comments
-------------| --------------------------------------------------- | -------------------------------
+----------- | --------------------------------------------------- | -------------------------------
+**global**  |                                                     |
 `<f5>`      | `my-toggle-fullscreen`                              |
 `<f6>`      | `org-agenda`                                        |
 `<f7>`      | `org-clock-goto`                                    |
@@ -48,6 +49,8 @@ Key name    | Command                                             | Comments
 `s-a`       | `helm-projectile-ag`                                |
 `s-f`       | `helm-projectile-find-file`                         |
 `s-l`       | `goto-line`                                         |
+**emacs-lisp-mode-map** |                                         |
+`C-c e`     | `macrostep-expand`                                  |
 
 ## Credits
 
