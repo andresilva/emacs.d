@@ -179,6 +179,14 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+;; show line diff indicator on fringe
+(use-package diff-hl
+  :ensure t
+  :init
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  :config
+  (global-diff-hl-mode))
+
 ;; highlight useful keywords
 (use-package hl-todo
   :ensure t
