@@ -404,6 +404,13 @@
   (setq markdown-command-needs-filename t)
   :mode ("\\.md\\'" . markdown-mode))
 
+;;;; yaml
+
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
+         ("Procfile\\'"            . yaml-mode)))
+
 ;;;; org
 
 ;; `org-mode'
