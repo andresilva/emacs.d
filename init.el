@@ -220,6 +220,10 @@
   (key-chord-mode 1)
   (key-chord-define-global "jk" 'god-mode-all))
 
+;; multiple cursors are easier than macros
+(use-package multiple-cursors
+  :ensure t)
+
 ;; smooth scrolling
 (use-package smooth-scrolling
   :ensure t)
