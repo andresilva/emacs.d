@@ -343,6 +343,7 @@
   (setq company-tooltip-limit 10)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
+  (setq company-tooltip-align-annotations t)
   :config
   (global-company-mode))
 
@@ -385,10 +386,9 @@
 ;; `rust' programming mode
 (use-package rust-mode
   :ensure t
-  :init
+  :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
-  :config
   (use-package racer
     :ensure t
     :init
