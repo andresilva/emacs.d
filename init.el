@@ -356,8 +356,7 @@
     :config
     (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
 
-  :mode (("\\.scala\\'" . scala-mode)
-         ("\\.sbt\\'"   . scala-mode)))
+  :mode ("\\.\\(scala\\|sbt\\)$" . scala-mode))
 
 ;;;; emacs lisp
 
@@ -367,6 +366,13 @@
   :diminish outline-minor-mode
   :init
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
+
+;; interactive lisp macro expansion
+(use-package macrostep
+  :ensure t
+  :commands macrostep-expand
+  :init
+  (bind-key "C-c e" 'macrostep-expand emacs-lisp-mode-map))
 
 ;;;; org
 
