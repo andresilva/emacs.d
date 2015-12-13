@@ -384,8 +384,11 @@
   ;; org directory and agenda files
   (setq org-directory "~/org")
   (setq org-agenda-files (quote ("~/org/todo.org"
-                                 "~/org/projects")))
+                                 "~/org/projects"
+                                 "~/org/journal")))
   (setq org-default-notes-file "~/org/refile.org")
+  ;; include numeric filenames in regexp (for journal files)
+  (setq org-agenda-file-regexp "'\\`[^.].*\\.org'\\|[0-9]+")
   ;; org keywords and faces
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)")
@@ -496,6 +499,12 @@
     :ensure t
     :config
     (add-hook 'org-mode-hook 'org-bullets-mode))
+  ;; personal journal
+  (use-package org-journal
+    :ensure t
+    :init
+    (setq org-journal-dir "~/org/journal")
+    (setq org-journal-enable-encryption t))
 
   :mode ("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)
   :bind (("C-c l" . org-store-link)
