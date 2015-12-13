@@ -97,7 +97,9 @@
       (exec-path-from-shell-initialize))
     (setq mac-command-modifier 'super)
     (setq mac-option-modifier 'meta)
-    (setq ns-function-modifier 'hyper)))
+    (setq ns-function-modifier 'hyper)
+    ;; enable emoji, and stop the UI from freezing when trying to display them
+    (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)))
 
 ;;;; helm
 
