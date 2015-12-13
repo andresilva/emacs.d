@@ -365,6 +365,16 @@
   (global-undo-tree-mode)
   (diminish 'undo-tree-mode))
 
+;; meaningful names for buffers with the same name
+(use-package uniquify
+  :init
+  (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-separator "/")
+  ;; rename after killing uniquified
+  (setq uniquify-after-kill-buffer-p t)
+  ;; don't muck with special buffers
+  (setq uniquify-ignore-buffers-re "^\\*"))
+
 ;;; major modes
 ;;;; git
 
