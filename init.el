@@ -1,3 +1,10 @@
+;;; init.el --- Andre Silva's Emacs configuration
+
+;;; Code:
+
+;;; initialization
+
+;; save start time so we can later measure the total loading time
 (defconst emacs-start-time (current-time))
 
 ;; reduce the frequency of garbage collection by making it happen on
@@ -22,8 +29,12 @@
 ;; required for the `use-package' :bind keyword
 (require 'bind-key)
 
+;; required for the `use-package' :diminish keyword
 ;; reduce modeline clutter
 (require 'diminish)
+
+;;; ui
+;;;; font
 
 ;; set default font
 (set-default-font
@@ -44,6 +55,8 @@
   (set-fontset-font "fontset-default"
                     '(#x2190 . #x2200) "Menlo"))
 
+;;;; settings
+
 ;; disable scrollbar
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
@@ -61,51 +74,10 @@
 ;; disable startup screen
 (setq inhibit-startup-screen t)
 
-;; no tabs please (but make it look like it)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 8)
-
-;; newline at end of file
-(setq require-final-newline t)
-
-;; delete selection with a keypress
-(delete-selection-mode t)
-
 ;; clean up obsolete buffers
 (use-package midnight)
 
-;; setup `hippie-expand' expand functions
-(setq hippie-expand-try-functions-list '(try-expand-dabbrev
-                                         try-expand-dabbrev-all-buffers
-                                         try-expand-dabbrev-from-kill
-                                         try-complete-file-name-partially
-                                         try-complete-file-name
-                                         try-expand-all-abbrevs
-                                         try-expand-list
-                                         try-expand-line
-                                         try-complete-lisp-symbol-partially
-                                         try-complete-lisp-symbol))
-
-;; use `hippie-expand' instead of `dabbrev'
-(bind-keys ("M-/" . hippie-expand)
-           ("C-ç" . hippie-expand))
-
-;; revert buffers automatically (also enabled for non-file buffers)
-(setq global-auto-revert-non-file-buffers t)
-(global-auto-revert-mode t)
-
-;; fill-column line length
-(setq-default fill-column 100)
-
-;; kill region or current line
-(use-package rect
-  :config
-  (defadvice kill-region (before smart-cut activate compile)
-    "When called interactively with no active region, kill a single line instead."
-    (interactive
-     (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
-       (list (line-beginning-position)
-             (line-beginning-position 2))))))
+;;;; theme
 
 ;; use the awesome `zenburn' as default theme
 (use-package zenburn-theme
@@ -114,23 +86,20 @@
   :init
   (load-theme 'zenburn :no-confirm))
 
-;; keep white space tidy
-(use-package whitespace
-  :diminish whitespace-mode
-  :init
-  (defun my-enable-whitespace-mode ()
-    (add-hook 'before-save-hook 'whitespace-cleanup nil t)
-    (whitespace-mode +1))
-  (add-hook 'text-mode-hook 'my-enable-whitespace-mode)
-  (add-hook 'prog-mode-hook 'my-enable-whitespace-mode)
-  (setq whitespace-line-column 100)
-  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+;;;; osx
 
-;; project navigation
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-global-mode))
+;; setup modifier keys on OSX
+(when (eq system-type 'darwin)
+  (progn
+    (use-package exec-path-from-shell
+      :ensure t
+      :config
+      (exec-path-from-shell-initialize))
+    (setq mac-command-modifier 'super)
+    (setq mac-option-modifier 'meta)
+    (setq ns-function-modifier 'hyper)))
+
+;;;; helm
 
 ;; interactive completion
 (use-package helm
@@ -174,28 +143,7 @@
          ("s-a"     . helm-projectile-ag)
          ("s-f"     . helm-projectile-find-file)))
 
-;; the best git client ever
-(use-package magit
-  :ensure t
-  :bind ("C-x g" . magit-status))
-
-;; show line diff indicator on fringe
-(use-package diff-hl
-  :ensure t
-  :init
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-  :config
-  (global-diff-hl-mode))
-
-;; highlight useful keywords
-(use-package hl-todo
-  :ensure t
-  :init (add-hook 'prog-mode-hook 'hl-todo-mode))
-
-;; enhanced `dired'
-(use-package dired+
-  :defer t
-  :ensure t)
+;;;; god mode
 
 ;; modal editing
 (use-package god-mode
@@ -220,9 +168,50 @@
   (key-chord-mode 1)
   (key-chord-define-global "jk" 'god-mode-all))
 
-;; multiple cursors are easier than macros
-(use-package multiple-cursors
+;;;; mode line
+
+;; fancy mode line with `spaceline'
+(use-package spaceline
+  :ensure t
+  :init
+  (defun my-spaceline-highlight-face-god-state ()
+    (if (bound-and-true-p god-local-mode)
+        'spaceline-evil-insert
+      'spaceline-evil-normal))
+  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
+
+  (setq spaceline-window-numbers-unicode t)
+  (setq powerline-default-separator 'bar)
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme)
+  (spaceline-helm-mode))
+
+;;;; extras
+
+;; show line diff indicator on fringe
+(use-package diff-hl
+  :ensure t
+  :init
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  :config
+  (global-diff-hl-mode))
+
+;; highlight useful keywords
+(use-package hl-todo
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'hl-todo-mode))
+
+;; enhanced `dired'
+(use-package dired+
+  :defer t
   :ensure t)
+
+;; project navigation
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
 
 ;; smooth scrolling
 (use-package smooth-scrolling
@@ -243,6 +232,86 @@
   :config
   (window-numbering-mode))
 
+;; start server if one isn't already running
+(use-package server
+  :config
+  (unless (server-running-p)
+    (server-start)))
+
+;;; editor
+;;;; settings
+
+;; delete selection with a keypress
+(delete-selection-mode t)
+
+;; setup `hippie-expand' expand functions
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
+
+;; use `hippie-expand' instead of `dabbrev'
+(bind-keys ("M-/" . hippie-expand)
+           ("C-ç" . hippie-expand))
+
+;; revert buffers automatically (also enabled for non-file buffers)
+(setq global-auto-revert-non-file-buffers t)
+(global-auto-revert-mode t)
+
+;; fill-column line length
+(setq-default fill-column 100)
+
+;; kill region or current line
+(use-package rect
+  :config
+  (defadvice kill-region (before smart-cut activate compile)
+    "When called interactively with no active region, kill a single line instead."
+    (interactive
+     (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
+       (list (line-beginning-position)
+             (line-beginning-position 2))))))
+
+;;;; white space
+
+;; no tabs please (but make it look like it)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 8)
+
+;; newline at end of file
+(setq require-final-newline t)
+
+;; keep white space tidy
+(use-package whitespace
+  :diminish whitespace-mode
+  :init
+  (defun my-enable-whitespace-mode ()
+    (add-hook 'before-save-hook 'whitespace-cleanup nil t)
+    (whitespace-mode +1))
+  (add-hook 'text-mode-hook 'my-enable-whitespace-mode)
+  (add-hook 'prog-mode-hook 'my-enable-whitespace-mode)
+  (setq whitespace-line-column 100)
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
+;;;; spell checking
+
+(use-package flyspell
+  :diminish flyspell-mode
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+
+;;;; packages
+
+;; multiple cursors are easier than macros
+(use-package multiple-cursors
+  :ensure t)
+
 ;; in-buffer auto completion framework
 (use-package company
   :ensure t
@@ -254,6 +323,26 @@
   (setq company-selection-wrap-around t)
   :config
   (global-company-mode))
+
+;;; major modes
+;;;; git
+;; the best git client ever
+(use-package magit
+  :ensure t
+  :bind ("C-x g" . magit-status))
+
+;;;; programming
+
+;; syntax checking
+(use-package flycheck
+  :ensure t
+  :diminish flycheck-mode
+  :init
+  (setq flycheck-indication-mode nil)
+  :config
+  (add-hook 'prog-mode-hook 'flycheck-mode))
+
+;;;; scala
 
 ;; `scala' programming mode
 (use-package scala-mode2
@@ -269,38 +358,24 @@
   :mode (("\\.scala\\'" . scala-mode)
          ("\\.sbt\\'"   . scala-mode)))
 
-;; spell checking
-(use-package flyspell
-  :diminish flyspell-mode
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'prog-mode-hook 'flyspell-prog-mode))
+;;;; emacs lisp
 
-;; syntax checking
-(use-package flycheck
-  :ensure t
-  :diminish flycheck-mode
-  :init
-  (setq flycheck-indication-mode nil)
-  :config
-  (add-hook 'prog-mode-hook 'flycheck-mode))
-
-;; fancy mode line with `spaceline'
-(use-package spaceline
+;; fold my `init.el' like an org file
+(use-package outshine
   :ensure t
   :init
-  (defun my-spaceline-highlight-face-god-state ()
-    (if (bound-and-true-p god-local-mode)
-        'spaceline-evil-insert
-      'spaceline-evil-normal))
-  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
+  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
 
-  (setq spaceline-window-numbers-unicode t)
-  (setq powerline-default-separator 'bar)
-  :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme)
-  (spaceline-helm-mode))
+;;;; org
+
+;; `org-mode'
+(use-package org
+  :bind (("C-c l" . org-store-link)
+         ("C-c c" . org-capture)
+         ("C-c a" . org-agenda)
+         ("C-c b" . org-iswitchb)))
+
+;;; defuns
 
 (defun my-comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active region."
@@ -362,36 +437,6 @@ buffer, stop there."
            ("<f5>"    . my-toggle-fullscreen)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
-
-;; setup modifier keys on OSX
-(when (eq system-type 'darwin)
-  (progn
-    (use-package exec-path-from-shell
-      :ensure t
-      :config
-      (exec-path-from-shell-initialize))
-    (setq mac-command-modifier 'super)
-    (setq mac-option-modifier 'meta)
-    (setq ns-function-modifier 'hyper)))
-
-;; start server if one isn't already running
-(use-package server
-  :config
-  (unless (server-running-p)
-    (server-start)))
-
-;; fold my `init.el' like an org file
-(use-package outshine
-  :ensure t
-  :init
-  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
-
-;; `org-mode'
-(use-package org
-  :bind (("C-c l" . org-store-link)
-         ("C-c c" . org-capture)
-         ("C-c a" . org-agenda)
-         ("C-c b" . org-iswitchb)))
 
 ;; print the load time
 (when window-system
