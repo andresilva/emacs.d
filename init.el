@@ -378,10 +378,129 @@
 
 ;; `org-mode'
 (use-package org
+  :init
+  ;; log time when task is finished
+  (setq org-log-done 'time)
+  ;; org directory and agenda files
+  (setq org-directory "~/org")
+  (setq org-agenda-files (quote ("~/org/todo.org"
+                                 "~/org/projects")))
+  (setq org-default-notes-file "~/org/refile.org")
+  ;; org keywords and faces
+  (setq org-todo-keywords
+        (quote ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)")
+                (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELED(c@/!)"))))
+  (setq org-todo-keyword-faces
+        (quote
+         ;; normal org-mode workflow
+         (("TODO" :foreground "red" :weight bold)
+          ("STARTED" :foreground "dodger blue" :weight bold)
+          ("DONE" :foreground "forest green" :weight bold)
+          ("WAITING" :foreground "orange" :weight bold)
+          ("HOLD" :foreground "magenta" :weight bold)
+          ("CANCELED" :foreground "forest green" :weight bold)
+          ;; music queue workflow
+          ("ADDED" :foreground "red" :weight bold)
+          ("DOWNLOADED" :foreground "dodger blue" :weight bold)
+          ("IMPORTED" :foreground "orange" :weight bold)
+          ("LISTENED" :foreground "forest green" :weight bold))))
+  ;; state triggers
+  (setq org-todo-state-tags-triggers
+        (quote (("CANCELED" ("CANCELED" . t))
+                ("WAITING"  ("WAITING"  . t))
+                ("HOLD"     ("WAITING"  . t) ("HOLD" . t))
+                (done       ("WAITING")      ("HOLD"))
+                ("TODO"     ("WAITING")      ("CANCELED") ("HOLD"))
+                ("STARTED"  ("WAITING")      ("CANCELED") ("HOLD"))
+                ("DONE"     ("WAITING")      ("CANCELED") ("HOLD")))))
+  ;; use fast todo selection
+  (setq org-use-fast-todo-selection t)
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  ;; show lots of clocking history so it's easy to pick items off the C-F11 list
+  (setq org-clock-history-length 36)
+  ;; resume clocking task on clock-in if the clock is open
+  (setq org-clock-in-resume t)
+  ;; change tasks to STARTED when clocking in
+  (setq org-clock-in-switch-to-state "STARTED")
+  ;; separate drawers for clocking and logs
+  (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
+  ;; save clock data and state changes and notes in the LOGBOOK drawer
+  (setq org-clock-into-drawer t)
+  ;; sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
+  (setq org-clock-out-remove-zero-time-clocks t)
+  ;; clock out when moving task to a done state
+  (setq org-clock-out-when-done t)
+  ;; save the running clock and all clock history when exiting Emacs, load it on startup
+  (setq org-clock-persist t)
+  ;; do not prompt to resume an active clock
+  (setq org-clock-persist-query-resume nil)
+  ;; enable auto clock resolution for finding open clocks
+  (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+  ;; include current clocking task in clock reports
+  (setq org-clock-report-include-clocking-task t)
+  ;; set default column format
+  (setq org-columns-default-format
+        "%40ITEM %TODO %5Effort(Effort){:} %6CLOCKSUM")
+  ;; enable org-indent-mode
+  (setq org-startup-indented t)
+  ;; handle empty lines
+  (setq org-cycle-separator-lines 0)
+  (setq org-blank-before-new-entry (quote ((heading)
+                                           (plain-list-item . auto))))
+  ;; templates
+  (setq org-capture-templates
+        (quote (("t" "Todo" entry (file+headline "~/org/refile.org" "Tasks")
+                 "* TODO %?")
+                ("i" "Todo+Iteration" entry (file+headline "~/org/refile.org" "Tasks")
+                 "* TODO %? %^{Iteration}p"))))
+  ;; refiling
+  ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9))))
+  ;; use full outline paths for refile targets - we file directly with ido
+  (setq org-refile-use-outline-path t)
+  ;; targets complete directly with ido
+  (setq org-outline-path-complete-in-steps nil)
+  ;; allow refile to create parent tasks with confirmation
+  (setq org-refile-allow-creating-parent-nodes (quote confirm))
+  ;; use ido for both buffer and file completion and ido-everywhere to t
+  (setq org-completion-use-ido t)
+  ;; babel
+  ;; enable syntax highlighting
+  (setq org-src-fontify-natively t)
+  ;; do not prompt to confirm evaluation
+  (setq org-confirm-babel-evaluate nil)
+  ;; org-pomodoro
+  ;; reduce volume of the bell sounds
+  (setq org-pomodoro-start-sound-args "-v 0.3")
+  (setq org-pomodoro-finished-sound-args "-v 0.3")
+  (setq org-pomodoro-killed-sound-args "-v 0.3")
+  (setq org-pomodoro-short-break-sound-args "-v 0.3")
+  (setq org-pomodoro-long-break-sound-args "-v 0.3")
+  (setq org-pomodoro-ticking-sound-args "-v 0.3")
+  :config
+  ;; resume clocking task when emacs is restarted
+  (org-clock-persistence-insinuate)
+  ;; enable languages in babel
+  (org-babel-do-load-languages
+   (quote org-babel-load-languages)
+   (quote ((scheme . t)
+           (sh     . t)
+           (org    . t)
+           (latex  . t))))
+  ;; pomodoro technique for org tasks
+  (use-package org-pomodoro
+    :ensure t)
+
+  :mode ("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)
   :bind (("C-c l" . org-store-link)
          ("C-c c" . org-capture)
          ("C-c a" . org-agenda)
-         ("C-c b" . org-iswitchb)))
+         ("C-c b" . org-iswitchb)
+         ("<f6>"  . org-agenda)
+         ("<f7>"  . org-clock-goto)
+         ("<f8>"  . org-clock-in)
+         ("<f9>"  . org-pomodoro)))
 
 ;;; defuns
 
