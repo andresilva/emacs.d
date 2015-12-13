@@ -179,6 +179,11 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+;; enhanced `dired'
+(use-package dired+
+  :defer t
+  :ensure t)
+
 ;; modal editing
 (use-package god-mode
   :ensure t
