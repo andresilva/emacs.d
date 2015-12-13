@@ -405,6 +405,31 @@
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+;;;; javascript
+
+;; `javascript' programming mode
+(use-package js2-mode
+  :ensure t
+  :init
+  (setq-default js2-basic-offset 2)
+  :config
+  (use-package tern
+    :ensure t
+    :config
+    (add-hook 'js2-mode-hook 'tern-mode))
+  (use-package company-tern
+    :ensure t
+    :config
+    (add-to-list 'company-backends 'company-tern))
+  :mode ("\\.js\\'" . js2-mode))
+
+;; `json' mode
+(use-package json-mode
+  :ensure t
+  :init
+  (setq-default js-indent-level 2)
+  :mode ("\\.json\\'" . json-mode))
+
 ;;;; emacs lisp
 
 ;; fold my `init.el' like an org file
