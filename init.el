@@ -431,6 +431,13 @@
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
          ("Procfile\\'"            . yaml-mode)))
 
+;;;; rest client
+
+;; interact with HTTP APIs
+(use-package restclient
+  :ensure t
+  :mode ("\\.http\\'" . restclient-mode))
+
 ;;;; org
 
 ;; `org-mode'
