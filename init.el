@@ -348,9 +348,9 @@ buffer, stop there."
       :ensure t
       :config
       (exec-path-from-shell-initialize))
-    (setq ns-function-modifier 'hyper)
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'super)))
+    (setq mac-command-modifier 'super)
+    (setq mac-option-modifier 'meta)
+    (setq ns-function-modifier 'hyper)))
 
 ;; start server if one isn't already running
 (use-package server
