@@ -353,6 +353,18 @@
   :config
   (global-company-mode))
 
+;; sensible undo
+(use-package undo-tree
+  :ensure t
+  :init
+  ;; autosave the undo-tree history
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t)
+  :config
+  (global-undo-tree-mode)
+  (diminish 'undo-tree-mode))
+
 ;;; major modes
 ;;;; git
 
