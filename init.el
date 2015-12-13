@@ -7,6 +7,11 @@
 ;; save start time so we can later measure the total loading time
 (defconst emacs-start-time (current-time))
 
+;; use one folder for all save/history files
+(defvar my-savefile-dir (expand-file-name "savefile" user-emacs-directory))
+(unless (file-exists-p my-savefile-dir)
+  (make-directory my-savefile-dir))
+
 ;; reduce the frequency of garbage collection by making it happen on
 ;; every 20MB of allocated data (the default is on every 0.76MB)
 (setq gc-cons-threshold (* 20 1000 1000))
@@ -374,6 +379,45 @@
   (setq uniquify-after-kill-buffer-p t)
   ;; don't muck with special buffers
   (setq uniquify-ignore-buffers-re "^\\*"))
+
+;; `saveplace' remembers your location in a file when saving files
+(use-package saveplace
+  :init
+  (setq save-place-file (expand-file-name "saveplace" my-savefile-dir))
+  ;; activate it for all buffers
+  (setq-default save-place t))
+
+;; `savehist' keeps track of some history
+(use-package savehist
+  :init
+  (setq savehist-additional-variables
+        ;; search entries
+        '(search-ring regexp-search-ring)
+        ;; save every minute
+        savehist-autosave-interval 60
+        ;; keep the home clean
+        savehist-file (expand-file-name "savehist" my-savefile-dir))
+  :config
+  (savehist-mode +1))
+
+;; save recent files
+(use-package recentf
+  :init
+  (setq recentf-save-file (expand-file-name "recentf" my-savefile-dir)
+        recentf-max-saved-items 500
+        recentf-max-menu-items 15
+        ;; disable recentf-cleanup on Emacs start, because it can cause
+        ;; problems with remote files
+        recentf-auto-cleanup 'never)
+  (defun my-recentf-exclude-p (file)
+    "A predicate to decide whether to exclude FILE from recentf."
+    (let ((file-dir (file-truename (file-name-directory file))))
+      (-any-p (lambda (dir)
+                (string-prefix-p dir file-dir))
+              (mapcar 'file-truename (list my-savefile-dir package-user-dir)))))
+  :config
+  (add-to-list 'recentf-exclude 'my-recentf-exclude-p)
+  (recentf-mode +1))
 
 ;;; major modes
 ;;;; git
