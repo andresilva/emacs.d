@@ -394,6 +394,26 @@
   :init
   (bind-key "C-c e" 'macrostep-expand emacs-lisp-mode-map))
 
+;;;; shell
+
+(use-package sh-script
+  :defer t
+  :init
+  ;; Use sh-mode when opening `.zsh' files, and when opening Prezto runcoms
+  (dolist (pattern '("\\.zsh\\'"
+                     "zlogin\\'"
+                     "zlogout\\'"
+                     "zpreztorc\\'"
+                     "zprofile\\'"
+                     "zshenv\\'"
+                     "zshrc\\'"))
+    (add-to-list 'auto-mode-alist (cons pattern 'sh-mode)))
+  (defun my-init-sh-mode ()
+    (when (and buffer-file-name
+               (string-match-p "\\.zsh\\'" buffer-file-name))
+      (sh-set-shell "zsh")))
+  (add-hook 'sh-mode-hook 'my-init-sh-mode))
+
 ;;;; markdown
 
 ;; setup `markdown-mode' to render with redcarpet
