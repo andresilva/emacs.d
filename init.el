@@ -431,6 +431,32 @@
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
          ("Procfile\\'"            . yaml-mode)))
 
+;;;; web
+
+(use-package web-mode
+  :ensure t
+  :config
+  (use-package company-web
+    :ensure t
+    :config
+    (push '(company-web-html company-css) company-backends-web-mode))
+  :mode (("\\.phtml\\'"      . web-mode)
+         ("\\.tpl\\.php\\'"  . web-mode)
+         ("\\.twig\\'"       . web-mode)
+         ("\\.html\\'"       . web-mode)
+         ("\\.htm\\'"        . web-mode)
+         ("\\.[gj]sp\\'"     . web-mode)
+         ("\\.as[cp]x?\\'"   . web-mode)
+         ("\\.eex\\'"        . web-mode)
+         ("\\.erb\\'"        . web-mode)
+         ("\\.mustache\\'"   . web-mode)
+         ("\\.handlebars\\'" . web-mode)
+         ("\\.hbs\\'"        . web-mode)
+         ("\\.eco\\'"        . web-mode)
+         ("\\.jsx\\'"        . web-mode)
+         ("\\.ejs\\'"        . web-mode)
+         ("\\.djhtml\\'"     . web-mode)))
+
 ;;;; rest client
 
 ;; interact with HTTP APIs
