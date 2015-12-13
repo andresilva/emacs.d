@@ -14,6 +14,41 @@ Additionally, I wanted to make my setup as simple as possible and therefore deci
 all my config in just one file. In order to get around the file I use `outshine` to fold sections
 like in `org-mode`.
 
+## Keybindings
+
+These are my personal keybindings as reported by `use-package`'s function `describe-personal-keybindings`.
+
+Key name    | Command                                             | Comments
+------------| --------------------------------------------------- | -------------------------------
+`<f5>`      | `my-toggle-fullscreen`                              |
+`<f6>`      | `org-agenda`                                        |
+`<f7>`      | `org-clock-goto`                                    |
+`<f8>`      | `org-clock-in`                                      |
+`<f9>`      | `org-pomodoro`                                      |
+`C-a`       | `my-move-beginning-of-line`                         | was `move-beginning-of-line`
+`C-ç`       | `hippie-expand`                                     |
+`C-c D`     | `my-delete-buffer-and-file`                         |
+`C-c a`     | `org-agenda`                                        |
+`C-c b`     | `org-iswitchb`                                      |
+`C-c c`     | `org-capture`                                       |
+`C-c l`     | `org-store-link`                                    |
+`C-c r`     | `my-rename-buffer-and-file`                         |
+`C-c C-m`   | `execute-extended-command`                          |
+`C-x b`     | `helm-mini`                                         | was `switch-to-buffer`
+`C-x g`     | `magit-status`                                      |
+`C-x ç`     | `my-comment-or-uncomment-region-or-line`            |
+`C-x C-b`   | `helm-buffers-list`                                 | was `list-buffers`
+`C-x C-f`   | `helm-find-files`                                   | was `find-file`
+`C-x C-m`   | `helm-M-x`                                          | was `#<keymap>`
+`M-/`       | `hippie-expand`                                     | was `dabbrev-expand`
+`M-x`       | `helm-M-x`                                          | was `execute-extended-command`
+`M-y`       | `helm-show-kill-ring`                               | was `yank-pop`
+`s-2`       | `my-insert-at-sign`                                 |
+`s-3`       | `my-insert-euro-sign`                               |
+`s-a`       | `helm-projectile-ag`                                |
+`s-f`       | `helm-projectile-find-file`                         |
+`s-l`       | `goto-line`                                         |
+
 ## Credits
 
 I have used Bozhidar Batsov's config for a long time and this config borrows a lot of knowledge (and
