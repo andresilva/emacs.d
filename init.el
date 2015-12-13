@@ -179,6 +179,11 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+;; highlight useful keywords
+(use-package hl-todo
+  :ensure t
+  :init (add-hook 'prog-mode-hook 'hl-todo-mode))
+
 ;; enhanced `dired'
 (use-package dired+
   :defer t
@@ -251,6 +256,8 @@
 
   :mode (("\\.scala\\'" . scala-mode)
          ("\\.sbt\\'"   . scala-mode)))
+
+;; org-mode
 
 
 ;; spell checking
