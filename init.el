@@ -384,6 +384,13 @@ buffer, stop there."
   :init
   (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
 
+;; `org-mode'
+(use-package org
+  :bind (("C-c l" . org-store-link)
+         ("C-c c" . org-capture)
+         ("C-c a" . org-agenda)
+         ("C-c b" . org-iswitchb)))
+
 ;; print the load time
 (when window-system
   (add-hook 'after-init-hook
