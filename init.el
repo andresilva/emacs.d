@@ -241,10 +241,15 @@
     (server-start)))
 
 ;; use rvm ruby version
-(use-package rvm
-  :ensure t
-  :config
-  (rvm-use-default))
+(defun my-init-rvm ()
+  (use-package rvm
+    :ensure t
+    :config
+    (rvm-use-default))
+  (remove-hook 'ruby-mode-hook 'my-init-rvm)
+  (remove-hook 'markdown-mode-hook 'my-init-rvm))
+(add-hook 'ruby-mode-hook 'my-init-rvm)
+(add-hook 'markdown-mode-hook 'my-init-rvm)
 
 ;;; editor
 ;;;; settings
