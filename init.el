@@ -1,3 +1,5 @@
+(defconst emacs-start-time (current-time))
+
 ;; reduce the frequency of garbage collection by making it happen on
 ;; every 20MB of allocated data (the default is on every 0.76MB)
 (setq gc-cons-threshold (* 20 1000 1000))
@@ -357,3 +359,11 @@ buffer, stop there."
   :config
   (unless (server-running-p)
     (server-start)))
+
+;; print the load time
+(when window-system
+  (add-hook 'after-init-hook
+            (lambda ()
+              (let ((elapsed (float-time (time-subtract (current-time)
+                                                        emacs-start-time))))
+                (message "init finished [%.3fs]" elapsed)))))
