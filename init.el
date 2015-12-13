@@ -198,12 +198,8 @@
 ;; ergonomic shortcuts
 (use-package key-chord
   :ensure t
-  :init
-  (setq key-chord-two-keys-delay 0.2)
-  (setq key-chord-one-key-delay 0.3)
   :config
   (key-chord-mode 1)
-  (key-chord-define-global "jj" 'god-mode-all)
   (key-chord-define-global "jk" 'god-mode-all))
 
 ;; smooth scrolling
