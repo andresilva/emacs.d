@@ -101,6 +101,12 @@
 
 ;;;; helm
 
+;; project navigation
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
+
 ;; interactive completion
 (use-package helm
   :ensure t
@@ -170,6 +176,12 @@
 
 ;;;; mode line
 
+;; window numbering and switching
+(use-package window-numbering
+  :ensure t
+  :config
+  (window-numbering-mode))
+
 ;; fancy mode line with `spaceline'
 (use-package spaceline
   :ensure t
@@ -207,12 +219,6 @@
   :defer t
   :ensure t)
 
-;; project navigation
-(use-package projectile
-  :ensure t
-  :config
-  (projectile-global-mode))
-
 ;; smooth scrolling
 (use-package smooth-scrolling
   :ensure t)
@@ -225,12 +231,6 @@
   (setq anzu-cons-mode-line-p nil)
   :config
   (global-anzu-mode))
-
-;; window numbering and switching
-(use-package window-numbering
-  :ensure t
-  :config
-  (window-numbering-mode))
 
 ;; start server if one isn't already running
 (use-package server
@@ -326,6 +326,7 @@
 
 ;;; major modes
 ;;;; git
+
 ;; the best git client ever
 (use-package magit
   :ensure t
