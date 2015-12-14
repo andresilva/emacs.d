@@ -12,7 +12,9 @@ packages consistent and also performant since most dependencies are lazy loaded.
 
 Additionally, I wanted to make my setup as simple as possible and therefore decided to try having
 all my config in just one file. In order to get around the file I use `outshine` to fold sections
-like in `org-mode`.
+like in `org-mode`. This is what it looks like:
+
+![outshine init](https://dl.dropboxusercontent.com/u/7018537/emacs-init.gif)
 
 ## Keybindings
 
