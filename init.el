@@ -166,13 +166,15 @@
   (defun my-update-cursor ()
     (set-cursor-color
      (if (bound-and-true-p god-local-mode)
-         "chartreuse3"
+         "SkyBlue2"
        "DarkGoldenrod2")))
   (add-hook 'god-mode-enabled-hook 'my-update-cursor)
   (add-hook 'god-mode-disabled-hook 'my-update-cursor)
 
   (setq god-exempt-major-modes nil)
-  (setq god-exempt-predicates nil))
+  (setq god-exempt-predicates nil)
+  :config
+  (my-update-cursor))
 
 ;; ergonomic shortcuts
 (use-package key-chord
@@ -195,7 +197,7 @@
   :init
   (defun my-spaceline-highlight-face-god-state ()
     (if (bound-and-true-p god-local-mode)
-        'spaceline-evil-insert
+        'spaceline-evil-emacs
       'spaceline-evil-normal))
   (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
 
