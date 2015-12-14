@@ -146,6 +146,8 @@
     (setq helm-projectile-fuzzy-match t)
     :config
     (helm-projectile-on))
+  (use-package helm-ag
+    :ensure t)
 
   :bind (("M-x"     . helm-M-x)
          ("C-x C-m" . helm-M-x)
