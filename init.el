@@ -89,7 +89,10 @@
   :ensure t
   :defer t
   :init
-  (load-theme 'zenburn :no-confirm))
+  (load-theme 'zenburn :no-confirm)
+  (set-face-attribute 'vertical-border
+                      nil
+                      :foreground "#4F4F4F"))
 
 ;;;; osx
 
