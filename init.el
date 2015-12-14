@@ -210,6 +210,13 @@
 
 ;;;; extras
 
+;; display key bindings popup given command prefix
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-mode))
+
 ;; show line diff indicator on fringe
 (use-package diff-hl
   :ensure t
