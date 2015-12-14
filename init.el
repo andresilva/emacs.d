@@ -481,6 +481,16 @@ The body of the advice is in BODY."
   :config
   (add-hook 'prog-mode-hook 'flycheck-mode))
 
+;; template code snippets
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :init
+  (defun my-enable-yasnippet ()
+    (yas-reload-all)
+    (yas-minor-mode 1))
+  (add-hook 'prog-mode-hook 'my-enable-yasnippet))
+
 ;;;; scala
 
 ;; `scala' programming mode
