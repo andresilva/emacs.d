@@ -193,7 +193,8 @@
 ;; window numbering and switching
 (use-package window-numbering
   :ensure t
-  :init
+  :config
+  (window-numbering-mode)
   (bind-keys :map window-numbering-keymap
              ("s-0" . select-window-0)
              ("s-1" . select-window-1)
@@ -214,9 +215,7 @@
   (unbind-key "M-6" window-numbering-keymap)
   (unbind-key "M-7" window-numbering-keymap)
   (unbind-key "M-8" window-numbering-keymap)
-  (unbind-key "M-9" window-numbering-keymap)
-  :config
-  (window-numbering-mode))
+  (unbind-key "M-9" window-numbering-keymap))
 
 ;; fancy mode line with `spaceline'
 (use-package spaceline
