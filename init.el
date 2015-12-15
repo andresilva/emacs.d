@@ -193,6 +193,28 @@
 ;; window numbering and switching
 (use-package window-numbering
   :ensure t
+  :init
+  (bind-keys :map window-numbering-keymap
+             ("s-0" . select-window-0)
+             ("s-1" . select-window-1)
+             ("s-2" . select-window-2)
+             ("s-3" . select-window-3)
+             ("s-4" . select-window-4)
+             ("s-5" . select-window-5)
+             ("s-6" . select-window-6)
+             ("s-7" . select-window-7)
+             ("s-8" . select-window-8)
+             ("s-9" . select-window-9))
+  (unbind-key "M-0" window-numbering-keymap)
+  (unbind-key "M-1" window-numbering-keymap)
+  (unbind-key "M-2" window-numbering-keymap)
+  (unbind-key "M-3" window-numbering-keymap)
+  (unbind-key "M-4" window-numbering-keymap)
+  (unbind-key "M-5" window-numbering-keymap)
+  (unbind-key "M-6" window-numbering-keymap)
+  (unbind-key "M-7" window-numbering-keymap)
+  (unbind-key "M-8" window-numbering-keymap)
+  (unbind-key "M-9" window-numbering-keymap)
   :config
   (window-numbering-mode))
 
@@ -887,8 +909,8 @@ buffer, stop there."
 
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
            ("C-a"     . my-move-beginning-of-line)
-           ("s-2"     . my-insert-at-sign)
-           ("s-3"     . my-insert-euro-sign)
+           ("M-2"     . my-insert-at-sign)
+           ("M-3"     . my-insert-euro-sign)
            ("<f5>"    . my-toggle-fullscreen)
            ("C-c r"   . my-rename-buffer-and-file)
            ("C-c D"   . my-delete-buffer-and-file)
