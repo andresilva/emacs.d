@@ -103,6 +103,8 @@
       :ensure t
       :config
       (exec-path-from-shell-initialize))
+    ;; use "old-style" fullscreen
+    (setq ns-use-native-fullscreen nil)
     (setq mac-command-modifier 'super)
     (setq mac-option-modifier 'meta)
     (setq ns-function-modifier 'hyper)
@@ -834,21 +836,6 @@
   (interactive)
   (insert "€"))
 
-(defun my-toggle-fullscreen ()
-  "Toggles the current window to full screen. Supports both OSX
-and X11 environment. On OSX it does so using the 'old-style'
-fullscreen."
-  (interactive)
-  (cond
-   ((eq system-type 'darwin)
-    (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth)))
-   ((eq window-system 'x)
-    (x-send-client-message nil 0 nil "_NET_WM_STATE" 32
-                           '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
-   (error "Unable to toggle fullscreen")))
-
 (defun my-move-beginning-of-line (arg)
   "Move point back to indentation of beginning of line.  Move
 point to the first non-whitespace character on this line.  If
@@ -897,9 +884,9 @@ buffer, stop there."
            ("C-a"     . my-move-beginning-of-line)
            ("M-2"     . my-insert-at-sign)
            ("M-3"     . my-insert-euro-sign)
-           ("<f5>"    . my-toggle-fullscreen)
            ("C-c r"   . my-rename-buffer-and-file)
            ("C-c D"   . my-delete-buffer-and-file)
+           ("<f5>"    . toggle-frame-fullscreen)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
 

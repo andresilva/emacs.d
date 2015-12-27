@@ -1,7 +1,7 @@
 # emacs.d
 
-This is my personal Emacs config. I use this mainly on OS X with Yamamoto's Emacs mac port and also
-on Arch Linux.
+This is my personal Emacs config. I use this mainly on OS X with GNU Emacs 24.5 and also on Arch
+Linux.
 
 This configuration is optimized for *my* use and therefore I wouldn't recommend it as it is to
 someone else, but it could however have some small gem that is useful to you.
