@@ -306,6 +306,10 @@
 (add-hook 'ruby-mode-hook 'my-init-rvm)
 (add-hook 'markdown-mode-hook 'my-init-rvm)
 
+;; local function decoration/overriding
+(use-package noflet
+  :ensure t)
+
 ;;; editor
 ;;;; settings
 
@@ -521,7 +525,51 @@
     :init
     (setq ensime-sem-high-enabled-p nil)
     :config
-    (add-hook 'scala-mode-hook 'ensime-scala-mode-hook))
+    (defun my-configure-ensime ()
+      "Ensure the file exists before starting `ensime-mode'."
+      (cond
+       ((and (buffer-file-name) (file-exists-p (buffer-file-name)))
+        (ensime-mode +1))
+       ((buffer-file-name)
+        (add-hook 'after-save-hook (lambda () (ensime-mode +1)) nil t))))
+
+    (defun my-maybe-start-ensime ()
+      (when (buffer-file-name)
+        (let ((ensime-buffer (my-ensime-buffer-for-file (buffer-file-name)))
+              (file (ensime-config-find-file (buffer-file-name)))
+              (is-source-file (s-matches? (rx (or "/src/" "/test/")) (buffer-file-name))))
+
+          (when (and is-source-file (null ensime-buffer))
+            (noflet ((ensime-config-find (&rest _) file))
+                    (save-window-excursion
+                      (ensime)))))))
+
+    (defun my-ensime-buffer-for-file (file)
+      "Find the Ensime server buffer corresponding to FILE."
+      (let ((default-directory (file-name-directory file)))
+        (-when-let (project-name (projectile-project-p))
+          (--first (-when-let (bufname (buffer-name it))
+                     (and (s-contains? "inferior-ensime-server" bufname)
+                          (s-contains? (file-name-nondirectory project-name) bufname)))
+                   (buffer-list)))))
+
+    ;; prevent common flyspell false positives in scala-mode
+    (defun my-flyspell-verify-scala ()
+      (and (flyspell-generic-progmode-verify)
+           (not (s-matches? (rx bol (* space) "package") (current-line)))))
+
+    (defun my-configure-flyspell-scala ()
+      (setq-local flyspell-generic-check-word-predicate 'my-flyspell-verify-scala))
+
+    ;; don't use Scala checker if ensime mode is active, since it provides better error checking.
+    (defun my-disable-flycheck-scala ()
+      (push 'scala flycheck-disabled-checkers))
+
+    (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
+    (add-hook 'scala-mode-hook 'my-configure-ensime)
+    (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
+
+    (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala))
 
   :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
 
