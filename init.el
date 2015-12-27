@@ -630,7 +630,7 @@
   (use-package company-web
     :ensure t
     :config
-    (push '(company-web-html company-css) company-backends-web-mode))
+    (add-to-list 'company-backends 'company-web-html))
   ;; make web-mode play nice with smartparens
   (setq web-mode-enable-auto-pairing nil)
   (sp-with-modes '(web-mode)
