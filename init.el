@@ -288,6 +288,7 @@
 
 ;; start server if one isn't already running
 (use-package server
+  :diminish server-buffer-clients
   :config
   (unless (server-running-p)
     (server-start)))
