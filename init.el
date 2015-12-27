@@ -519,13 +519,9 @@
 ;; template code snippets
 (use-package yasnippet
   :ensure t
-  :disabled t
   :diminish yas-minor-mode
-  :init
-  (defun my-enable-yasnippet ()
-    (yas-reload-all)
-    (yas-minor-mode 1))
-  (add-hook 'prog-mode-hook 'my-enable-yasnippet))
+  :config
+  (yas-global-mode 1))
 
 ;;;; scala
 
