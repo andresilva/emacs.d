@@ -403,6 +403,11 @@
   :commands mc/edit-lines
   :ensure t)
 
+;; expand selected region by semantic units
+(use-package expand-region
+  :ensure t
+  :bind ("C-{" . er/expand-region))
+
 ;; in-buffer auto completion framework
 (use-package company
   :ensure t
