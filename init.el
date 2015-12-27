@@ -335,8 +335,12 @@
            ("C-ç" . hippie-expand))
 
 ;; revert buffers automatically (also enabled for non-file buffers)
-(setq global-auto-revert-non-file-buffers t)
-(global-auto-revert-mode t)
+(use-package autorevert
+  :init
+  (setq auto-revert-check-vc-info t)
+  (setq global-auto-revert-non-file-buffers t)
+  :config
+  (global-auto-revert-mode t))
 
 ;; fill-column line length
 (setq-default fill-column 100)
