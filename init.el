@@ -243,6 +243,7 @@
 ;; display key bindings popup given command prefix
 (use-package which-key
   :ensure t
+  :disabled t
   :diminish which-key-mode
   :config
   (which-key-mode))
@@ -494,6 +495,7 @@
 ;; template code snippets
 (use-package yasnippet
   :ensure t
+  :disabled t
   :diminish yas-minor-mode
   :init
   (defun my-enable-yasnippet ()
