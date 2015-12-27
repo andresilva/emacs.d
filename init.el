@@ -79,6 +79,9 @@
 ;; disable startup screen
 (setq inhibit-startup-screen t)
 
+;; highlight current line
+(global-hl-line-mode 1)
+
 ;; clean up obsolete buffers
 (use-package midnight)
 
