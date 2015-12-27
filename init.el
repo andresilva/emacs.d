@@ -151,6 +151,10 @@
     (helm-projectile-on))
   (use-package helm-ag
     :ensure t)
+  (use-package helm-flx
+    :ensure t
+    :config
+    (helm-flx-mode +1))
 
   :bind (("M-x"     . helm-M-x)
          ("C-x C-m" . helm-M-x)
