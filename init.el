@@ -423,7 +423,7 @@
 
 ;; useful interactive commands to enhance the overall Emacs experience
 (use-package crux
-  ;; :ensure t
+  :ensure t
   :bind (("C-a"   . crux-move-beginning-of-line)
          ("C-c r" . crux-rename-file-and-buffer)
          ("C-c D" . crux-delete-file-and-buffer)))
