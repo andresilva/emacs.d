@@ -530,7 +530,9 @@
     (add-to-list 'company-backends (my-company-backend-with-yasnippet backend)))
   ;; enable yasnippet completions on all company backends
   (setq company-backends (mapcar #'my-company-backend-with-yasnippet company-backends))
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+
+  :bind ("C-x y" . yas/describe-tables))
 
 ;;;; scala
 
