@@ -38,6 +38,22 @@
 ;; reduce modeline clutter
 (require 'diminish)
 
+(eval-when-compile (require 'cl))
+(defun my-add-subdirs-to-load-path (parent-dir)
+  "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
+  (let* ((default-directory parent-dir))
+    (progn
+      (setq load-path
+            (append
+             (remove-if-not
+              (lambda (dir) (file-directory-p dir))
+              (directory-files (expand-file-name parent-dir) t "^[^\\.]"))
+             load-path)))))
+
+;; load 3rd party code from `site-lisp' folder
+(my-add-subdirs-to-load-path
+ (expand-file-name "site-lisp/" user-emacs-directory))
+
 ;;; ui
 ;;;; font
 
