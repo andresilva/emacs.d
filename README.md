@@ -62,6 +62,11 @@ Key name    | Command                                             | Comments
 `s-l`       | `goto-line`                                         |
 **emacs-lisp-mode-map** |                                         |
 `C-c e`     | `macrostep-expand`                                  |
+**helm-map** |                                                    |
+`<tab>`     | `helm-execute-persistent-action`                    |
+            |                                                     |
+`C-i`       | `helm-execute-persistent-action`                    | was `helm-select-action'
+`C-z`       | `helm-select-action`                                | was `helm-execute-persistent-action'
 **window-numbering-keymap** |                                     |
 `s-0`       | `select-window-0`                                   |
 `s-1`       | `select-window-1`                                   |
