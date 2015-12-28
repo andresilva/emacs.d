@@ -23,13 +23,14 @@ These are my personal keybindings as reported by `use-package`'s function `descr
 Key name    | Command                                             | Comments
 ----------- | --------------------------------------------------- | -------------------------------
 **global**  |                                                     |
-`<f5>`      | `my-toggle-fullscreen`                              |
+`<f5>`      | `toggle-frame-fullscreen`                           |
 `<f6>`      | `org-agenda`                                        |
 `<f7>`      | `org-clock-goto`                                    |
 `<f8>`      | `org-clock-in`                                      |
 `<f9>`      | `org-pomodoro`                                      |
             |                                                     |
 `C-a`       | `my-move-beginning-of-line`                         | was `move-beginning-of-line`
+`C-{`       | `er/expand-region`                                  |
 `C-ç`       | `hippie-expand`                                     |
             |                                                     |
 `C-c D`     | `my-delete-buffer-and-file`                         |
@@ -43,6 +44,7 @@ Key name    | Command                                             | Comments
             |                                                     |
 `C-x b`     | `helm-mini`                                         | was `switch-to-buffer`
 `C-x g`     | `magit-status`                                      |
+`C-x y`     | `yas/describe-tables`                               |
 `C-x ç`     | `my-comment-or-uncomment-region-or-line`            |
             |                                                     |
 `C-x C-b`   | `helm-buffers-list`                                 | was `list-buffers`
