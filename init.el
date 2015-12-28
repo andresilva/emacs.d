@@ -521,6 +521,15 @@
   :ensure t
   :diminish yas-minor-mode
   :config
+  (defun my-company-backend-with-yasnippet (backend)
+    (if (and (listp backend) (member 'company-yasnippet backend))
+        backend
+      (append (if (consp backend) backend (list backend))
+              '(:with company-yasnippet))))
+  (defun my-add-company-backend-with-yasnippet (backend)
+    (add-to-list 'company-backends (my-company-backend-with-yasnippet backend)))
+  ;; enable yasnippet completions on all company backends
+  (setq company-backends (mapcar #'my-company-backend-with-yasnippet company-backends))
   (yas-global-mode 1))
 
 ;;;; scala
@@ -574,11 +583,16 @@
     (defun my-disable-flycheck-scala ()
       (push 'scala flycheck-disabled-checkers))
 
+    ;; add yasnippet templates to ensime-company completions
+    (defun my-enable-company-scala ()
+      (my-add-company-backend-with-yasnippet 'ensime-company))
+
     (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
     (add-hook 'scala-mode-hook 'my-configure-ensime)
     (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
 
-    (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala))
+    (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
+    (add-hook 'ensime-mode-hook 'my-enable-company-scala))
 
   :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
 
@@ -598,7 +612,7 @@
   (use-package company-racer
     :ensure t
     :config
-    (add-to-list 'company-backends 'company-racer))
+    (my-add-company-backend-with-yasnippet 'company-racer))
   :mode ("\\.rust\\'" . rust-mode))
 
 ;; needed for `cargo' files
@@ -621,7 +635,7 @@
   (use-package company-tern
     :ensure t
     :config
-    (add-to-list 'company-backends 'company-tern))
+    (my-add-company-backend-with-yasnippet 'company-tern))
   :mode ("\\.js\\'" . js2-mode))
 
 ;; `json' mode
@@ -694,7 +708,7 @@
   (use-package company-web
     :ensure t
     :config
-    (add-to-list 'company-backends 'company-web-html))
+    (my-add-company-backend-with-yasnippet 'company-web-html))
   ;; make web-mode play nice with smartparens
   (setq web-mode-enable-auto-pairing nil)
   (sp-with-modes '(web-mode)
