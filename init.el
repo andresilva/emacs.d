@@ -120,7 +120,7 @@
   (progn
     ;; fix cursor character deletion when Emacs loses focus
     (defun my-fix-cursor ()
-      (blink-cursor-mode -1))
+      (force-window-update))
     (add-hook 'focus-out-hook 'my-fix-cursor)
     (add-hook 'focus-in-hook 'my-fix-cursor)
     (use-package exec-path-from-shell
