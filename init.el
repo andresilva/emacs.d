@@ -960,6 +960,8 @@
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
 
+(add-hook 'after-init-hook 'toggle-frame-fullscreen)
+
 ;; print the load time
 (when window-system
   (add-hook 'after-init-hook
