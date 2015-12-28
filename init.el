@@ -505,6 +505,11 @@
   :ensure t
   :bind ("C-x g" . magit-status))
 
+;; follow symlinks to version controlled folders without asking
+(use-package vc
+  :init
+  (setq vc-follow-symlinks t))
+
 ;;;; programming
 
 ;; syntax checking
