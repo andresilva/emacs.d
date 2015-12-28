@@ -29,16 +29,16 @@ Key name    | Command                                             | Comments
 `<f8>`      | `org-clock-in`                                      |
 `<f9>`      | `org-pomodoro`                                      |
             |                                                     |
-`C-a`       | `my-move-beginning-of-line`                         | was `move-beginning-of-line`
+`C-a`       | `crux-move-beginning-of-line`                       | was `move-beginning-of-line`
 `C-{`       | `er/expand-region`                                  |
 `C-ç`       | `hippie-expand`                                     |
             |                                                     |
-`C-c D`     | `my-delete-buffer-and-file`                         |
+`C-c D`     | `crux-delete-file-and-buffer`                       |
 `C-c a`     | `org-agenda`                                        |
 `C-c b`     | `org-iswitchb`                                      |
 `C-c c`     | `org-capture`                                       |
 `C-c l`     | `org-store-link`                                    |
-`C-c r`     | `my-rename-buffer-and-file`                         |
+`C-c r`     | `crux-rename-file-and-buffer`                       |
             |                                                     |
 `C-c C-m`   | `execute-extended-command`                          |
             |                                                     |

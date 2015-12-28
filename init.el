@@ -419,6 +419,13 @@
 
 ;;;; packages
 
+;; useful interactive commands to enhance the overall Emacs experience
+(use-package crux
+  ;; :ensure t
+  :bind (("C-a"   . crux-move-beginning-of-line)
+         ("C-c r" . crux-rename-file-and-buffer)
+         ("C-c D" . crux-delete-file-and-buffer)))
+
 ;; multiple cursors are easier than macros
 (use-package multiple-cursors
   :commands mc/edit-lines
@@ -944,56 +951,9 @@
   (interactive)
   (insert "€"))
 
-(defun my-move-beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.  Move
-point to the first non-whitespace character on this line.  If
-point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.  If ARG is not nil or 1, move forward
-ARG - 1 lines first. If point reaches the beginning or end of the
-buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-(defun my-rename-buffer-and-file ()
-  "Rename current buffer and if the buffer is visiting a file, rename it too."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (rename-buffer (read-from-minibuffer "New name: " (buffer-name)))
-      (let ((new-name (read-file-name "New name: " filename)))
-        (cond
-         ((vc-backend filename) (vc-rename-file filename new-name))
-         (t
-          (rename-file filename new-name t)
-          (set-visited-file-name new-name t t)))))))
-
-(defun my-delete-buffer-and-file ()
-  "Kill the current buffer and deletes the file it is visiting."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (when filename
-      (if (vc-backend filename)
-          (vc-delete-file filename)
-        (when (y-or-n-p (format "Are you sure you want to delete %s? " filename))
-          (delete-file filename delete-by-moving-to-trash)
-          (message "Deleted file %s" filename)
-          (kill-buffer))))))
-
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
-           ("C-a"     . my-move-beginning-of-line)
            ("M-2"     . my-insert-at-sign)
            ("M-3"     . my-insert-euro-sign)
-           ("C-c r"   . my-rename-buffer-and-file)
-           ("C-c D"   . my-delete-buffer-and-file)
            ("<f5>"    . toggle-frame-fullscreen)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
