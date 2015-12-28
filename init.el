@@ -496,6 +496,11 @@
   (add-to-list 'recentf-exclude 'my-recentf-exclude-p)
   (recentf-mode +1))
 
+;; avoid string escape nightmares
+(use-package string-edit
+  :commands string-edit-at-point
+  :ensure t)
+
 ;; auto-save buffers when certain events happen, e.g. switching between buffers, frame loses focus
 (use-package super-save
   :ensure t
