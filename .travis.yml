@@ -1,0 +1,30 @@
+language: ruby
+
+before_install:
+  - git clone https://github.com/rejeep/evm.git $HOME/.evm
+  - export PATH=$HOME/.evm/bin:$PATH
+
+  - evm config path /tmp
+  - evm install $EVM_EMACS --use --skip
+
+env:
+  - EVM_EMACS=emacs-24.4-travis
+  - EVM_EMACS=emacs-24.5-travis
+  - EVM_EMACS=emacs-git-snapshot-travis
+
+matrix:
+  allow_failures:
+    - env:
+        - EVM_EMACS=emacs-git-snapshot-travis
+
+script: >
+  ln -s $PWD $HOME/.emacs.d &&
+  echo "Attempting startup..." &&
+  ${EMACS:=emacs} -nw --batch --eval '(let ((debug-on-error t)
+                                            (url-show-status nil)
+                                            (user-emacs-directory default-directory)
+                                            (user-init-file (expand-file-name "init.el"))
+                                            (load-path (delq default-directory load-path)))
+                                         (load-file user-init-file)
+                                         (run-hooks (quote after-init-hook)))' &&
+  echo "Startup successful"

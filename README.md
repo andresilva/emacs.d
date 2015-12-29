@@ -1,5 +1,7 @@
 # emacs.d
 
+[![Build Status](https://img.shields.io/travis/andrebeat/emacs.d/master.svg)](https://travis-ci.org/andrebeat/emacs.d)
+
 This is my personal Emacs config. I use this mainly on OS X with GNU Emacs 24.5 and also on Arch
 Linux.
 
