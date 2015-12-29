@@ -44,7 +44,7 @@ Key name    | Command                                             | Comments
             |                                                     |
 `C-x b`     | `helm-mini`                                         | was `switch-to-buffer`
 `C-x g`     | `magit-status`                                      |
-`C-x y`     | `yas/describe-tables`                               |
+`C-x y`     | `yas-describe-tables`                               |
 `C-x ç`     | `my-comment-or-uncomment-region-or-line`            |
             |                                                     |
 `C-x C-b`   | `helm-buffers-list`                                 | was `list-buffers`
