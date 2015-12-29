@@ -560,7 +560,7 @@
 (use-package yasnippet
   :ensure t
   :diminish yas-minor-mode
-  :config
+  :init
   (defun my-company-backend-with-yasnippet (backend)
     (if (and (listp backend) (member 'company-yasnippet backend))
         backend
@@ -568,6 +568,7 @@
               '(:with company-yasnippet))))
   (defun my-add-company-backend-with-yasnippet (backend)
     (add-to-list 'company-backends (my-company-backend-with-yasnippet backend)))
+  :config
   ;; enable yasnippet completions on all company backends
   (setq company-backends (mapcar #'my-company-backend-with-yasnippet company-backends))
   (yas-global-mode 1)
