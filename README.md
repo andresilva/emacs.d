@@ -40,6 +40,7 @@ Key name    | Command                                             | Comments
 `C-c b`     | `org-iswitchb`                                      |
 `C-c c`     | `org-capture`                                       |
 `C-c l`     | `org-store-link`                                    |
+`C-c n`     | `crux-cleanup-buffer-or-region`                     |
 `C-c r`     | `crux-rename-file-and-buffer`                       |
             |                                                     |
 `C-c C-m`   | `execute-extended-command`                          |
@@ -54,21 +55,22 @@ Key name    | Command                                             | Comments
 `C-x C-m`   | `helm-M-x`                                          | was `#<keymap>`
             |                                                     |
 `M-/`       | `hippie-expand`                                     | was `dabbrev-expand`
-`M-2`       | `my-insert-at-sign`                                 |
-`M-3`       | `my-insert-euro-sign`                               |
+`M-2`       | `my-insert-at-sign`                                 | was `digit-argument`
+`M-3`       | `my-insert-euro-sign`                               | was `digit-argument`
 `M-x`       | `helm-M-x`                                          | was `execute-extended-command`
 `M-y`       | `helm-show-kill-ring`                               | was `yank-pop`
             |                                                     |
-`s-a`       | `helm-projectile-ag`                                |
-`s-f`       | `helm-projectile-find-file`                         |
+`s-a`       | `helm-projectile-ag`                                | was `mark-whole-buffer`
+`s-f`       | `helm-projectile-find-file`                         | was `isearch-forward`
+`s-k`       | `crux-kill-whole-line`                              | was `kill-this-buffer`
 `s-l`       | `goto-line`                                         |
 **emacs-lisp-mode-map** |                                         |
 `C-c e`     | `macrostep-expand`                                  |
 **helm-map** |                                                    |
 `<tab>`     | `helm-execute-persistent-action`                    |
             |                                                     |
-`C-i`       | `helm-execute-persistent-action`                    | was `helm-select-action'
-`C-z`       | `helm-select-action`                                | was `helm-execute-persistent-action'
+`C-i`       | `helm-execute-persistent-action`                    | was `helm-select-action`
+`C-z`       | `helm-select-action`                                | was `helm-execute-persistent-action`
 **window-numbering-keymap** |                                     |
 `s-0`       | `select-window-0`                                   |
 `s-1`       | `select-window-1`                                   |
