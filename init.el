@@ -424,9 +424,14 @@
 ;; useful interactive commands to enhance the overall Emacs experience
 (use-package crux
   :ensure t
-  :bind (("C-a"   . crux-move-beginning-of-line)
+  :config
+  (crux-with-region-or-buffer indent-region)
+  (crux-with-region-or-buffer untabify)
+  :bind (("C-c n" . crux-cleanup-buffer-or-region)
+         ("C-a"   . crux-move-beginning-of-line)
          ("C-c r" . crux-rename-file-and-buffer)
-         ("C-c D" . crux-delete-file-and-buffer)))
+         ("C-c D" . crux-delete-file-and-buffer)
+         ("s-k"   . crux-kill-whole-line)))
 
 ;; multiple cursors are easier than macros
 (use-package multiple-cursors
