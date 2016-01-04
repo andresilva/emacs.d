@@ -614,10 +614,14 @@
                           (s-contains? (file-name-nondirectory project-name) bufname)))
                    (buffer-list)))))
 
+    (defun my-current-line ()
+      "Return the line at point as a string."
+      (buffer-substring (line-beginning-position) (line-end-position)))
+
     ;; prevent common flyspell false positives in scala-mode
     (defun my-flyspell-verify-scala ()
       (and (flyspell-generic-progmode-verify)
-           (not (s-matches? (rx bol (* space) "package") (current-line)))))
+           (not (s-matches? (rx bol (* space) "package") (my-current-line)))))
 
     (defun my-configure-flyspell-scala ()
       (setq-local flyspell-generic-check-word-predicate 'my-flyspell-verify-scala))
