@@ -297,12 +297,6 @@
 ;; enhanced `dired'
 (use-package dired-x)
 
-;; smooth scrolling
-(use-package smooth-scrolling
-  :ensure t
-  :init
-  (setq smooth-scroll-margin 5))
-
 ;; enhanced `isearch'
 (use-package anzu
   :ensure t
