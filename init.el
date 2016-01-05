@@ -78,6 +78,11 @@
 
 ;;;; settings
 
+;; nice scrolling
+(setq scroll-margin 5
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
 ;; disable scrollbar
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
