@@ -41,7 +41,7 @@ Key name    | Command                                             | Comments
 `C-c c`     | `org-capture`                                       |
 `C-c l`     | `org-store-link`                                    |
 `C-c n`     | `crux-cleanup-buffer-or-region`                     |
-`C-c r`     | `crux-rename-file-and-buffer`                       |
+`C-c r`     | `crux-rename-buffer-and-file`                       |
             |                                                     |
 `C-c C-m`   | `execute-extended-command`                          |
             |                                                     |

@@ -431,7 +431,7 @@
   (crux-with-region-or-buffer untabify)
   :bind (("C-c n" . crux-cleanup-buffer-or-region)
          ("C-a"   . crux-move-beginning-of-line)
-         ("C-c r" . crux-rename-file-and-buffer)
+         ("C-c r" . crux-rename-buffer-and-file)
          ("C-c D" . crux-delete-file-and-buffer)
          ("s-k"   . crux-kill-whole-line)))
 
