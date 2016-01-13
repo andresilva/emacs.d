@@ -352,6 +352,10 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+;; store `auto-save-list' backup file mapping in `savefile' dir
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-save-list/.saves-" my-savefile-dir))
+
 ;; delete selection with a keypress
 (delete-selection-mode t)
 
@@ -600,6 +604,7 @@
     :ensure t
     :init
     (setq ensime-sem-high-enabled-p nil)
+    (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
     :config
     (defun my-configure-ensime ()
       "Ensure the file exists before starting `ensime-mode'."
@@ -855,7 +860,7 @@
   ;; use fast todo selection
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-  ;; move org-clock file to savefile dir
+  ;; move org-clock file to `savefile' dir
   (setq org-clock-persist-file (expand-file-name "org-clock-save.el" my-savefile-dir))
   ;; show lots of clocking history so it's easy to pick items off the C-F11 list
   (setq org-clock-history-length 36)
