@@ -511,6 +511,12 @@
   :config
   (savehist-mode +1))
 
+;; `desktop' mode saves the state of Emacs from one session to another (buffers, frames, etc.)
+(use-package desktop
+  :init
+  (setq desktop-path (list my-savefile-dir))
+  (setq desktop-dirname my-savefile-dir))
+
 ;; save recent files
 (use-package recentf
   :init
