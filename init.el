@@ -147,6 +147,9 @@
 ;; project navigation
 (use-package projectile
   :ensure t
+  :init
+  (setq projectile-cache-file (expand-file-name  "projectile.cache" my-savefile-dir))
+  (setq projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" my-savefile-dir))
   :config
   (projectile-global-mode))
 
@@ -435,6 +438,8 @@
 ;; multiple cursors are easier than macros
 (use-package multiple-cursors
   :commands mc/edit-lines
+  :init
+  (setq mc/list-file (expand-file-name "mc-lists.el" my-savefile-dir))
   :ensure t)
 
 ;; expand selected region by semantic units
@@ -844,6 +849,8 @@
   ;; use fast todo selection
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  ;; move org-clock file to savefile dir
+  (setq org-clock-persist-file (expand-file-name "org-clock-save.el" my-savefile-dir))
   ;; show lots of clocking history so it's easy to pick items off the C-F11 list
   (setq org-clock-history-length 36)
   ;; resume clocking task on clock-in if the clock is open
