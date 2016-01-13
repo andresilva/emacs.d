@@ -79,8 +79,8 @@
 ;;;; settings
 
 ;; nice scrolling
-(setq scroll-margin 5
-      scroll-conservatively 10000
+(setq scroll-margin 0
+      scroll-conservatively 101
       scroll-preserve-screen-position 1)
 
 ;; disable scrollbar
