@@ -379,6 +379,7 @@
 
 ;; revert buffers automatically (also enabled for non-file buffers)
 (use-package autorevert
+  :diminish auto-revert-mode
   :init
   (setq auto-revert-check-vc-info t)
   (setq global-auto-revert-non-file-buffers t)
