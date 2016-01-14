@@ -114,6 +114,8 @@
   :defer t
   :init
   (load-theme 'zenburn :no-confirm)
+  (when (fboundp 'fringe-mode)
+    (fringe-mode '(8 . 0)))
   (set-face-attribute 'vertical-border
                       nil
                       :foreground "#4F4F4F"))
