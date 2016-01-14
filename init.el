@@ -238,6 +238,11 @@
 
   (helm-adaptive-mode 1)
 
+  (advice-add 'helm-ff-filter-candidate-one-by-one
+              :around (lambda (fcn file)
+                        (unless (string-match "\\(?:/\\|\\`\\)\\.\\.\\'" file)
+                          (funcall fcn file))))
+
   (bind-keys :map helm-map
              ("<tab>" . helm-execute-persistent-action) ;; rebind tab to run persistent action
              ("C-i"   . helm-execute-persistent-action) ;; make TAB works in terminal
