@@ -176,8 +176,6 @@
         helm-lisp-fuzzy-completion t
         helm-mode-fuzzy-match t
         helm-completion-in-region-fuzzy-match t)
-  (setq helm-adaptive-history-file
-        (expand-file-name "helm-adaptive-history" my-savefile-dir))
   :config
   (require 'helm-config)
   (helm-mode)
@@ -195,48 +193,6 @@
     :ensure t
     :config
     (helm-flx-mode +1))
-
-  (with-eval-after-load 'helm-adaptive
-    (defcustom helm-adaptive-enabled-sources  '()
-      "List of Helm Source names for which helm-adaptive will remember history."
-      :type '(repeat string)
-      :group 'helm-adapt)
-
-    ;; remember history for these sources
-    (add-to-list 'helm-adaptive-enabled-sources "Emacs Commands") ;; helm-M-x
-    (add-to-list 'helm-adaptive-enabled-sources "Commands") ;; describe-function
-    (add-to-list 'helm-adaptive-enabled-sources "Variables") ;; describe-variable
-
-    ;; clobber helm's implementation
-    (defun helm-adapt-use-adaptive-p (&optional source-name)
-      "Return current source only if it use adaptive history, nil otherwise."
-      (when helm-adaptive-mode
-        (let* ((source (or source-name (helm-get-current-source)))
-               (adapt-source (when (listp source)
-                               (or (assoc-default 'filtered-candidate-transformer
-                                                  (assoc (assoc-default 'type source)
-                                                         helm-type-attributes))
-                                   (assoc-default 'candidate-transformer
-                                                  (assoc (assoc-default 'type source)
-                                                         helm-type-attributes))
-                                   (assoc-default 'filtered-candidate-transformer source)
-                                   (assoc-default 'candidate-transformer source)))))
-          (cond
-           ((member (cdr (assoc 'name source)) helm-adaptive-enabled-sources)
-            source)
-           ((listp adapt-source)
-            (and (member 'helm-adaptive-sort adapt-source) source))
-           ((eq adapt-source 'helm-adaptive-sort)
-            source)))))
-
-    (setq helm-fuzzy-sort-fn
-          (lambda (candidates source &optional use-real)
-            (-> candidates
-                (helm-flx-fuzzy-matching-sort source use-real)
-                (helm-adaptive-sort source)))
-          helm-fuzzy-matching-highlight-fn #'helm-flx-fuzzy-highlight-match))
-
-  (helm-adaptive-mode 1)
 
   (advice-add 'helm-ff-filter-candidate-one-by-one
               :around (lambda (fcn file)
