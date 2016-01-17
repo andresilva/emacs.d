@@ -193,6 +193,10 @@
     :ensure t
     :config
     (helm-flx-mode +1))
+  (use-package helm-fuzzier
+    :ensure t
+    :config
+    (helm-fuzzier-mode 1))
 
   (advice-add 'helm-ff-filter-candidate-one-by-one
               :around (lambda (fcn file)
