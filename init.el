@@ -217,32 +217,32 @@
          ("s-a"     . helm-projectile-ag)
          ("s-f"     . helm-projectile-find-file)))
 
-;;;; god mode
+;;;; evil mode
 
-;; modal editing
-(use-package god-mode
+(use-package evil
   :ensure t
-  :diminish god-local-mode
   :init
-  (defun my-update-cursor ()
-    (set-cursor-color
-     (if (bound-and-true-p god-local-mode)
-         "SkyBlue2"
-       "DarkGoldenrod2")))
-  (add-hook 'god-mode-enabled-hook 'my-update-cursor)
-  (add-hook 'god-mode-disabled-hook 'my-update-cursor)
-
-  (setq god-exempt-major-modes nil)
-  (setq god-exempt-predicates nil)
+  (setq evil-emacs-state-cursor '(box "DarkGoldenrod2")
+        evil-normal-state-cursor '(box "SkyBlue2"))
+  (setq evil-default-state 'emacs)
   :config
-  (my-update-cursor))
+  (define-key evil-emacs-state-map [escape] 'evil-normal-state)
+  (defadvice evil-insert-state (around emacs-state-instead-of-insert-state activate)
+    (evil-emacs-state))
+  (evil-mode))
 
 ;; ergonomic shortcuts
 (use-package key-chord
   :ensure t
+  :init
+  (defun my-toggle-evil-state ()
+    (interactive)
+    (if (evil-normal-state-p)
+        (evil-emacs-state)
+      (evil-normal-state)))
   :config
   (key-chord-mode 1)
-  (key-chord-define-global "jk" 'god-mode-all))
+  (key-chord-define-global "jk" 'my-toggle-evil-state))
 
 ;;;; mode line
 
@@ -277,18 +277,15 @@
 (use-package spaceline
   :ensure t
   :init
-  (defun my-spaceline-highlight-face-god-state ()
-    (if (bound-and-true-p god-local-mode)
-        'spaceline-evil-emacs
-      'spaceline-evil-normal))
-  (setq spaceline-highlight-face-func 'my-spaceline-highlight-face-god-state)
-
+  (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
   (setq spaceline-window-numbers-unicode t)
   (setq powerline-default-separator 'bar)
   :config
   (require 'spaceline-config)
   (spaceline-emacs-theme)
-  (spaceline-helm-mode))
+  (spaceline-helm-mode)
+  (set-face-attribute 'spaceline-evil-normal nil :background "SkyBlue2")
+  (set-face-attribute 'spaceline-evil-emacs nil :background "DarkGoldenrod2"))
 
 ;;;; extras
 
