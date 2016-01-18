@@ -222,8 +222,9 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-emacs-state-cursor '(box "DarkGoldenrod2")
-        evil-normal-state-cursor '(box "SkyBlue2"))
+  (setq evil-normal-state-cursor '(box "chartreuse3")
+        evil-emacs-state-cursor '(box "DarkGoldenrod2")
+        evil-visual-state-cursor '(box "gray"))
   (setq evil-default-state 'emacs)
   :config
   (define-key evil-emacs-state-map [escape] 'evil-normal-state)
@@ -284,7 +285,7 @@
   (require 'spaceline-config)
   (spaceline-emacs-theme)
   (spaceline-helm-mode)
-  (set-face-attribute 'spaceline-evil-normal nil :background "SkyBlue2")
+  (set-face-attribute 'spaceline-evil-normal nil :background "chartreuse3")
   (set-face-attribute 'spaceline-evil-emacs nil :background "DarkGoldenrod2"))
 
 ;;;; extras
