@@ -25,7 +25,7 @@ These are my personal keybindings as reported by `use-package`'s function `descr
 Key name    | Command                                             | Comments
 ----------- | --------------------------------------------------- | -------------------------------
 **global**  |                                                     |
-`<f5>`      | `toggle-frame-fullscreen`                           |
+`<f5>`      | `my-toggle-frame-fullscreen`                        |
 `<f6>`      | `org-agenda`                                        |
 `<f7>`      | `org-clock-goto`                                    |
 `<f8>`      | `org-clock-in`                                      |

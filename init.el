@@ -989,14 +989,22 @@
   (interactive)
   (insert "€"))
 
+(defun my-toggle-frame-fullscreen ()
+  "Enables old-style OSX fullscreen support in Emacs Mac port."
+  (interactive)
+  (if (string-match "Carbon" (emacs-version))
+      (set-frame-parameter nil 'fullscreen
+                           (when (not (frame-parameter nil 'fullscreen)) 'fullboth))
+    (toggle-frame-fullscreen)))
+
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
            ("M-2"     . my-insert-at-sign)
            ("M-3"     . my-insert-euro-sign)
-           ("<f5>"    . toggle-frame-fullscreen)
+           ("<f5>"    . my-toggle-frame-fullscreen)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
 
-(add-hook 'after-init-hook 'toggle-frame-fullscreen)
+(add-hook 'after-init-hook 'my-toggle-frame-fullscreen)
 
 ;; print the load time
 (when window-system
