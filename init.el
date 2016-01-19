@@ -7,14 +7,16 @@
 ;; save start time so we can later measure the total loading time
 (defconst emacs-start-time (current-time))
 
-;; use one folder for all save/history files
-(defvar my-savefile-dir (expand-file-name "savefile" user-emacs-directory))
+;; use one folder for all save/history/cache files
+(defconst my-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 (unless (file-exists-p my-savefile-dir)
   (make-directory my-savefile-dir))
 
-;; reduce the frequency of garbage collection by making it happen on
-;; every 20MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold (* 20 1000 1000))
+;; temporarily reduce garbage collection during startup
+(defconst my-initial-gc-cons-threshold gc-cons-threshold)
+(setq gc-cons-threshold (* 128 1000 1000))
+(add-hook 'after-init-hook
+          (lambda () (setq gc-cons-threshold my-initial-gc-cons-threshold)))
 
 ;; setup `package' but do not auto-load installed packages
 (require 'package)
