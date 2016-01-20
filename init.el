@@ -342,6 +342,44 @@
 (add-hook 'ruby-mode-hook 'my-init-rvm)
 (add-hook 'markdown-mode-hook 'my-init-rvm)
 
+;; automatic resizing of windows to the golden ratio
+(use-package golden-ratio
+  :ensure t
+  :diminish golden-ratio-mode
+  :init
+  (setq window-combination-resize t)
+  (setq golden-ratio-adjust-factor 0.81)
+  (setq golden-ratio-exclude-modes '("bs-mode"
+                                     "calc-mode"
+                                     "ediff-mode"
+                                     "dired-mode"
+                                     "gud-mode"
+                                     "gdb-locals-mode"
+                                     "gdb-registers-mode"
+                                     "gdb-breakpoints-mode"
+                                     "gdb-threads-mode"
+                                     "gdb-frames-mode"
+                                     "gdb-inferior-io-mode"
+                                     "gud-mode"
+                                     "gdb-inferior-io-mode"
+                                     "gdb-disassembly-mode"
+                                     "gdb-memory-mode"
+                                     "restclient-mode"))
+  :config
+  (add-to-list 'golden-ratio-exclude-buffer-regexp "^\\*[hH]elm.*")
+  (setq golden-ratio-extra-commands
+        (append golden-ratio-extra-commands
+                '(select-window-0
+                  select-window-1
+                  select-window-2
+                  select-window-3
+                  select-window-4
+                  select-window-5
+                  select-window-6
+                  select-window-7
+                  select-window-8
+                  select-window-9)))
+  (golden-ratio-mode 1))
 
 ;;; editor
 ;;;; settings
