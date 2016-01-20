@@ -770,6 +770,8 @@
   :init
   (bind-key "C-c e" 'macrostep-expand emacs-lisp-mode-map))
 
+(bind-key "C-c C-e" 'eval-region emacs-lisp-mode-map)
+
 ;;;; shell
 
 (use-package sh-script

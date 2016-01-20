@@ -66,6 +66,7 @@ Key name    | Command                                             | Comments
 `s-l`       | `goto-line`                                         |
 **emacs-lisp-mode-map** |                                         |
 `C-c e`     | `macrostep-expand`                                  |
+`C-c C-e`   | `eval-region`                                       |
 **helm-map** |                                                    |
 `<tab>`     | `helm-execute-persistent-action`                    |
             |                                                     |
