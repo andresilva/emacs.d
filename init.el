@@ -331,6 +331,11 @@
   (unless (server-running-p)
     (server-start)))
 
+;; undo and redo window layout operations
+(use-package winner
+  :config
+  (winner-mode 1))
+
 ;; use rvm ruby version
 (defun my-init-rvm ()
   (use-package rvm
@@ -1032,10 +1037,22 @@
                            (when (not (frame-parameter nil 'fullscreen)) 'fullboth))
     (toggle-frame-fullscreen)))
 
+(defun my-toggle-window-focus ()
+  "Toggles focus of the current window, i.e. deletes all other windows and reverts afterwards."
+  (interactive)
+  (if (bound-and-true-p my-window-focused)
+      (progn
+        (setq my-window-focused nil)
+        (winner-undo))
+    (progn
+      (setq my-window-focused t)
+      (delete-other-windows))))
+
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
            ("M-2"     . my-insert-at-sign)
            ("M-3"     . my-insert-euro-sign)
            ("<f5>"    . my-toggle-frame-fullscreen)
+           ("C-c f"   . my-toggle-window-focus)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
 
