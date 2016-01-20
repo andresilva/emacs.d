@@ -342,9 +342,6 @@
 (add-hook 'ruby-mode-hook 'my-init-rvm)
 (add-hook 'markdown-mode-hook 'my-init-rvm)
 
-;; local function decoration/overriding
-(use-package noflet
-  :ensure t)
 
 ;;; editor
 ;;;; settings
@@ -604,6 +601,9 @@
 (use-package scala-mode2
   :ensure t
   :config
+  ;; local function decoration/overriding
+  (use-package noflet
+    :ensure t)
   (use-package ensime
     :ensure t
     :init
