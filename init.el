@@ -984,6 +984,9 @@
            (sh     . t)
            (org    . t)
            (latex  . t))))
+  ;; diminish org-indent-mode
+  (use-package org-indent
+    :diminish org-indent-mode)
   ;; pomodoro technique for org tasks
   (use-package org-pomodoro
     :ensure t)
