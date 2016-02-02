@@ -154,6 +154,10 @@
   :init
   (setq projectile-cache-file (expand-file-name  "projectile.cache" my-savefile-dir))
   (setq projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" my-savefile-dir))
+  (setq projectile-mode-line '(:eval
+                               (if (file-remote-p default-directory)
+                                   " P"
+                                 (format " P(%s)" (projectile-project-name)))))
   :config
   (projectile-global-mode))
 
