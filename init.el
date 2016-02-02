@@ -391,7 +391,9 @@
                   select-window-6
                   select-window-7
                   select-window-8
-                  select-window-9)))
+                  select-window-9
+                  my-split-window-below-and-focus
+                  my-split-window-right-and-focus)))
   (golden-ratio-mode 1))
 
 ;;; editor
@@ -1081,11 +1083,40 @@
       (setq my-window-focused t)
       (delete-other-windows))))
 
+(defun my-layout-triple-columns ()
+  "Set the layout to triple columns. "
+  (interactive)
+  (delete-other-windows)
+  (dotimes (i 2) (split-window-right))
+  (balance-windows))
+
+(defun my-layout-double-columns ()
+  "Set the layout to double columns. "
+  (interactive)
+  (delete-other-windows)
+  (split-window-right))
+
+(defun my-split-window-below-and-focus ()
+  "Split the window vertically and focus the new window."
+  (interactive)
+  (split-window-below)
+  (windmove-down 1))
+
+(defun my-split-window-right-and-focus ()
+  "Split the window horizontally and focus the new window."
+  (interactive)
+  (split-window-right)
+  (windmove-right 1))
+
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
            ("M-2"     . my-insert-at-sign)
            ("M-3"     . my-insert-euro-sign)
            ("<f5>"    . my-toggle-frame-fullscreen)
            ("C-c f"   . my-toggle-window-focus)
+           ("C-x 2"   . my-split-window-below-and-focus)
+           ("C-x 3"   . my-split-window-right-and-focus)
+           ("C-c 2"   . my-layout-double-columns)
+           ("C-c 3"   . my-layout-triple-columns)
            ("s-l"     . goto-line)
            ("C-c C-m" . execute-extended-command))
 
