@@ -8,19 +8,22 @@ Linux.
 This configuration is optimized for *my* use and therefore I wouldn't recommend it as it is to
 someone else, but it could however have some small gem that is useful to you.
 
-I decided to experiment with using `use-package` to manage and configure dependencies. Most of the
-config is actually made of `use-package` blocks. This has the advantage of making configuration of
-packages consistent and also performant since most dependencies are lazy loaded.
+I decided to experiment with using [`use-package`][use-package] to manage and configure
+dependencies. Most of the config is actually made of [`use-package`][use-package] blocks. This has
+the advantage of making configuration of packages consistent and also performant since most
+dependencies are lazy loaded.
 
 Additionally, I wanted to make my setup as simple as possible and therefore decided to try having
 all my config in just one file. In order to get around the file I use `outline-minor-mode` with
-`outline-magic` to fold sections like in `org-mode`. This is what it looks like:
+[`outline-magic`](https://github.com/tj64/outline-magic) to fold sections like in `org-mode`. This
+is what it looks like:
 
 ![outshine init](https://dl.dropboxusercontent.com/u/7018537/emacs-init.gif)
 
 ## Keybindings
 
-These are my personal keybindings as reported by `use-package`'s function `describe-personal-keybindings`.
+These are my personal keybindings as reported by [`use-package`][use-package]'s function
+`describe-personal-keybindings`.
 
 Key name    | Command                                             | Comments
 ----------- | --------------------------------------------------- | -------------------------------
@@ -88,4 +91,7 @@ Key name    | Command                                             | Comments
 ## Credits
 
 I have used Bozhidar Batsov's config for a long time and this config borrows a lot of knowledge (and
-code) from Prelude.
+some code) from [Prelude](https://github.com/bbatsov/prelude). Additionally, I've also found some of
+[Spacemacs](https://github.com/syl20bnr/spacemacs)'s layers to be very useful.
+
+[use-package]: https://github.com/jwiegley/use-package
