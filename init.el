@@ -223,7 +223,7 @@
   (setq evil-normal-state-cursor '(box "chartreuse3")
         evil-emacs-state-cursor '(box "DarkGoldenrod2")
         evil-visual-state-cursor '(box "gray"))
-  (setq evil-default-state 'emacs)
+  (setq evil-default-state 'insert)
   :config
   (define-key evil-emacs-state-map [escape] 'evil-normal-state)
   (defun my-evil-insert-state (orig-fun &rest args)
@@ -309,7 +309,8 @@
 ;; highlight useful keywords
 (use-package hl-todo
   :ensure t
-  :init (add-hook 'prog-mode-hook 'hl-todo-mode))
+  :init
+  (add-hook 'prog-mode-hook 'hl-todo-mode))
 
 ;; enhanced `dired'
 (use-package dired-x)
@@ -472,7 +473,7 @@
 
 (use-package flyspell
   :diminish flyspell-mode
-  :config
+  :init
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'prog-mode-hook 'flyspell-prog-mode))
 
@@ -492,10 +493,10 @@
 
 ;; multiple cursors are easier than macros
 (use-package multiple-cursors
-  :commands mc/edit-lines
+  :ensure t
   :init
   (setq mc/list-file (expand-file-name "mc-lists.el" my-savefile-dir))
-  :ensure t)
+  :commands mc/edit-lines)
 
 ;; expand selected region by semantic units
 (use-package expand-region
@@ -593,8 +594,8 @@
 
 ;; avoid string escape nightmares
 (use-package string-edit
-  :commands string-edit-at-point
-  :ensure t)
+  :ensure t
+  :commands string-edit-at-point)
 
 ;; auto-save buffers when certain events happen, e.g. switching between buffers, frame loses focus
 (use-package super-save
@@ -809,8 +810,12 @@
 ;;;; shell
 
 (use-package sh-script
-  :defer t
   :init
+  (defun my-init-sh-mode ()
+    (when (and buffer-file-name
+               (string-match-p "\\.zsh\\'" buffer-file-name))
+      (sh-set-shell "zsh")))
+  (add-hook 'sh-mode-hook 'my-init-sh-mode)
   ;; Use sh-mode when opening `.zsh' files, and when opening Prezto runcoms
   (dolist (pattern '("\\.zsh\\'"
                      "zlogin\\'"
@@ -819,12 +824,7 @@
                      "zprofile\\'"
                      "zshenv\\'"
                      "zshrc\\'"))
-    (add-to-list 'auto-mode-alist (cons pattern 'sh-mode)))
-  (defun my-init-sh-mode ()
-    (when (and buffer-file-name
-               (string-match-p "\\.zsh\\'" buffer-file-name))
-      (sh-set-shell "zsh")))
-  (add-hook 'sh-mode-hook 'my-init-sh-mode))
+    (add-to-list 'auto-mode-alist (cons pattern 'sh-mode))))
 
 ;;;; markdown
 
@@ -1021,7 +1021,7 @@
   ;; fancy list bullets
   (use-package org-bullets
     :ensure t
-    :config
+    :init
     (add-hook 'org-mode-hook 'org-bullets-mode))
   ;; personal journal
   (use-package org-journal
