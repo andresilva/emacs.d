@@ -226,8 +226,9 @@
   (setq evil-default-state 'emacs)
   :config
   (define-key evil-emacs-state-map [escape] 'evil-normal-state)
-  (defadvice evil-insert-state (around emacs-state-instead-of-insert-state activate)
+  (defun my-evil-insert-state (orig-fun &rest args)
     (evil-emacs-state))
+  (advice-add 'evil-insert-state :around #'my-evil-insert-state)
   (evil-mode))
 
 ;; ergonomic shortcuts
@@ -237,7 +238,7 @@
   (defun my-toggle-evil-state ()
     (interactive)
     (if (evil-normal-state-p)
-        (evil-emacs-state)
+        (evil-insert-state)
       (evil-normal-state)))
   :config
   (key-chord-mode 1)
@@ -438,12 +439,13 @@
 ;; kill region or current line
 (use-package rect
   :config
-  (defadvice kill-region (before smart-cut activate compile)
+  (defun my-kill-region (orig-fun &rest args)
     "When called interactively with no active region, kill a single line instead."
     (interactive
      (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
        (list (line-beginning-position)
-             (line-beginning-position 2))))))
+             (line-beginning-position 2)))))
+  (advice-add 'kill-region :before #'my-kill-region))
 
 ;;;; white space
 
