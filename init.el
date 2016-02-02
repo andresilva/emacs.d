@@ -128,10 +128,11 @@
 (when (eq system-type 'darwin)
   (progn
     ;; fix cursor character deletion when Emacs loses focus
-    (defun my-fix-cursor ()
-      (force-window-update))
-    (add-hook 'focus-out-hook 'my-fix-cursor)
-    (add-hook 'focus-in-hook 'my-fix-cursor)
+    (when (string-match "NS" (emacs-version))
+      (defun my-fix-cursor ()
+        (force-window-update))
+      (add-hook 'focus-out-hook 'my-fix-cursor)
+      (add-hook 'focus-in-hook 'my-fix-cursor))
     (use-package exec-path-from-shell
       :ensure t
       :init
