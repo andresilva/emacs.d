@@ -441,15 +441,22 @@
 (setq-default fill-column 100)
 
 ;; kill region or current line
-(use-package rect
-  :config
-  (defun my-kill-region (orig-fun &rest args)
-    "When called interactively with no active region, kill a single line instead."
-    (interactive
-     (if mark-active (list (region-beginning) (region-end) rectangle-mark-mode)
-       (list (line-beginning-position)
-             (line-beginning-position 2)))))
-  (advice-add 'kill-region :before #'my-kill-region))
+(defun my-kill-region (beg end)
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (list (line-beginning-position) (line-beginning-position 2)))))
+
+(advice-add 'kill-region :before #'my-kill-region)
+
+;; save region or current line
+(defun my-kill-ring-save (beg end)
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (list (line-beginning-position) (line-beginning-position 2)))))
+
+(advice-add 'kill-ring-save :before #'my-kill-ring-save)
 
 ;;;; white space
 
