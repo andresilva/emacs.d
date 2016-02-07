@@ -237,6 +237,8 @@
     (evil-leader/set-key "b" 'helm-mini)
     (evil-leader/set-key "s" 'save-buffer)
     (global-evil-leader-mode))
+  (use-package evil-magit
+    :ensure t)
   (evil-mode))
 
 ;; ergonomic shortcuts
