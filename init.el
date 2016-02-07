@@ -222,7 +222,7 @@
   :ensure t
   :init
   (setq evil-normal-state-cursor '(box "chartreuse3")
-        evil-emacs-state-cursor '(box "DarkGoldenrod2")
+        evil-emacs-state-cursor '(bar "DarkGoldenrod2")
         evil-visual-state-cursor '(box "gray"))
   (setq evil-default-state 'insert)
   :config
