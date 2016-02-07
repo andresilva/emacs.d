@@ -230,6 +230,14 @@
   (defun my-evil-insert-state (orig-fun &rest args)
     (evil-emacs-state))
   (advice-add 'evil-insert-state :around #'my-evil-insert-state)
+  (use-package evil-leader
+    :ensure t
+    :config
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key "g" 'magit-status)
+    (evil-leader/set-key "b" 'helm-mini)
+    (evil-leader/set-key "s" 'save-buffer)
+    (global-evil-leader-mode))
   (evil-mode))
 
 ;; ergonomic shortcuts
@@ -243,7 +251,8 @@
       (evil-normal-state)))
   :config
   (key-chord-mode 1)
-  (key-chord-define-global "jk" 'my-toggle-evil-state))
+  (key-chord-define-global "jk" 'my-toggle-evil-state)
+  (key-chord-define-global "jf" 'my-toggle-evil-state))
 
 ;;;; mode line
 
