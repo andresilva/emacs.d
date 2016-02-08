@@ -236,6 +236,9 @@
     (evil-leader/set-key "g" 'magit-status)
     (evil-leader/set-key "b" 'helm-mini)
     (evil-leader/set-key "s" 'save-buffer)
+    (evil-leader/set-key "pp" 'helm-projectile-switch-project)
+    (evil-leader/set-key "pf" 'helm-projectile-find-file)
+    (evil-leader/set-key "pa" 'helm-projectile-ag)
     (global-evil-leader-mode))
   (use-package evil-magit
     :ensure t)
