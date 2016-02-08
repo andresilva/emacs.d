@@ -239,6 +239,9 @@
     (global-evil-leader-mode))
   (use-package evil-magit
     :ensure t)
+  (use-package evil-org
+    :ensure t
+    :diminish evil-org-mode)
   (evil-mode))
 
 ;; ergonomic shortcuts
