@@ -20,6 +20,9 @@ is what it looks like:
 
 ![outshine init](https://dl.dropboxusercontent.com/u/7018537/emacs-init.gif)
 
+I've also started using [`evil-mode`](https://bitbucket.org/lyro/evil/wiki/Home) for "vim-like"
+editing coupled with [`evil-leader`](https://github.com/cofi/evil-leader) for ergonomic keybindings.
+
 ## Keybindings
 
 These are my personal keybindings as reported by [`use-package`][use-package]'s function
