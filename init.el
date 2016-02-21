@@ -794,6 +794,10 @@
     :ensure t
     :config
     (my-add-company-backend-with-yasnippet 'company-racer))
+  (use-package flycheck-rust
+    :ensure t
+    :init
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
   :mode ("\\.rust\\'" . rust-mode))
 
 ;; needed for `cargo' files
