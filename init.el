@@ -250,12 +250,19 @@
     (evil-leader/set-key "g" 'magit-status)
     (evil-leader/set-key "b" 'helm-mini)
     (evil-leader/set-key "s" 'save-buffer)
+    (evil-leader/set-key "k" 'kill-this-buffer)
+    (evil-leader/set-key "d" 'delete-window)
+    (evil-leader/set-key "f" 'helm-find-files)
     (evil-leader/set-key "pp" 'helm-projectile-switch-project)
     (evil-leader/set-key "pf" 'helm-projectile-find-file)
     (evil-leader/set-key "pa" 'helm-projectile-ag)
+    (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
+    (evil-set-initial-state 'paradox-menu-mode 'emacs)
     (global-evil-leader-mode))
   (use-package evil-magit
-    :ensure t)
+    :ensure t
+    :init
+    (setq evil-magit-want-horizontal-movement t))
   (use-package evil-org
     :ensure t
     :diminish evil-org-mode)
