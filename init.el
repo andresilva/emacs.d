@@ -18,6 +18,16 @@
 (add-hook 'after-init-hook
           (lambda () (setq gc-cons-threshold my-initial-gc-cons-threshold)))
 
+;; increase garbage collection threshold on minibuffer
+(defun my-minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun my-minibuffer-exit-hook ()
+  (setq gc-cons-threshold my-initial-gc-cons-threshold))
+
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
 ;; setup `package' but do not auto-load installed packages
 (require 'package)
 (setq package-enable-at-startup nil)
