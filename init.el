@@ -206,6 +206,10 @@
     (helm-projectile-on))
   (use-package helm-ag
     :ensure t)
+  (use-package helm-flx
+    :ensure t
+    :config
+    (helm-flx-mode +1))
 
   (advice-add 'helm-ff-filter-candidate-one-by-one
               :around (lambda (fcn file)
