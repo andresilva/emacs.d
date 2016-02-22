@@ -211,10 +211,21 @@
     :config
     (helm-flx-mode +1))
 
-  (advice-add 'helm-ff-filter-candidate-one-by-one
-              :around (lambda (fcn file)
-                        (unless (string-match "\\(?:/\\|\\`\\)\\.\\.\\'" file)
-                          (funcall fcn file))))
+  (defun my-helm-ff-filter-candidate-one-by-one (fcn file)
+    (unless (string-match "\\(?:/\\|\\`\\)\\.\\{1,2\\}\\'" file)
+      (funcall fcn file)))
+
+  (advice-add 'helm-ff-filter-candidate-one-by-one :around #'my-helm-ff-filter-candidate-one-by-one)
+
+  (defun my-helm-file-completion-source-p (&rest args) t)
+
+  (defun my-helm-find-files-up-one-level (fcn &rest args)
+    (prog2
+        (advice-add 'helm-file-completion-source-p :around #'my-helm-file-completion-source-p)
+        (apply fcn args)
+      (advice-remove 'helm-file-completion-source-p #'my-helm-file-completion-source-p)))
+
+  (advice-add 'helm-find-files-up-one-level :around #'my-helm-find-files-up-one-level)
 
   (bind-keys :map helm-map
              ("<tab>" . helm-execute-persistent-action) ;; rebind tab to run persistent action
