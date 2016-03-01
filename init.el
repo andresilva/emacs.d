@@ -230,7 +230,9 @@
   (bind-keys :map helm-map
              ("<tab>" . helm-execute-persistent-action) ;; rebind tab to run persistent action
              ("C-i"   . helm-execute-persistent-action) ;; make TAB works in terminal
-             ("C-z"   . helm-select-action)) ;; list actions using C-z
+             ("C-z"   . helm-select-action) ;; list actions using C-z
+             ("C-j"   . helm-next-line)
+             ("C-k"   . helm-previous-line))
 
   :bind (("M-x"     . helm-M-x)
          ("C-x C-m" . helm-M-x)
