@@ -247,6 +247,7 @@
 
 (use-package evil
   :ensure t
+  :demand t
   :init
   (setq evil-normal-state-cursor '(box "DarkGoldenrod2")
         evil-emacs-state-cursor '(bar "chartreuse3")
@@ -279,7 +280,9 @@
   (use-package evil-org
     :ensure t
     :diminish evil-org-mode)
-  (evil-mode))
+  (evil-mode)
+
+  :bind ("C-q" . evil-execute-macro))
 
 ;; ergonomic shortcuts
 (use-package key-chord
