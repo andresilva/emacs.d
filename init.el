@@ -1117,6 +1117,12 @@
          ("<f8>"  . org-clock-in)
          ("<f9>"  . org-pomodoro)))
 
+;;;; term
+
+(add-hook 'term-mode-hook
+          (lambda ()
+            (setq yas-dont-activate t)))
+
 ;;; defuns
 
 (defun my-comment-or-uncomment-region-or-line ()
