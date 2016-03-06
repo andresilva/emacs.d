@@ -90,10 +90,21 @@
 
 ;;;; settings
 
-;; nice scrolling
-(setq scroll-margin 5
-      scroll-conservatively 10000
-      auto-window-vscroll nil)
+;; nice and smooth scrolling
+(use-package smooth-scrolling
+  :ensure t
+  :diminish smooth-scrolling-mode
+  :init
+  (setq smooth-scroll-margin 5)
+  (defun my-unset-scroll-margin ()
+    "Set scroll-margin to zero."
+    (setq-local scroll-margin 0))
+  (add-hook 'messages-buffer-mode-hook 'my-unset-scroll-margin)
+  :config
+  (smooth-scrolling-mode)
+  (enable-smooth-scroll-for-function previous-line)
+  (enable-smooth-scroll-for-function next-line)
+  (enable-smooth-scroll-for-function isearch-repeat))
 
 ;; disable scrollbar
 (when (fboundp 'scroll-bar-mode)
