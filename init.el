@@ -52,7 +52,7 @@
 
 (eval-when-compile (require 'cl))
 (defun my-add-subdirs-to-load-path (parent-dir)
-  "Adds every non-hidden subdir of PARENT-DIR to `load-path'."
+  "Add every non-hidden subdir of PARENT-DIR to `load-path'."
   (let* ((default-directory parent-dir))
     (progn
       (setq load-path
@@ -265,6 +265,7 @@
         evil-visual-state-cursor '(box "gray"))
   :config
   (define-key evil-emacs-state-map [escape] 'evil-normal-state)
+  (define-key evil-emacs-state-map "\e" 'evil-normal-state) ;; for terminal support
   (defun my-evil-insert-state (orig-fun &rest args)
     (evil-emacs-state))
   (advice-add 'evil-insert-state :around #'my-evil-insert-state)
