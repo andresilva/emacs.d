@@ -421,6 +421,7 @@
 
 ;; automatic resizing of windows to the golden ratio
 (use-package golden-ratio
+  :disabled t
   :ensure t
   :diminish golden-ratio-mode
   :init
