@@ -104,7 +104,11 @@
   (smooth-scrolling-mode)
   (enable-smooth-scroll-for-function previous-line)
   (enable-smooth-scroll-for-function next-line)
-  (enable-smooth-scroll-for-function isearch-repeat))
+  (enable-smooth-scroll-for-function isearch-repeat)
+  (enable-smooth-scroll-for-function scroll-down-command)
+  (enable-smooth-scroll-for-function scroll-up-command)
+  (enable-smooth-scroll-for-function evil-scroll-page-up)
+  (enable-smooth-scroll-for-function evil-scroll-page-down))
 
 ;; disable scrollbar
 (when (fboundp 'scroll-bar-mode)
