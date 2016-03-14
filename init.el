@@ -932,13 +932,15 @@
 ;; web programming mode
 (use-package web-mode
   :ensure t
+  :init
+  (setq web-mode-code-indent-offset 2)
+  ;; make web-mode play nice with smartparens
+  (setq web-mode-enable-auto-pairing nil)
   :config
   (use-package company-web
     :ensure t
     :config
     (my-add-company-backend-with-yasnippet 'company-web-html))
-  ;; make web-mode play nice with smartparens
-  (setq web-mode-enable-auto-pairing nil)
   (sp-with-modes '(web-mode)
                  (sp-local-pair "%" "%"
                                 :unless '(sp-in-string-p)
