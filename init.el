@@ -995,6 +995,8 @@
   :init
   ;; log time when task is finished
   (setq org-log-done 'time)
+  ;; create a logbook entry
+  (setq org-log-into-drawer t)
   ;; org directory and agenda files
   (setq org-directory "~/org")
   (setq org-agenda-files (quote ("~/org/todo.org"
