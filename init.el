@@ -971,6 +971,16 @@
          ("\\.ejs\\'"        . web-mode)
          ("\\.djhtml\\'"     . web-mode)))
 
+;;;; lua
+
+(use-package lua-mode
+  :ensure t
+  :mode "\\.lua\\'"
+  :interpreter "lua"
+  :init
+  (setq lua-indent-level 2
+        lua-indent-string-contents t))
+
 ;;;; rest client
 
 ;; interact with HTTP APIs
