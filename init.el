@@ -288,10 +288,6 @@
     (evil-leader/set-key "pa" 'helm-projectile-ag)
     (evil-set-initial-state 'paradox-menu-mode 'emacs)
     (global-evil-leader-mode))
-  (use-package evil-magit
-    :ensure t
-    :init
-    (setq evil-magit-want-horizontal-movement t))
   (use-package evil-org
     :ensure t
     :diminish evil-org-mode)
@@ -688,6 +684,11 @@
 ;; the best git client ever
 (use-package magit
   :ensure t
+  :config
+  (use-package evil-magit
+    :ensure t
+    :init
+    (setq evil-magit-want-horizontal-movement t))
   :bind ("C-x g" . magit-status))
 
 ;; follow symlinks to version controlled folders without asking
