@@ -130,6 +130,9 @@
 ;; highlight current line
 (global-hl-line-mode 1)
 
+;; internationalization
+(prefer-coding-system 'utf-8)
+
 ;; clean up obsolete buffers
 (use-package midnight)
 
