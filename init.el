@@ -286,7 +286,6 @@
     (evil-leader/set-key "pp" 'helm-projectile-switch-project)
     (evil-leader/set-key "pf" 'helm-projectile-find-file)
     (evil-leader/set-key "pa" 'helm-projectile-ag)
-    (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
     (evil-set-initial-state 'paradox-menu-mode 'emacs)
     (global-evil-leader-mode))
   (use-package evil-magit
@@ -739,6 +738,9 @@
     (setq ensime-sem-high-enabled-p nil)
     (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
     :config
+    (evil-set-initial-state 'sbt-mode 'emacs)
+    (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
+    (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
     (defun ensime-modeline-string ()
       (when ensime-mode
         (condition-case err
