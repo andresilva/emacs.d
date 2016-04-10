@@ -288,11 +288,7 @@
     (evil-leader/set-key "pa" 'helm-projectile-ag)
     (evil-set-initial-state 'paradox-menu-mode 'emacs)
     (global-evil-leader-mode))
-  (use-package evil-org
-    :ensure t
-    :diminish evil-org-mode)
   (evil-mode)
-
   :bind ("C-q" . evil-execute-macro))
 
 ;; ergonomic shortcuts
@@ -1130,6 +1126,11 @@
     :init
     (setq org-journal-dir "~/org/journal")
     (setq org-journal-enable-encryption t))
+
+  ;; evil keybindings for `org-mode'
+  (use-package evil-org
+    :ensure t
+    :diminish evil-org-mode)
 
   :mode ("\\.\\(org\\|org_archive\\|txt\\)\\'" . org-mode)
   :bind (("C-c l" . org-store-link)
