@@ -737,6 +737,8 @@
     (setq ensime-sem-high-enabled-p nil)
     (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
     :config
+    (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
+          sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
     (evil-set-initial-state 'sbt-mode 'emacs)
     (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
     (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
