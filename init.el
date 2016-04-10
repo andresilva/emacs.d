@@ -937,6 +937,7 @@
   :ensure t
   :init
   (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2)
   ;; make web-mode play nice with smartparens
   (setq web-mode-enable-auto-pairing nil)
   :config
