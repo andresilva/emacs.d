@@ -172,6 +172,46 @@
     ;; enable emoji, and stop the UI from freezing when trying to display them
     (set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)))
 
+;;;; evil mode
+
+(use-package evil
+  :ensure t
+  :demand t
+  :init
+  (setq evil-normal-state-cursor '(box "DarkGoldenrod2")
+        evil-emacs-state-cursor '(bar "chartreuse3")
+        evil-visual-state-cursor '(box "gray"))
+  :config
+  (define-key evil-emacs-state-map [escape] 'evil-normal-state)
+  ;; (define-key evil-emacs-state-map "\e" 'evil-normal-state) ;; for terminal support
+  (defun my-evil-insert-state (orig-fun &rest args)
+    (evil-emacs-state))
+  (advice-add 'evil-insert-state :around #'my-evil-insert-state)
+  (use-package evil-leader
+    :ensure t
+    :config
+    (evil-leader/set-leader "<SPC>")
+    (evil-leader/set-key "s" 'save-buffer)
+    (evil-leader/set-key "k" 'kill-this-buffer)
+    (evil-leader/set-key "d" 'delete-window)
+    (global-evil-leader-mode))
+  (evil-mode)
+  :bind ("C-q" . evil-execute-macro))
+
+;; ergonomic shortcuts
+(use-package key-chord
+  :ensure t
+  :init
+  (defun my-toggle-evil-state ()
+    (interactive)
+    (if (evil-normal-state-p)
+        (evil-insert-state)
+      (evil-normal-state)))
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "jk" 'my-toggle-evil-state)
+  (key-chord-define-global "jf" 'my-toggle-evil-state))
+
 ;;;; helm
 
 ;; project navigation
@@ -217,6 +257,9 @@
     :init
     (setq projectile-completion-system 'helm)
     (setq helm-projectile-fuzzy-match t)
+    (evil-leader/set-key "pp" 'helm-projectile-switch-project)
+    (evil-leader/set-key "pf" 'helm-projectile-find-file)
+    (evil-leader/set-key "pa" 'helm-projectile-ag)
     :config
     (helm-projectile-on))
   (use-package helm-ag
@@ -242,6 +285,9 @@
 
   (advice-add 'helm-find-files-up-one-level :around #'my-helm-find-files-up-one-level)
 
+  (evil-leader/set-key "b" 'helm-mini)
+  (evil-leader/set-key "f" 'helm-find-files)
+
   (bind-keys :map helm-map
              ("<tab>" . helm-execute-persistent-action) ;; rebind tab to run persistent action
              ("C-i"   . helm-execute-persistent-action) ;; make TAB works in terminal
@@ -258,50 +304,6 @@
          ("s-a"     . helm-projectile-ag)
          ("s-f"     . helm-projectile-find-file)))
 
-;;;; evil mode
-
-(use-package evil
-  :ensure t
-  :demand t
-  :init
-  (setq evil-normal-state-cursor '(box "DarkGoldenrod2")
-        evil-emacs-state-cursor '(bar "chartreuse3")
-        evil-visual-state-cursor '(box "gray"))
-  :config
-  (define-key evil-emacs-state-map [escape] 'evil-normal-state)
-  (define-key evil-emacs-state-map "\e" 'evil-normal-state) ;; for terminal support
-  (defun my-evil-insert-state (orig-fun &rest args)
-    (evil-emacs-state))
-  (advice-add 'evil-insert-state :around #'my-evil-insert-state)
-  (use-package evil-leader
-    :ensure t
-    :config
-    (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key "b" 'helm-mini)
-    (evil-leader/set-key "s" 'save-buffer)
-    (evil-leader/set-key "k" 'kill-this-buffer)
-    (evil-leader/set-key "d" 'delete-window)
-    (evil-leader/set-key "f" 'helm-find-files)
-    (evil-leader/set-key "pp" 'helm-projectile-switch-project)
-    (evil-leader/set-key "pf" 'helm-projectile-find-file)
-    (evil-leader/set-key "pa" 'helm-projectile-ag)
-    (global-evil-leader-mode))
-  (evil-mode)
-  :bind ("C-q" . evil-execute-macro))
-
-;; ergonomic shortcuts
-(use-package key-chord
-  :ensure t
-  :init
-  (defun my-toggle-evil-state ()
-    (interactive)
-    (if (evil-normal-state-p)
-        (evil-insert-state)
-      (evil-normal-state)))
-  :config
-  (key-chord-mode 1)
-  (key-chord-define-global "jk" 'my-toggle-evil-state)
-  (key-chord-define-global "jf" 'my-toggle-evil-state))
 
 ;;;; mode line
 
@@ -680,8 +682,9 @@
 ;; the best git client ever
 (use-package magit
   :ensure t
-  :config
+  :init
   (evil-leader/set-key "g" 'magit-status)
+  :config
   (use-package evil-magit
     :ensure t
     :init
