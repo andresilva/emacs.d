@@ -277,7 +277,6 @@
     :ensure t
     :config
     (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key "g" 'magit-status)
     (evil-leader/set-key "b" 'helm-mini)
     (evil-leader/set-key "s" 'save-buffer)
     (evil-leader/set-key "k" 'kill-this-buffer)
@@ -286,7 +285,6 @@
     (evil-leader/set-key "pp" 'helm-projectile-switch-project)
     (evil-leader/set-key "pf" 'helm-projectile-find-file)
     (evil-leader/set-key "pa" 'helm-projectile-ag)
-    (evil-set-initial-state 'paradox-menu-mode 'emacs)
     (global-evil-leader-mode))
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
@@ -391,6 +389,8 @@
   :ensure t
   :init
   (setq paradox-github-token t)
+  :config
+  (evil-set-initial-state 'paradox-menu-mode 'emacs)
   :commands paradox-list-packages)
 
 ;; start server if one isn't already running
@@ -681,6 +681,7 @@
 (use-package magit
   :ensure t
   :config
+  (evil-leader/set-key "g" 'magit-status)
   (use-package evil-magit
     :ensure t
     :init
