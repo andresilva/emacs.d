@@ -351,11 +351,11 @@
      anzu
      auto-compile
      (buffer-id remote-host)
+     (projectile-root :when (not (derived-mode-p 'magit-mode)))
      major-mode
      (process :when active)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
      ((minor-modes :separator spaceline-minor-modes-separator) :when active)
-     projectile-root
      (version-control :when active)
      (org-pomodoro :when active)
      (org-clock :when active))
