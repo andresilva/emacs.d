@@ -113,7 +113,7 @@ Key binding | Command
 
 ### Key chord
 
-I use [key chord](https://github.com/emacsmirror/key-chord) to define two chords to toggle between
+I use [`key-chord`](https://github.com/emacsmirror/key-chord) to define two chords to toggle between
 `evil`'s normal and insert state.
 
 Key binding | Command
