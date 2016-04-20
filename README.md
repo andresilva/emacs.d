@@ -20,8 +20,8 @@ is what it looks like:
 
 ![outshine init](https://dl.dropboxusercontent.com/u/7018537/emacs-init.gif)
 
-I've also started using [`evil-mode`](https://bitbucket.org/lyro/evil/wiki/Home) for "vim-like"
-editing coupled with [`evil-leader`](https://github.com/cofi/evil-leader) for ergonomic keybindings.
+I've also started using [`evil-mode`][evil-mode] for "vim-like" editing coupled with
+[`evil-leader`](https://github.com/cofi/evil-leader) for ergonomic keybindings.
 
 ## Keybindings
 
@@ -124,7 +124,7 @@ Key binding | Command
 ### Key chord
 
 I use [`key-chord`](https://github.com/emacsmirror/key-chord) to define two chords to toggle between
-`evil`'s normal and insert state.
+[`evil-mode`][evil-mode]'s normal and insert state.
 
 Key binding | Command
 ----------- | -------------------------------------
@@ -139,3 +139,4 @@ some code) from [Prelude](https://github.com/bbatsov/prelude). Additionally, I'v
 [Spacemacs](https://github.com/syl20bnr/spacemacs)'s layers to be very useful.
 
 [use-package]: https://github.com/jwiegley/use-package
+[evil-mode]: https://bitbucket.org/lyro/evil/wiki/Home
