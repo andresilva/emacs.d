@@ -28,7 +28,7 @@ editing coupled with [`evil-leader`](https://github.com/cofi/evil-leader) for er
 These are my personal keybindings as reported by [`use-package`][use-package]'s function
 `describe-personal-keybindings`.
 
-Key name    | Command                                             | Comments
+Key binding | Command                                             | Comments
 ----------- | --------------------------------------------------- | -------------------------------
 **global**  |                                                     |
 `<f5>`      | `my-toggle-frame-fullscreen`                        |
@@ -90,6 +90,26 @@ Key name    | Command                                             | Comments
 `s-8`       | `select-window-8`                                   |
 `s-9`       | `select-window-9`                                   |
 
+### Evil Leader
+
+I set my leader key to `SPC` since it's pressed with the thumb.
+
+Key binding | Command
+----------- | -------------------------------------
+**global**  |
+`SPC s`     | `save-buffer`
+`SPC k`     | `kill-this-buffer`
+`SPC d`     | `delete-window`
+`SPC b`     | `helm-mini`
+`SPC f`     | `helm-find-files`
+`SPC g`     | `magit-status`
+            |
+`SPC p p`   | `helm-projectile-switch-project`
+`SPC p f`   | `helm-projectile-find-file`
+`SPC p a`   | `helm-projectile-ag`
+**scala-mode-map** |
+`SPC .`     | `ensime-edit-definition`
+`SPC p c`   | `ensime-sbt-do-compile`
 
 ## Credits
 
