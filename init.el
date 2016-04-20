@@ -220,13 +220,10 @@
 ;; project navigation
 (use-package projectile
   :ensure t
+  :diminish projectile-mode
   :init
   (setq projectile-cache-file (expand-file-name  "projectile.cache" my-savefile-dir))
   (setq projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" my-savefile-dir))
-  (setq projectile-mode-line '(:eval
-                               (if (file-remote-p default-directory)
-                                   " P"
-                                 (format " P(%s)" (projectile-project-name)))))
   :config
   (projectile-global-mode))
 
@@ -346,7 +343,32 @@
   (setq powerline-default-separator 'bar)
   :config
   (require 'spaceline-config)
-  (spaceline-emacs-theme)
+  (spaceline-install
+   `(((window-number
+       buffer-modified
+       buffer-size)
+      :face highlight-face)
+     anzu
+     auto-compile
+     (buffer-id remote-host)
+     major-mode
+     (process :when active)
+     ((flycheck-error flycheck-warning flycheck-info) :when active)
+     ((minor-modes :separator spaceline-minor-modes-separator) :when active)
+     projectile-root
+     (version-control :when active)
+     (org-pomodoro :when active)
+     (org-clock :when active))
+
+   `(which-function
+     (python-pyvenv :fallback python-pyenv)
+     selection-info
+     input-method
+     (point-position
+      line-column)
+     (global :when active)
+     buffer-position
+     hud))
   (spaceline-helm-mode)
   (set-face-attribute 'spaceline-evil-emacs nil :background "chartreuse3"))
 
