@@ -38,19 +38,25 @@ Key binding | Command                                             | Comments
 `<f9>`      | `org-pomodoro`                                      |
             |                                                     |
 `C-a`       | `crux-move-beginning-of-line`                       | was `move-beginning-of-line`
+`C-q`       | `evil-execute-macro`                                | was `quoted-insert`
 `C-{`       | `er/expand-region`                                  |
 `C-ç`       | `hippie-expand`                                     |
             |                                                     |
+`C-c 2`     | `my-layout-double-columns`                          |
+`C-c 3`     | `my-layout-triple-columns`                          |
 `C-c D`     | `crux-delete-file-and-buffer`                       |
 `C-c a`     | `org-agenda`                                        |
 `C-c b`     | `org-iswitchb`                                      |
 `C-c c`     | `org-capture`                                       |
+`C-c f`     | `my-toggle-window-focus`                            |
 `C-c l`     | `org-store-link`                                    |
 `C-c n`     | `crux-cleanup-buffer-or-region`                     |
 `C-c r`     | `crux-rename-buffer-and-file`                       |
             |                                                     |
 `C-c C-m`   | `execute-extended-command`                          |
             |                                                     |
+`C-x 2`     | `my-split-window-below-and-focus`                   | was `split-window-below`
+`C-x 3`     | `my-split-window-right-and-focus`                   | was `split-window-right`
 `C-x b`     | `helm-mini`                                         | was `switch-to-buffer`
 `C-x g`     | `magit-status`                                      |
 `C-x y`     | `yas-describe-tables`                               |
@@ -77,7 +83,11 @@ Key binding | Command                                             | Comments
 `<tab>`     | `helm-execute-persistent-action`                    |
             |                                                     |
 `C-i`       | `helm-execute-persistent-action`                    | was `helm-select-action`
+`C-j`       | `helm-next-line`                                    | was `helm-execute-persistent-action`
+`C-k`       | `helm-previous-line`                                | was `helm-delete-minibuffer-contents`
 `C-z`       | `helm-select-action`                                | was `helm-execute-persistent-action`
+**outline-minor-mode-map** |                                      |
+`C-<tab>`   | `outline-cycle`                                     |
 **window-numbering-keymap** |                                     |
 `s-0`       | `select-window-0`                                   |
 `s-1`       | `select-window-1`                                   |
