@@ -111,6 +111,17 @@ Key binding | Command
 `SPC .`     | `ensime-edit-definition`
 `SPC p c`   | `ensime-sbt-do-compile`
 
+### Key chord
+
+I use [key chord](https://github.com/emacsmirror/key-chord) to define two chords to toggle between
+`evil`'s normal and insert state.
+
+Key binding | Command
+----------- | -------------------------------------
+**global**  |
+`jk`        | `my-toggle-evil-state`
+`jf`        | `my-toggle-evil-state`
+
 ## Credits
 
 I have used Bozhidar Batsov's config for a long time and this config borrows a lot of knowledge (and
