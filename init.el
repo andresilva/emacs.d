@@ -344,10 +344,7 @@
   :config
   (require 'spaceline-config)
   (spaceline-install
-   `(((window-number
-       buffer-modified
-       buffer-size)
-      :face highlight-face)
+   `(((window-number buffer-modified) :face highlight-face)
      anzu
      auto-compile
      (buffer-id remote-host)
