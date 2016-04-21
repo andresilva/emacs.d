@@ -574,6 +574,12 @@
 
 ;;;; packages
 
+;; edit remote files
+(use-package tramp
+  :init
+  (setq tramp-default-method "ssh")
+  (setq tramp-persistency-file-name (expand-file-name "tramp" my-savefile-dir)))
+
 ;; useful interactive commands to enhance the overall Emacs experience
 (use-package crux
   :ensure t
