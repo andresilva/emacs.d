@@ -182,14 +182,12 @@
   :demand t
   :init
   (setq evil-normal-state-cursor '(box "DarkGoldenrod2")
-        evil-emacs-state-cursor '(bar "chartreuse3")
+        evil-insert-state-cursor '(bar "chartreuse3")
         evil-visual-state-cursor '(box "gray"))
   :config
-  (define-key evil-emacs-state-map [escape] 'evil-normal-state)
-  ;; (define-key evil-emacs-state-map "\e" 'evil-normal-state) ;; for terminal support
-  (defun my-evil-insert-state (orig-fun &rest args)
-    (evil-emacs-state))
-  (advice-add 'evil-insert-state :around #'my-evil-insert-state)
+  ;; replace evil insert state keymap with emacs'
+  (setq evil-insert-state-map (make-sparse-keymap))
+  (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state)
   (use-package evil-leader
     :ensure t
     :config
@@ -366,8 +364,7 @@
      (global :when active)
      buffer-position
      hud))
-  (spaceline-helm-mode)
-  (set-face-attribute 'spaceline-evil-emacs nil :background "chartreuse3"))
+  (spaceline-helm-mode))
 
 ;;;; extras
 
@@ -414,7 +411,7 @@
   :init
   (setq paradox-github-token t)
   :config
-  (evil-set-initial-state 'paradox-menu-mode 'emacs)
+  (evil-set-initial-state 'paradox-menu-mode 'insert)
   :commands paradox-list-packages)
 
 ;; start server if one isn't already running
@@ -771,7 +768,7 @@
     :config
     (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
           sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
-    (evil-set-initial-state 'sbt-mode 'emacs)
+    (evil-set-initial-state 'sbt-mode 'insert)
     (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
     (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
     (defun ensime-modeline-string ()
