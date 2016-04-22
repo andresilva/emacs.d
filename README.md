@@ -121,16 +121,8 @@ Key binding | Command
 `SPC .`     | `ensime-edit-definition`
 `SPC p c`   | `ensime-sbt-do-compile`
 
-### Key chord
-
-I use [`key-chord`](https://github.com/emacsmirror/key-chord) to define two chords to toggle between
-[`evil-mode`][evil-mode]'s normal and insert state.
-
-Key binding | Command
------------ | -------------------------------------
-**global**  |
-`jk`        | `my-toggle-evil-state`
-`jf`        | `my-toggle-evil-state`
+Since [`evil-mode`][evil-mode] relies on `Esc` to switch back to normal state, I have set up my `Caps
+Lock` key to act as `Esc` when tapped and as `Ctrl` when pressed.
 
 ## Credits
 

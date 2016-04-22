@@ -199,20 +199,6 @@
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
-;; ergonomic shortcuts
-(use-package key-chord
-  :ensure t
-  :init
-  (defun my-toggle-evil-state ()
-    (interactive)
-    (if (evil-normal-state-p)
-        (evil-insert-state)
-      (evil-normal-state)))
-  :config
-  (key-chord-mode 1)
-  (key-chord-define-global "jk" 'my-toggle-evil-state)
-  (key-chord-define-global "jf" 'my-toggle-evil-state))
-
 ;;;; helm
 
 ;; project navigation
