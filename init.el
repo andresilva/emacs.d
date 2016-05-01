@@ -318,6 +318,15 @@
   (unbind-key "M-8" window-numbering-keymap)
   (unbind-key "M-9" window-numbering-keymap))
 
+;; nyan mode
+(use-package nyan-mode
+  :ensure t
+  :init
+  (setq nyan-wavy-trail t)
+  (setq nyan-minimum-window-width 128)
+  :config
+  (nyan-mode))
+
 ;; fancy mode line with `spaceline'
 (use-package spaceline
   :ensure t
@@ -334,6 +343,7 @@
      (buffer-id remote-host)
      (projectile-root :when (not (derived-mode-p 'magit-mode)))
      major-mode
+     nyan-cat
      (process :when active)
      ((flycheck-error flycheck-warning flycheck-info) :when active)
      ((minor-modes :separator spaceline-minor-modes-separator) :when active)
