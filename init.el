@@ -716,7 +716,7 @@
   :init
   (setq flycheck-indication-mode nil)
   :config
-  (add-hook 'prog-mode-hook 'flycheck-mode))
+  (global-flycheck-mode))
 
 ;; template code snippets
 (use-package yasnippet
