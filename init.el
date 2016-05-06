@@ -1178,6 +1178,16 @@
           (lambda ()
             (setq yas-dont-activate t)))
 
+;;;; gnus
+
+(use-package gnus
+  :defer t
+  :commands gnus
+  :init
+  (setq gnus-select-method '(nnnil ""))
+  (setq gnus-secondary-select-methods
+        '((nntp "gmane" (nntp-address "news.gmane.org")))))
+
 ;;; defuns
 
 (defun my-comment-or-uncomment-region-or-line ()
