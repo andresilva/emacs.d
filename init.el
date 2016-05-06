@@ -1193,7 +1193,15 @@
   :init
   (setq gnus-select-method '(nnnil ""))
   (setq gnus-secondary-select-methods
-        '((nntp "gmane" (nntp-address "news.gmane.org")))))
+        '((nntp "gmane" (nntp-address "news.gmane.org"))))
+
+  (evilified-state-evilify gnus-group-mode gnus-group-mode-map)
+  (evilified-state-evilify gnus-server-mode gnus-server-mode-map)
+  (evilified-state-evilify gnus-browse-mode gnus-browse-mode-map)
+  (evilified-state-evilify gnus-article-mode gnus-article-mode-map)
+  (evilified-state-evilify gnus-summary-mode gnus-summary-mode-map
+    (kbd "J") 'gnus-summary-next-article
+    (kbd "K") 'gnus-summary-prev-article))
 
 ;;; defuns
 
