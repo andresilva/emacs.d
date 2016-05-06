@@ -12,6 +12,9 @@
 (unless (file-exists-p my-savefile-dir)
   (make-directory my-savefile-dir))
 
+;; third-party code not available on ELPA should reside in this folder
+(defconst my-sitelisp-dir (expand-file-name "site-lisp" user-emacs-directory))
+
 ;; temporarily reduce garbage collection during startup
 (defconst my-initial-gc-cons-threshold gc-cons-threshold)
 (setq gc-cons-threshold (* 128 1000 1000))
@@ -63,8 +66,8 @@
              load-path)))))
 
 ;; load 3rd party code from `site-lisp' folder
-(my-add-subdirs-to-load-path
- (expand-file-name "site-lisp/" user-emacs-directory))
+(add-to-list 'load-path my-sitelisp-dir t)
+(my-add-subdirs-to-load-path my-sitelisp-dir)
 
 ;;; ui
 ;;;; font
