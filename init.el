@@ -404,11 +404,11 @@
 ;; enhanced `list-packages'
 (use-package paradox
   :ensure t
+  :commands paradox-list-packages
   :init
   (setq paradox-github-token t)
   :config
-  (evil-set-initial-state 'paradox-menu-mode 'insert)
-  :commands paradox-list-packages)
+  (evilified-state-evilify paradox-menu-mode paradox-menu-mode-map))
 
 ;; start server if one isn't already running
 (use-package server
