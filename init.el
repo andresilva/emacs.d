@@ -199,6 +199,8 @@
     (evil-leader/set-key "k" 'kill-this-buffer)
     (evil-leader/set-key "d" 'delete-window)
     (global-evil-leader-mode))
+  ;; FIXME: evil leader doesn't work on evilified state
+  (use-package evil-evilified-state)
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
