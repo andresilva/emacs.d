@@ -199,8 +199,10 @@
     (evil-leader/set-key "k" 'kill-this-buffer)
     (evil-leader/set-key "d" 'delete-window)
     (global-evil-leader-mode))
-  ;; FIXME: evil leader doesn't work on evilified state
-  (use-package evil-evilified-state)
+  (use-package evil-evilified-state
+    :config
+    ;; this is a bit dirty since it relies on the "private" evil-leader key map
+    (define-key evil-evilified-state-map (kbd "<SPC>") evil-leader--default-map))
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
