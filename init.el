@@ -367,6 +367,7 @@
      (global :when active)
      buffer-position
      hud))
+  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main))))
   (spaceline-helm-mode))
 
 ;;;; extras
