@@ -720,6 +720,11 @@
     (setq evil-magit-want-horizontal-movement t))
   :bind ("C-x g" . magit-status))
 
+;; step through historic versions of git controlled files
+(use-package git-timemachine
+  :ensure t
+  :commands git-timemachine)
+
 ;; follow symlinks to version controlled folders without asking
 (use-package vc
   :init
