@@ -897,10 +897,12 @@
   :config
   (use-package tern
     :ensure t
+    :disabled t
     :config
     (add-hook 'js2-mode-hook 'tern-mode))
   (use-package company-tern
     :ensure t
+    :disabled t
     :config
     (my-add-company-backend-with-yasnippet 'company-tern))
   :mode ("\\.js\\'" . js2-mode))
