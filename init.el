@@ -766,97 +766,99 @@
 ;; `scala' programming mode
 (use-package scala-mode2
   :ensure t
+  :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
+
+(use-package ensime
+  :ensure t
+  :commands ensime ensime-mode
+  :init
+  (setq ensime-use-helm t)
+  (setq ensime-sem-high-enabled-p nil)
+  (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
   :config
+  (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
+        sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
+  (evil-set-initial-state 'sbt-mode 'insert)
+  (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
+  (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
+  (defun ensime-modeline-string ()
+    (when ensime-mode
+      (condition-case err
+          (let ((conn (ensime-connection-or-nil)))
+            (cond ((and ensime-mode (not conn))
+                   " E()")
+
+                  ((and ensime-mode (ensime-connected-p conn))
+                   (concat " E"
+                           (let ((status (ensime-modeline-state-string conn))
+                                 (unready (not (ensime-analyzer-ready conn))))
+                             (cond (status (concat " [" status "] "))
+                                   (unready " [Analyzing] ")
+                                   (t "")))
+                           (concat (format "(%s/%s)"
+                                           (ensime-num-errors conn)
+                                           (ensime-num-warnings conn)))))
+                  (ensime-mode " E(Dead Connection)]")))
+        (error (progn " E(wtf)")))))
+
+  (defun my-configure-ensime ()
+    "Ensure the file exists before starting `ensime-mode'."
+    (cond
+     ((and (buffer-file-name) (file-exists-p (buffer-file-name)))
+      (ensime-mode +1))
+     ((buffer-file-name)
+      (add-hook 'after-save-hook (lambda () (ensime-mode +1)) nil t))))
+
   ;; local function decoration/overriding
   (use-package noflet
     :ensure t)
-  (use-package ensime
-    :ensure t
-    :init
-    (setq ensime-sem-high-enabled-p nil)
-    (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
-    :config
-    (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
-          sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
-    (evil-set-initial-state 'sbt-mode 'insert)
-    (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
-    (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
-    (defun ensime-modeline-string ()
-      (when ensime-mode
-        (condition-case err
-            (let ((conn (ensime-connection-or-nil)))
-              (cond ((and ensime-mode (not conn))
-                     " E()")
 
-                    ((and ensime-mode (ensime-connected-p conn))
-                     (concat " E"
-                             (let ((status (ensime-modeline-state-string conn))
-                                   (unready (not (ensime-analyzer-ready conn))))
-                               (cond (status (concat " [" status "] "))
-                                     (unready " [Analyzing] ")
-                                     (t "")))
-                             (concat (format "(%s/%s)"
-                                             (ensime-num-errors conn)
-                                             (ensime-num-warnings conn)))))
-                    (ensime-mode " E(Dead Connection)]")))
-          (error (progn " E(wtf)")))))
+  (defun my-maybe-start-ensime ()
+    (when (buffer-file-name)
+      (let ((ensime-buffer (my-ensime-buffer-for-file (buffer-file-name)))
+            (file (ensime-config-find-file (buffer-file-name)))
+            (is-source-file (s-matches? (rx (or "/src/" "/test/")) (buffer-file-name))))
 
-    (defun my-configure-ensime ()
-      "Ensure the file exists before starting `ensime-mode'."
-      (cond
-       ((and (buffer-file-name) (file-exists-p (buffer-file-name)))
-        (ensime-mode +1))
-       ((buffer-file-name)
-        (add-hook 'after-save-hook (lambda () (ensime-mode +1)) nil t))))
+        (when (and is-source-file (null ensime-buffer))
+          (noflet ((ensime-config-find (&rest _) file))
+                  (save-window-excursion
+                    (ensime)))))))
 
-    (defun my-maybe-start-ensime ()
-      (when (buffer-file-name)
-        (let ((ensime-buffer (my-ensime-buffer-for-file (buffer-file-name)))
-              (file (ensime-config-find-file (buffer-file-name)))
-              (is-source-file (s-matches? (rx (or "/src/" "/test/")) (buffer-file-name))))
+  (defun my-ensime-buffer-for-file (file)
+    "Find the Ensime server buffer corresponding to FILE."
+    (let ((default-directory (file-name-directory file)))
+      (-when-let (project-name (projectile-project-p))
+        (--first (-when-let (bufname (buffer-name it))
+                   (and (s-contains? "inferior-ensime-server" bufname)
+                        (s-contains? (file-name-nondirectory project-name) bufname)))
+                 (buffer-list)))))
 
-          (when (and is-source-file (null ensime-buffer))
-            (noflet ((ensime-config-find (&rest _) file))
-                    (save-window-excursion
-                      (ensime)))))))
+  (defun my-current-line ()
+    "Return the line at point as a string."
+    (buffer-substring (line-beginning-position) (line-end-position)))
 
-    (defun my-ensime-buffer-for-file (file)
-      "Find the Ensime server buffer corresponding to FILE."
-      (let ((default-directory (file-name-directory file)))
-        (-when-let (project-name (projectile-project-p))
-          (--first (-when-let (bufname (buffer-name it))
-                     (and (s-contains? "inferior-ensime-server" bufname)
-                          (s-contains? (file-name-nondirectory project-name) bufname)))
-                   (buffer-list)))))
+  ;; prevent common flyspell false positives in scala-mode
+  (defun my-flyspell-verify-scala ()
+    (and (flyspell-generic-progmode-verify)
+         (not (s-matches? (rx bol (* space) "package") (my-current-line)))))
 
-    (defun my-current-line ()
-      "Return the line at point as a string."
-      (buffer-substring (line-beginning-position) (line-end-position)))
+  (defun my-configure-flyspell-scala ()
+    (setq-local flyspell-generic-check-word-predicate 'my-flyspell-verify-scala))
 
-    ;; prevent common flyspell false positives in scala-mode
-    (defun my-flyspell-verify-scala ()
-      (and (flyspell-generic-progmode-verify)
-           (not (s-matches? (rx bol (* space) "package") (my-current-line)))))
+  ;; don't use Scala checker if ensime mode is active, since it provides better error checking.
+  (defun my-disable-flycheck-scala ()
+    (push 'scala flycheck-disabled-checkers))
 
-    (defun my-configure-flyspell-scala ()
-      (setq-local flyspell-generic-check-word-predicate 'my-flyspell-verify-scala))
+  ;; add yasnippet templates to ensime-company completions
+  (defun my-enable-company-scala ()
+    (my-add-company-backend-with-yasnippet 'ensime-company))
 
-    ;; don't use Scala checker if ensime mode is active, since it provides better error checking.
-    (defun my-disable-flycheck-scala ()
-      (push 'scala flycheck-disabled-checkers))
+  (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
+  (add-hook 'scala-mode-hook 'my-configure-ensime)
+  (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
 
-    ;; add yasnippet templates to ensime-company completions
-    (defun my-enable-company-scala ()
-      (my-add-company-backend-with-yasnippet 'ensime-company))
-
-    (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
-    (add-hook 'scala-mode-hook 'my-configure-ensime)
-    (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
-
-    (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
-    (add-hook 'ensime-mode-hook 'my-enable-company-scala))
-
-  :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
+  (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
+  (add-hook 'ensime-mode-hook 'my-enable-company-scala))
 
 ;;;; rust
 
