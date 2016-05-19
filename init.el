@@ -864,17 +864,18 @@
 (use-package rust-mode
   :ensure t
   :config
-  (when (memq window-system '(mac ns x))
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-copy-env "CARGO_HOME")
     (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
+  (use-package cargo
+    :ensure t
+    :init
+    (add-hook 'rust-mode-hook 'cargo-minor-mode))
   (use-package racer
     :ensure t
     :init
     (add-hook 'rust-mode-hook 'racer-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode))
-  (use-package company-racer
-    :ensure t
-    :config
-    (my-add-company-backend-with-yasnippet 'company-racer))
   (use-package flycheck-rust
     :ensure t
     :init
