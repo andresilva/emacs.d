@@ -879,7 +879,8 @@
     :diminish racer-mode eldoc-mode
     :init
     (add-hook 'rust-mode-hook 'racer-mode)
-    (add-hook 'racer-mode-hook 'eldoc-mode))
+    (add-hook 'racer-mode-hook 'eldoc-mode)
+    (evil-leader/set-key-for-mode 'rust-mode "." 'racer-find-definition))
   (use-package flycheck-rust
     :ensure t
     :init
