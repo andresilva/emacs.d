@@ -1230,17 +1230,17 @@
     (comment-or-uncomment-region beg end)))
 
 (defun my-insert-at-sign ()
-  "Inserts an at sign into the buffer."
+  "Insert an at sign into the buffer."
   (interactive)
   (insert "@"))
 
 (defun my-insert-euro-sign ()
-  "Inserts an euro sign into the buffer."
+  "Insert an euro sign into the buffer."
   (interactive)
   (insert "€"))
 
 (defun my-toggle-frame-fullscreen ()
-  "Enables old-style OSX fullscreen support in Emacs Mac port."
+  "Enable old-style OSX fullscreen support in Emacs Mac port."
   (interactive)
   (if (string-match "Carbon" (emacs-version))
       (set-frame-parameter nil 'fullscreen
@@ -1248,7 +1248,7 @@
     (toggle-frame-fullscreen)))
 
 (defun my-toggle-window-focus ()
-  "Toggles focus of the current window, i.e. deletes all other windows and reverts afterwards."
+  "Toggle focus of the current window, i.e. delete all other windows and revert afterwards."
   (interactive)
   (if (bound-and-true-p my-window-focused)
       (progn
@@ -1259,17 +1259,38 @@
       (delete-other-windows))))
 
 (defun my-layout-triple-columns ()
-  "Set the layout to triple columns. "
+  "Set the layout to triple columns."
   (interactive)
   (delete-other-windows)
   (dotimes (i 2) (split-window-right))
   (balance-windows))
 
 (defun my-layout-double-columns ()
-  "Set the layout to double columns. "
+  "Set the layout to double columns."
   (interactive)
   (delete-other-windows)
   (split-window-right))
+
+(defun my-rotate-windows (arg)
+  "Rotate existing windows, use the prefix ARG to rotate in the other direction."
+  (interactive "P")
+  (if (not (> (count-windows) 1))
+      (message "You can't rotate a single window")
+    (let* ((rotate-times (prefix-numeric-value arg))
+           (direction (if (or (< rotate-times 0) (equal arg '(4)))
+                          'reverse 'identity)))
+      (dotimes (_ (abs rotate-times))
+        (dotimes (i (- (count-windows) 1))
+          (let* ((w1 (elt (funcall direction (window-list)) i))
+                 (w2 (elt (funcall direction (window-list)) (+ i 1)))
+                 (b1 (window-buffer w1))
+                 (b2 (window-buffer w2))
+                 (s1 (window-start w1))
+                 (s2 (window-start w2))
+                 (p1 (window-point w1))
+                 (p2 (window-point w2)))
+            (set-window-buffer-start-and-point w1 b2 s2 p2)
+            (set-window-buffer-start-and-point w2 b1 s1 p1)))))))
 
 (defun my-split-window-below-and-focus ()
   "Split the window vertically and focus the new window."
