@@ -871,10 +871,12 @@
     (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
   (use-package cargo
     :ensure t
+    :diminish cargo-minor-mode
     :init
     (add-hook 'rust-mode-hook 'cargo-minor-mode))
   (use-package racer
     :ensure t
+    :diminish racer-mode eldoc-mode
     :init
     (add-hook 'rust-mode-hook 'racer-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode))
