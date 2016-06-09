@@ -742,6 +742,10 @@
   :config
   (global-flycheck-mode))
 
+;; show argument list/type information in the modeline
+(use-package eldoc
+  :diminish eldoc-mode)
+
 ;; template code snippets
 (use-package yasnippet
   :ensure t
@@ -876,7 +880,7 @@
     (add-hook 'rust-mode-hook 'cargo-minor-mode))
   (use-package racer
     :ensure t
-    :diminish racer-mode eldoc-mode
+    :diminish racer-mode
     :init
     (add-hook 'rust-mode-hook 'racer-mode)
     (add-hook 'racer-mode-hook 'eldoc-mode)
