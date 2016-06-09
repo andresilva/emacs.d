@@ -836,12 +836,16 @@
   (defun my-enable-company-scala ()
     (my-add-company-backend-with-yasnippet 'ensime-company))
 
-  (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
+  (defun my-enable-expand-region-scala ()
+    (require 'ensime-expand-region nil 'noerror))
+
   (add-hook 'scala-mode-hook 'my-configure-ensime)
+  (add-hook 'scala-mode-hook 'my-configure-flyspell-scala)
   (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
 
   (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
-  (add-hook 'ensime-mode-hook 'my-enable-company-scala))
+  (add-hook 'ensime-mode-hook 'my-enable-expand-region-scala)
+  (add-hook 'ensime-mode-hook 'my-enable-company-scala)
 
   :config
   (defun ensime-modeline-string ()
