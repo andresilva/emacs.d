@@ -770,36 +770,15 @@
 
 (use-package ensime
   :ensure t
-  :commands ensime ensime-mode
   :init
   (setq ensime-use-helm t)
   (setq ensime-sem-high-enabled-p nil)
   (setq user-emacs-ensime-directory (expand-file-name "ensime" my-savefile-dir))
-  :config
   (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
         sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
   (evil-set-initial-state 'sbt-mode 'insert)
   (evil-leader/set-key-for-mode 'scala-mode "pc" 'ensime-sbt-do-compile)
   (evil-leader/set-key-for-mode 'scala-mode "." 'ensime-edit-definition)
-  (defun ensime-modeline-string ()
-    (when ensime-mode
-      (condition-case err
-          (let ((conn (ensime-connection-or-nil)))
-            (cond ((and ensime-mode (not conn))
-                   " E()")
-
-                  ((and ensime-mode (ensime-connected-p conn))
-                   (concat " E"
-                           (let ((status (ensime-modeline-state-string conn))
-                                 (unready (not (ensime-analyzer-ready conn))))
-                             (cond (status (concat " [" status "] "))
-                                   (unready " [Analyzing] ")
-                                   (t "")))
-                           (concat (format "(%s/%s)"
-                                           (ensime-num-errors conn)
-                                           (ensime-num-warnings conn)))))
-                  (ensime-mode " E(Dead Connection)]")))
-        (error (progn " E(wtf)")))))
 
   (defun my-configure-ensime ()
     "Ensure the file exists before starting `ensime-mode'."
@@ -821,8 +800,8 @@
 
         (when (and is-source-file (null ensime-buffer))
           (noflet ((ensime-config-find (&rest _) file))
-                  (save-window-excursion
-                    (ensime)))))))
+            (save-window-excursion
+              (ensime)))))))
 
   (defun my-ensime-buffer-for-file (file)
     "Find the Ensime server buffer corresponding to FILE."
@@ -859,6 +838,27 @@
 
   (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
   (add-hook 'ensime-mode-hook 'my-enable-company-scala))
+
+  :config
+  (defun ensime-modeline-string ()
+    (when ensime-mode
+      (condition-case err
+          (let ((conn (ensime-connection-or-nil)))
+            (cond ((and ensime-mode (not conn))
+                   " E()")
+
+                  ((and ensime-mode (ensime-connected-p conn))
+                   (concat " E"
+                           (let ((status (ensime-modeline-state-string conn))
+                                 (unready (not (ensime-analyzer-ready conn))))
+                             (cond (status (concat " [" status "] "))
+                                   (unready " [Analyzing] ")
+                                   (t "")))
+                           (concat (format "(%s/%s)"
+                                           (ensime-num-errors conn)
+                                           (ensime-num-warnings conn)))))
+                  (ensime-mode " E(Dead Connection)]")))
+        (error (progn " E(wtf)"))))))
 
 ;;;; rust
 
