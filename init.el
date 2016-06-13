@@ -836,6 +836,15 @@
   (defun my-enable-company-scala ()
     (my-add-company-backend-with-yasnippet 'ensime-company))
 
+  ;; use eldoc to show current type at point
+  (defun my-enable-eldoc-scala ()
+    (setq-local eldoc-documentation-function
+                (lambda ()
+                  (when (ensime-connected-p)
+                    (ensime-print-type-at-point))))
+    (eldoc-mode +1))
+
+  ;; use ensime's expand region support
   (defun my-enable-expand-region-scala ()
     (require 'ensime-expand-region nil 'noerror))
 
@@ -844,6 +853,7 @@
   (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
 
   (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
+  (add-hook 'ensime-mode-hook 'my-enable-eldoc-scala)
   (add-hook 'ensime-mode-hook 'my-enable-expand-region-scala)
   (add-hook 'ensime-mode-hook 'my-enable-company-scala)
 
