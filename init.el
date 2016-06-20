@@ -1051,6 +1051,12 @@
   (setq lua-indent-level 2
         lua-indent-string-contents t))
 
+;;;; erlang
+
+(use-package erlang-mode
+  :ensure erlang
+  :mode "\\.erl\\'")
+
 ;;;; rest client
 
 ;; interact with HTTP APIs
