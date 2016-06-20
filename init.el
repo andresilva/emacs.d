@@ -774,6 +774,7 @@
 
 (use-package ensime
   :ensure t
+  :after scala-mode
   :init
   (setq ensime-use-helm t)
   (setq ensime-sem-high-enabled-p nil)
