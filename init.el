@@ -861,23 +861,18 @@
   :config
   (defun ensime-modeline-string ()
     (when ensime-mode
-      (condition-case err
-          (let ((conn (ensime-connection-or-nil)))
-            (cond ((and ensime-mode (not conn))
-                   " E()")
-
-                  ((and ensime-mode (ensime-connected-p conn))
-                   (concat " E"
-                           (let ((status (ensime-modeline-state-string conn))
-                                 (unready (not (ensime-analyzer-ready conn))))
-                             (cond (status (concat " [" status "] "))
-                                   (unready " [Analyzing] ")
-                                   (t "")))
-                           (concat (format "(%s/%s)"
-                                           (ensime-num-errors conn)
-                                           (ensime-num-warnings conn)))))
-                  (ensime-mode " E(Dead Connection)]")))
-        (error (progn " E(wtf)"))))))
+      (s-wrap
+       (condition-case err
+           (let ((conn (ensime-connection-or-nil)))
+             (cond ((not conn)
+                    (if (ensime-owning-server-process-for-source-file buffer-file-name)
+                        "ENSIME: Starting"
+                      "ENSIME: Disconnected"))
+                   ((ensime-connected-p conn)
+                    "ENSIME")
+                   (t "ENSIME: Dead Connection")))
+         (error "ENSIME: Error"))
+       "[" "]"))))
 
 ;;;; rust
 
