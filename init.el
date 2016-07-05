@@ -982,8 +982,7 @@
 (use-package markdown-mode
   :ensure t
   :init
-  (setq markdown-command "redcarpet --parse tables")
-  (setq markdown-command-needs-filename t)
+  (setq markdown-command "grip --export -")
   :mode ("\\.md\\'" . markdown-mode))
 
 ;;;; yaml
