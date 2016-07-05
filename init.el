@@ -958,6 +958,7 @@
 (use-package sh-script
   :init
   (setq sh-basic-offset 2)
+  (setq sh-indentation 2)
   (defun my-init-sh-mode ()
     (when (and buffer-file-name
                (string-match-p "\\.zsh\\'" buffer-file-name))
