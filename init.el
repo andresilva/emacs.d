@@ -815,7 +815,7 @@
     (let ((default-directory (file-name-directory file)))
       (-when-let (project-name (projectile-project-p))
         (--first (-when-let (bufname (buffer-name it))
-                   (and (s-contains? "inferior-ensime-server" bufname)
+                   (and (s-contains? "*ENSIME-" bufname)
                         (s-contains? (file-name-nondirectory project-name) bufname)))
                  (buffer-list)))))
 
