@@ -629,6 +629,7 @@
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
+  (setq undo-tree-visualizer-diff t)
   :config
   (global-undo-tree-mode))
 
