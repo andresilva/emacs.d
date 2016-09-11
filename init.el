@@ -899,7 +899,8 @@
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-copy-env "CARGO_HOME")
-    (exec-path-from-shell-copy-env "RUST_SRC_PATH"))
+    (exec-path-from-shell-copy-env "RUST_SRC_PATH")
+    (setq racer-rust-src-path (getenv "RUST_SRC_PATH")))
   (use-package cargo
     :ensure t
     :diminish cargo-minor-mode
