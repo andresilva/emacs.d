@@ -265,10 +265,20 @@
 ;; ivy support for projectile
 (use-package counsel-projectile
   :ensure t
+  :init
+  (defun counsel-projectile-ag ()
+    (interactive)
+    (counsel-ag nil (projectile-project-root)))
   :bind*
-  (("C-c p p" . counsel-projectile)
-   ("C-c p b" . counsel-projectile-switch-to-buffer)
-   ("C-c p f" . counsel-projectile-find-file)))
+  (("C-c p p"   . counsel-projectile)
+   ("s-p p"     . counsel-projectile)
+   ("C-c p b"   . counsel-projectile-switch-to-buffer)
+   ("s-p b"     . counsel-projectile-switch-to-buffer)
+   ("C-c p f"   . counsel-projectile-find-file)
+   ("s-p f"     . counsel-projectile-find-file)
+   ("C-c p s s" . counsel-projectile-ag)
+   ("s-p s s"   . counsel-projectile-ag)
+   ("s-a"       . counsel-projectile-ag)))
 
 ;; in-buffer auto completion framework
 (use-package company
