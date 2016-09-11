@@ -251,16 +251,16 @@
   :init
   (evil-leader/set-key "f" 'counsel-find-files)
   :bind
-  (("M-x" . counsel-M-x)
+  (("M-x"     . counsel-M-x)
    ("C-x C-m" . counsel-M-x)
-   ("M-y" . counsel-yank-pop)
+   ("M-y"     . counsel-yank-pop)
    ("C-x C-f" . counsel-find-file)
-   ("<f2> i" . counsel-info-lookup-symbol)
-   ("<f2> u" . counsel-unicode-char)
-   ("C-c g" . counsel-git)
-   ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-ag)
-   ("C-x l" . counsel-locate)
+   ("<f2> i"  . counsel-info-lookup-symbol)
+   ("<f2> u"  . counsel-unicode-char)
+   ("C-c g"   . counsel-git)
+   ("C-c j"   . counsel-git-grep)
+   ("C-c k"   . counsel-ag)
+   ("C-x l"   . counsel-locate)
    :map read-expression-map
    ("C-r" . counsel-expression-history)))
 
