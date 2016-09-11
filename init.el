@@ -208,7 +208,7 @@
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
-;;;; ivy
+;;;; completion
 
 ;; project interaction library
 (use-package projectile
@@ -217,13 +217,15 @@
   :init
   (setq projectile-cache-file (expand-file-name  "projectile.cache" my-savefile-dir))
   (setq projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" my-savefile-dir))
+  (setq projectile-completion-system 'ivy)
   :config
   (projectile-global-mode))
 
-;; interactive completion
+;; generic completion mechanism
 (use-package ivy
   :ensure t
   :demand t
+  :diminish ivy-mode
   :init
   (setq ivy-use-virtual-buffers t)
   (setq ivy-initial-inputs-alist nil)
@@ -240,7 +242,8 @@
   (ivy-mode 1)
   :bind
   (("C-c C-r" . ivy-resume)
-   ("<f6>" . ivy-resume)))
+   ("<f6>"    . ivy-resume)
+   ("s-b"     . ivy-switch-buffer)))
 
 ;; ivy support for common functions
 (use-package counsel
@@ -267,6 +270,18 @@
    ("C-c p b" . counsel-projectile-switch-to-buffer)
    ("C-c p f" . counsel-projectile-find-file)))
 
+;; in-buffer auto completion framework
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :init
+  (setq company-idle-delay 0.5)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  (setq company-tooltip-align-annotations t)
+  :config
+  (global-company-mode))
 
 
 
@@ -577,19 +592,6 @@
 (use-package expand-region
   :ensure t
   :bind ("C-{" . er/expand-region))
-
-;; in-buffer auto completion framework
-(use-package company
-  :ensure t
-  :diminish company-mode
-  :init
-  (setq company-idle-delay 0.5)
-  (setq company-tooltip-limit 10)
-  (setq company-minimum-prefix-length 2)
-  (setq company-selection-wrap-around t)
-  (setq company-tooltip-align-annotations t)
-  :config
-  (global-company-mode))
 
 ;; sensible undo
 (use-package undo-tree
