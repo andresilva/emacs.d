@@ -246,8 +246,10 @@
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
         '((t . ivy--regex-fuzzy)))
+  (setq ivy-extra-directories nil)
   (evil-leader/set-key "b" 'ivy-switch-buffer)
   :config
+  (define-key ivy-minibuffer-map (kbd "C-l") (kbd "DEL"))
   ;; M-x enhancement with recently and most frequently used commands
   (use-package smex
     :ensure t
@@ -261,7 +263,12 @@
   :bind
   (("C-c C-r" . ivy-resume)
    ("<f6>"    . ivy-resume)
-   ("s-b"     . ivy-switch-buffer)))
+   ("s-b"     . ivy-switch-buffer)
+   :map ivy-minibuffer-map
+   ("TAB"      . ivy-alt-done)
+   ("<escape>" . minibuffer-keyboard-quit)
+   ("C-j"      . ivy-next-line)
+   ("C-k"      . ivy-previous-line)))
 
 ;; ivy support for common functions
 (use-package counsel
