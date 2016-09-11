@@ -207,9 +207,9 @@
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
-;;;; helm
+;;;; ivy
 
-;; project navigation
+;; project interaction library
 (use-package projectile
   :ensure t
   :diminish projectile-mode
@@ -220,81 +220,53 @@
   (projectile-global-mode))
 
 ;; interactive completion
-(use-package helm
+(use-package ivy
   :ensure t
   :demand t
-  :diminish helm-mode
   :init
-  (setq helm-split-window-in-side-p t
-        helm-move-to-line-cycle-in-source t
-        helm-ff-search-library-in-sexp t
-        helm-ff-file-name-history-use-recentf t)
-  ;; enable fuzzy matching
-  (setq helm-buffers-fuzzy-matching t
-        helm-recentf-fuzzy-match t
-        helm-locate-fuzzy-match t
-        helm-M-x-fuzzy-match t
-        helm-semantic-fuzzy-match t
-        helm-imenu-fuzzy-match t
-        helm-apropos-fuzzy-match t
-        helm-lisp-fuzzy-completion t
-        helm-mode-fuzzy-match t
-        helm-completion-in-region-fuzzy-match t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+        '((swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
   :config
-  (require 'helm-config)
-  (helm-mode)
-  (helm-autoresize-mode)
-  (use-package helm-projectile
-    :ensure t
-    :init
-    (setq projectile-completion-system 'helm)
-    (setq helm-projectile-fuzzy-match t)
-    (evil-leader/set-key "pp" 'helm-projectile-switch-project)
-    (evil-leader/set-key "pf" 'helm-projectile-find-file)
-    (evil-leader/set-key "pa" 'helm-projectile-ag)
-    :config
-    (helm-projectile-on))
-  (use-package helm-ag
+  ;; M-x enhancement with recently and most frequently used commands
+  (use-package smex
     :ensure t)
-  (use-package helm-flx
-    :ensure t
-    :config
-    (helm-flx-mode +1))
+  ;; fuzzy matching
+  (use-package flx
+    :ensure t)
+  (ivy-mode 1)
+  :bind
+  (("C-c C-r" . ivy-resume)
+   ("<f6>" . ivy-resume)))
 
-  (defun my-helm-ff-filter-candidate-one-by-one (fcn file)
-    (unless (string-match "\\(?:/\\|\\`\\)\\.\\{1,2\\}\\'" file)
-      (funcall fcn file)))
+;; ivy support for common functions
+(use-package counsel
+  :ensure t
+  :bind
+  (("M-x" . counsel-M-x)
+   ("C-x C-m" . counsel-M-x)
+   ("M-y" . counsel-yank-pop)
+   ("C-x C-f" . counsel-find-file)
+   ("<f2> i" . counsel-info-lookup-symbol)
+   ("<f2> u" . counsel-unicode-char)
+   ("C-c g" . counsel-git)
+   ("C-c j" . counsel-git-grep)
+   ("C-c k" . counsel-ag)
+   ("C-x l" . counsel-locate)
+   :map read-expression-map
+   ("C-r" . counsel-expression-history)))
 
-  (advice-add 'helm-ff-filter-candidate-one-by-one :around #'my-helm-ff-filter-candidate-one-by-one)
+;; ivy support for projectile
+(use-package counsel-projectile
+  :ensure t
+  :bind*
+  (("C-c p p" . counsel-projectile)
+   ("C-c p b" . counsel-projectile-switch-to-buffer)
+   ("C-c p f" . counsel-projectile-find-file)))
 
-  (defun my-helm-file-completion-source-p (&rest args) t)
 
-  (defun my-helm-find-files-up-one-level (fcn &rest args)
-    (prog2
-        (advice-add 'helm-file-completion-source-p :around #'my-helm-file-completion-source-p)
-        (apply fcn args)
-      (advice-remove 'helm-file-completion-source-p #'my-helm-file-completion-source-p)))
-
-  (advice-add 'helm-find-files-up-one-level :around #'my-helm-find-files-up-one-level)
-
-  (evil-leader/set-key "b" 'helm-mini)
-  (evil-leader/set-key "f" 'helm-find-files)
-
-  (bind-keys :map helm-map
-             ("<tab>" . helm-execute-persistent-action) ;; rebind tab to run persistent action
-             ("C-i"   . helm-execute-persistent-action) ;; make TAB works in terminal
-             ("C-z"   . helm-select-action) ;; list actions using C-z
-             ("C-j"   . helm-next-line)
-             ("C-k"   . helm-previous-line))
-
-  :bind (("M-x"     . helm-M-x)
-         ("C-x C-m" . helm-M-x)
-         ("C-x C-f" . helm-find-files)
-         ("C-x C-b" . helm-buffers-list)
-         ("C-x b"   . helm-mini)
-         ("M-y"     . helm-show-kill-ring)
-         ("s-a"     . helm-projectile-ag)
-         ("s-f"     . helm-projectile-find-file)))
 
 
 ;;;; mode line
@@ -368,8 +340,7 @@
      (global :when active)
      buffer-position
      hud))
-  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main))))
-  (spaceline-helm-mode))
+  (setq-default mode-line-format '("%e" (:eval (spaceline-ml-main)))))
 
 ;;;; extras
 
@@ -777,7 +748,6 @@
   :ensure t
   :after scala-mode
   :init
-  (setq ensime-use-helm t)
   (setq ensime-sem-high-enabled-p nil)
   (setq ensime-startup-snapshot-notification nil)
   (setq ensime-startup-dirname (expand-file-name "ensime" my-savefile-dir))
@@ -1336,7 +1306,7 @@
            ("C-c 2"   . my-layout-double-columns)
            ("C-c 3"   . my-layout-triple-columns)
            ("s-l"     . goto-line)
-           ("C-c C-m" . execute-extended-command))
+           ("C-c C-m" . smex))
 
 (add-hook 'after-init-hook 'my-toggle-frame-fullscreen)
 
