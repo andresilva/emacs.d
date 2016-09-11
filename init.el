@@ -283,7 +283,17 @@
   :config
   (global-company-mode))
 
+;; isearch replacement that uses ivy to show an overview of all matches
+(use-package swiper
+  :ensure t
+  :bind
+  ("C-s" . swiper))
 
+;;  jump to things using a char-based decision tree
+(use-package avy
+  :ensure t
+  :bind
+  ("C-:" . avy-goto-char))
 
 ;;;; mode line
 
