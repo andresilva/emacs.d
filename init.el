@@ -230,8 +230,8 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
-        '((swiper . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
+        '((t . ivy--regex-fuzzy)))
+  (evil-leader/set-key "b" 'ivy-switch-buffer)
   :config
   ;; M-x enhancement with recently and most frequently used commands
   (use-package smex
@@ -248,6 +248,8 @@
 ;; ivy support for common functions
 (use-package counsel
   :ensure t
+  :init
+  (evil-leader/set-key "f" 'counsel-find-files)
   :bind
   (("M-x" . counsel-M-x)
    ("C-x C-m" . counsel-M-x)
@@ -269,6 +271,9 @@
   (defun counsel-projectile-ag ()
     (interactive)
     (counsel-ag nil (projectile-project-root)))
+  (evil-leader/set-key "pp" 'counsel-projectile)
+  (evil-leader/set-key "pf" 'counsel-projectile-find-file)
+  (evil-leader/set-key "pa" 'counsel-projectile-ag)
   :bind*
   (("C-c p p"   . counsel-projectile)
    ("s-p p"     . counsel-projectile)
@@ -383,7 +388,6 @@
 ;; display key bindings popup given command prefix
 (use-package which-key
   :ensure t
-  :disabled t
   :diminish which-key-mode
   :config
   (which-key-mode))
