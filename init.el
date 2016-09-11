@@ -197,9 +197,10 @@
     :ensure t
     :config
     (evil-leader/set-leader "<SPC>")
-    (evil-leader/set-key "s" 'save-buffer)
-    (evil-leader/set-key "k" 'kill-this-buffer)
-    (evil-leader/set-key "d" 'delete-window)
+    (evil-leader/set-key
+      "s" 'save-buffer
+      "k" 'kill-this-buffer
+      "d" 'delete-window)
     (global-evil-leader-mode))
   (use-package evil-evilified-state
     :config
