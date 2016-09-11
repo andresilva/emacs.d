@@ -173,6 +173,7 @@
         (exec-path-from-shell-initialize)))
     ;; use "old-style" fullscreen
     (setq ns-use-native-fullscreen nil)
+    (setq mac-right-option-modifier nil)
     (setq mac-command-modifier 'super)
     (setq mac-option-modifier 'meta)
     (setq ns-function-modifier 'hyper)
@@ -1221,16 +1222,6 @@
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
 
-(defun my-insert-at-sign ()
-  "Insert an at sign into the buffer."
-  (interactive)
-  (insert "@"))
-
-(defun my-insert-euro-sign ()
-  "Insert an euro sign into the buffer."
-  (interactive)
-  (insert "€"))
-
 (defun my-toggle-frame-fullscreen ()
   "Enable old-style OSX fullscreen support in Emacs Mac port."
   (interactive)
@@ -1297,8 +1288,6 @@
   (windmove-right 1))
 
 (bind-keys ("C-x ç"   . my-comment-or-uncomment-region-or-line)
-           ("M-2"     . my-insert-at-sign)
-           ("M-3"     . my-insert-euro-sign)
            ("<f5>"    . my-toggle-frame-fullscreen)
            ("C-c f"   . my-toggle-window-focus)
            ("C-x 2"   . my-split-window-below-and-focus)
