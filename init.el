@@ -680,7 +680,9 @@
   (setq save-place-file (expand-file-name "saveplace" my-savefile-dir))
   ;; activate it for all buffers
   :config
-  (save-place-mode t))
+  (if (>= emacs-major-version 25)
+      (save-place-mode t)
+   (setq-default save-place t)))
 
 ;; `savehist' keeps track of some history
 (use-package savehist
