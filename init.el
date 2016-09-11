@@ -414,8 +414,11 @@
 (use-package which-key
   :ensure t
   :diminish which-key-mode
+  :init
+  (setq which-key-idle-delay 0.4)
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (which-key-setup-minibuffer))
 
 ;; show line diff indicator on fringe
 (use-package diff-hl
