@@ -236,7 +236,10 @@
   :config
   ;; M-x enhancement with recently and most frequently used commands
   (use-package smex
-    :ensure t)
+    :ensure t
+    :init
+    (setq-default smex-history-length 32
+                  smex-save-file (expand-file-name ".smex-items" my-savefile-dir)))
   ;; fuzzy matching
   (use-package flx
     :ensure t)
