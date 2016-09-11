@@ -679,7 +679,8 @@
   :init
   (setq save-place-file (expand-file-name "saveplace" my-savefile-dir))
   ;; activate it for all buffers
-  (setq-default save-place t))
+  :config
+  (save-place-mode t))
 
 ;; `savehist' keeps track of some history
 (use-package savehist
