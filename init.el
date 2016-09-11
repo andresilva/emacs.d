@@ -871,7 +871,6 @@
   (add-hook 'scala-mode-hook 'my-maybe-start-ensime)
 
   (add-hook 'ensime-mode-hook 'my-disable-flycheck-scala)
-  (add-hook 'ensime-mode-hook 'my-enable-eldoc-scala)
   (add-hook 'ensime-mode-hook 'my-enable-expand-region-scala)
   (add-hook 'ensime-mode-hook 'my-enable-company-scala)
 
