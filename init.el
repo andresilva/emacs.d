@@ -35,7 +35,6 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
 ;; bootstrap `use-package'
@@ -776,11 +775,11 @@
 
 (use-package ensime
   :ensure t
-  :pin melpa-stable
   :after scala-mode
   :init
   (setq ensime-use-helm t)
   (setq ensime-sem-high-enabled-p nil)
+  (setq ensime-startup-snapshot-notification nil)
   (setq ensime-startup-dirname (expand-file-name "ensime" my-savefile-dir))
   (setq sbt:sbt-prompt-regexp "^.*>[ ]*"
         sbt:prompt-regexp "^\\(\\(scala\\|.*\\)?>\\|[ ]+|\\)[ ]*")
