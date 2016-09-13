@@ -189,6 +189,7 @@
   (setq evil-normal-state-cursor '(box "DarkGoldenrod2")
         evil-insert-state-cursor '(bar "chartreuse3")
         evil-visual-state-cursor '(box "gray"))
+  (setq evil-want-C-i-jump nil)
   :config
   ;; replace evil insert state keymap with emacs'
   (setq evil-insert-state-map (make-sparse-keymap))
