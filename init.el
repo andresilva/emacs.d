@@ -651,6 +651,11 @@
 ;; expand selected region by semantic units
 (use-package expand-region
   :ensure t
+  :init
+  :init
+  (evil-leader/set-key "v" 'er/expand-region)
+  (setq expand-region-contract-fast-key "V"
+        expand-region-reset-fast-key "r")
   :bind ("C-{" . er/expand-region))
 
 ;; sensible undo
