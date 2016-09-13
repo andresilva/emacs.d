@@ -332,6 +332,14 @@
 ;;  jump to things using a char-based decision tree
 (use-package avy
   :ensure t
+  :init
+  (setq avy-all-windows 'all-frames)
+  (setq avy-background t)
+  (evil-leader/set-key
+    "jj" 'avy-goto-char
+    "jw" 'avy-goto-word-or-subword-1
+    "jl" 'avy-goto-line
+    "jb" 'avy-pop-mark)
   :bind
   ("C-:" . avy-goto-char))
 
