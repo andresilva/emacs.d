@@ -303,9 +303,10 @@
   (defun counsel-projectile-ag ()
     (interactive)
     (counsel-ag nil (projectile-project-root)))
-  (evil-leader/set-key "pp" 'counsel-projectile)
-  (evil-leader/set-key "pf" 'counsel-projectile-find-file)
-  (evil-leader/set-key "pa" 'counsel-projectile-ag)
+  (evil-leader/set-key
+    "pp" 'counsel-projectile
+    "pf" 'counsel-projectile-find-file
+    "pa" 'counsel-projectile-ag)
   :bind*
   (("C-c p p"   . counsel-projectile)
    ("s-p p"     . counsel-projectile)
