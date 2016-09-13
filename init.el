@@ -209,6 +209,13 @@
   (evil-mode)
   :bind ("C-q" . evil-execute-macro))
 
+;; escape to normal mode with `fd' key sequence
+(use-package evil-escape
+  :ensure t
+  :diminish evil-escape-mode
+  :config
+  (evil-escape-mode))
+
 ;; comment and uncomment lines efficiently
 (use-package evil-nerd-commenter
   :ensure t
