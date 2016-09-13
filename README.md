@@ -110,16 +110,32 @@ Key binding | Command
 `SPC s`     | `save-buffer`
 `SPC k`     | `kill-this-buffer`
 `SPC d`     | `delete-window`
-`SPC b`     | `helm-mini`
-`SPC f`     | `helm-find-files`
+`SPC b`     | `ivy-switch-buffer`
+`SPC f`     | `counsel-find-files`
 `SPC g`     | `magit-status`
+`SPC v`     | `expand-region`
             |
-`SPC p p`   | `helm-projectile-switch-project`
-`SPC p f`   | `helm-projectile-find-file`
-`SPC p a`   | `helm-projectile-ag`
+`SPC ç`     | `evilnc-comment-or-uncomment-lines`
+`SPC ci`    | `evilnc-comment-or-uncomment-lines`
+`SPC cl`    | `evilnc-quick-comment-or-uncomment-to-the-line`
+`SPC cc`    | `evilnc-copy-and-comment-lines`
+`SPC cp`    | `evilnc-comment-or-uncomment-paragraphs`
+`SPC cr`    | `comment-or-uncomment-region`
+`SPC cv`    | `evilnc-toggle-invert-comment-line-by-line`
+            |
+`SPC p p`   | `counsel-projectile`
+`SPC p f`   | `counsel-projectile-find-file`
+`SPC p a`   | `counsel-projectile-ag`
+            |
+`SPC j j`   | `avy-goto-char`
+`SPC j w`   | `avy-goto-word-or-subword-1`
+`SPC j l`   | `avy-goto-line`
+`SPC j b`   | `avy-pop-mark`
 **scala-mode-map** |
 `SPC .`     | `ensime-edit-definition`
 `SPC p c`   | `ensime-sbt-do-compile`
+**rust-mode-map** |
+`SPC .`     | `racer-find-definition`
 
 Since [`evil-mode`][evil-mode] relies on `Esc` to switch back to normal state, I have set up my `Caps
 Lock` key to act as `Esc` when tapped and as `Ctrl` when pressed.
