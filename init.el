@@ -224,7 +224,6 @@
     "ç"  'evilnc-comment-or-uncomment-lines
     "ci" 'evilnc-comment-or-uncomment-lines
     "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
     "cc" 'evilnc-copy-and-comment-lines
     "cp" 'evilnc-comment-or-uncomment-paragraphs
     "cr" 'comment-or-uncomment-region
@@ -432,7 +431,11 @@
   :init
   (setq which-key-idle-delay 0.4)
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (which-key-declare-prefixes
+    "SPC c" "comments"
+    "SPC j" "jump"
+    "SPC p" "projects"))
 
 ;; show line diff indicator on fringe
 (use-package diff-hl
