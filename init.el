@@ -990,13 +990,12 @@
 ;;;; emacs lisp
 
 ;; fold my `init.el' like an org file
-(use-package outline-magic
+(use-package outshine
   :ensure t
   :diminish outline-minor-mode
   :init
-  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
-  :config
-  (bind-key "C-<tab>" 'outline-cycle outline-minor-mode-map))
+  (add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+  (add-hook 'emacs-lisp-mode-hook 'outline-minor-mode))
 
 ;; interactive lisp macro expansion
 (use-package macrostep

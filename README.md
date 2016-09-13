@@ -15,7 +15,7 @@ dependencies are lazy loaded.
 
 Additionally, I wanted to make my setup as simple as possible and therefore decided to try having
 all my config in just one file. In order to get around the file I use `outline-minor-mode` with
-[`outline-magic`](https://github.com/tj64/outline-magic) to fold sections like in `org-mode`. This
+[`outshine`](https://github.com/tj64/outshine) to fold sections like in `org-mode`. This
 is what it looks like:
 
 ![outshine init](https://dl.dropboxusercontent.com/u/7018537/emacs-init.gif)
@@ -86,8 +86,6 @@ Key binding | Command                                             | Comments
             |                                                     |
 `C-j`       | `ivy-next-line`                                     | was `ivy-alt-done`
 `C-k`       | `ivy-previous-line`                                 |
-**outline-minor-mode-map** |                                      |
-`C-<tab>`   | `outline-cycle`                                     |
 **override-global-map** |
 `C-c p b`   | `counsel-projectile-switch-to-buffer`
 `C-c p f`   | `counsel-projectile-find-file`
