@@ -39,6 +39,7 @@ Key binding | Command                                             | Comments
             |                                                     |
 `C-a`       | `crux-move-beginning-of-line`                       | was `move-beginning-of-line`
 `C-q`       | `evil-execute-macro`                                | was `quoted-insert`
+`C-s`       | `swiper`                                            | was `isearch-forward`
 `C-{`       | `er/expand-region`                                  |
 `C-ç`       | `hippie-expand`                                     |
             |                                                     |
@@ -49,45 +50,55 @@ Key binding | Command                                             | Comments
 `C-c b`     | `org-iswitchb`                                      |
 `C-c c`     | `org-capture`                                       |
 `C-c f`     | `my-toggle-window-focus`                            |
+`C-c g`     | `counsel-git`                                       |
+`C-c j`     | `counsel-git-grep`                                  |
+`C-c k`     | `counsel-ag`                                        |
 `C-c l`     | `org-store-link`                                    |
 `C-c n`     | `crux-cleanup-buffer-or-region`                     |
 `C-c r`     | `crux-rename-buffer-and-file`                       |
             |                                                     |
-`C-c C-m`   | `execute-extended-command`                          |
+`C-c C-m`   | `smex`                                              |
+`C-c C-r`   | `ivy-resume`                                        |
             |                                                     |
 `C-x 2`     | `my-split-window-below-and-focus`                   | was `split-window-below`
 `C-x 3`     | `my-split-window-right-and-focus`                   | was `split-window-right`
-`C-x b`     | `helm-mini`                                         | was `switch-to-buffer`
+`C-x b`     | `ivy-switch-buffer`                                 | was `switch-to-buffer`
 `C-x g`     | `magit-status`                                      |
 `C-x y`     | `yas-describe-tables`                               |
 `C-x ç`     | `my-comment-or-uncomment-region-or-line`            |
             |                                                     |
-`C-x C-b`   | `helm-buffers-list`                                 | was `list-buffers`
-`C-x C-f`   | `helm-find-files`                                   | was `find-file`
-`C-x C-m`   | `helm-M-x`                                          | was `#<keymap>`
+`C-x C-f`   | `counsel-find-files`                                | was `find-file`
+`C-x C-m`   | `counsel-M-x`                                       | was `#<keymap>`
             |                                                     |
 `M-/`       | `hippie-expand`                                     | was `dabbrev-expand`
-`M-2`       | `my-insert-at-sign`                                 | was `digit-argument`
-`M-3`       | `my-insert-euro-sign`                               | was `digit-argument`
-`M-x`       | `helm-M-x`                                          | was `execute-extended-command`
-`M-y`       | `helm-show-kill-ring`                               | was `yank-pop`
+`M-x`       | `counsel-M-x`                                       | was `execute-extended-command`
+`M-y`       | `counsel-yank-pop`                                  | was `yank-pop`
             |                                                     |
-`s-a`       | `helm-projectile-ag`                                | was `mark-whole-buffer`
-`s-f`       | `helm-projectile-find-file`                         | was `isearch-forward`
+`s-b`       | `ivy-switch-buffer`                                 |
 `s-k`       | `crux-kill-whole-line`                              | was `kill-this-buffer`
 `s-l`       | `goto-line`                                         |
 **emacs-lisp-mode-map** |                                         |
 `C-c e`     | `macrostep-expand`                                  |
 `C-c C-e`   | `eval-region`                                       |
-**helm-map** |                                                    |
-`<tab>`     | `helm-execute-persistent-action`                    |
+**ivy-minibuffer-map** |                                          |
+`<escape>`  | `minibuffer-keyboard-quit`                          |
+`<tab>`     | `ivy-alt-done`                                      | was `ivy-partial-or-done`
             |                                                     |
-`C-i`       | `helm-execute-persistent-action`                    | was `helm-select-action`
-`C-j`       | `helm-next-line`                                    | was `helm-execute-persistent-action`
-`C-k`       | `helm-previous-line`                                | was `helm-delete-minibuffer-contents`
-`C-z`       | `helm-select-action`                                | was `helm-execute-persistent-action`
+`C-j`       | `ivy-next-line`                                     | was `ivy-alt-done`
+`C-k`       | `ivy-previous-line`                                 |
 **outline-minor-mode-map** |                                      |
 `C-<tab>`   | `outline-cycle`                                     |
+**override-global-map** |
+`C-c p b`   | `counsel-projectile-switch-to-buffer`
+`C-c p f`   | `counsel-projectile-find-file`
+`C-c p p`   | `counsel-projectile`
+`C-c p s s` | `counsel-projectile-ag`
+            |
+`s-a`       | `counsel-projectile-ag`
+`s-p b`     | `counsel-projectile-switch-to-buffer`
+`s-p f`     | `counsel-projectile-find-file`
+`s-p p`     | `counsel-projectile`
+`s-p s s`   | `counsel-projectile-ag`
 **window-numbering-keymap** |                                     |
 `s-0`       | `select-window-0`                                   |
 `s-1`       | `select-window-1`                                   |
