@@ -304,12 +304,12 @@
     (interactive)
     (counsel-ag nil (projectile-project-root)))
   (evil-leader/set-key
-    "pp" 'counsel-projectile
+    "pp" 'counsel-projectile-switch-project
     "pf" 'counsel-projectile-find-file
     "pa" 'counsel-projectile-ag)
   :bind*
-  (("C-c p p"   . counsel-projectile)
-   ("s-p p"     . counsel-projectile)
+  (("C-c p p"   . counsel-projectile-switch-project)
+   ("s-p p"     . counsel-projectile-switch-project)
    ("C-c p b"   . counsel-projectile-switch-to-buffer)
    ("s-p b"     . counsel-projectile-switch-to-buffer)
    ("C-c p f"   . counsel-projectile-find-file)
