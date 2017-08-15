@@ -111,6 +111,8 @@
                       "C-S-h" 'help-map
                       "C-l" 'ivy-alt-done
                       "TAB" 'ivy-alt-done
+                      "C-M-l" 'ivy-immediate-done
+                      "<C-tab>" 'ivy-immediate-done
                       "<escape>" 'minibuffer-keyboard-quit)
 
   (general-define-key
