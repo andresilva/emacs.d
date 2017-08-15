@@ -55,12 +55,20 @@
   :init
   (setq smex-history-length 32))
 
+;; fuzzy matching
+(use-package flx
+  :ensure t
+  :defer t)
+
 ;; generic completion frontend
 (use-package ivy
   :ensure t
   :diminish ivy-mode
   :init
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-fuzzy)))
   :config
   (ivy-mode 1))
 
