@@ -35,6 +35,15 @@
 (use-package better-defaults
   :ensure t)
 
+;; configure `exec-path' from shell
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :init
+  (setq exec-path-from-shell-check-startup-files nil)
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; undo history as a tree
 (use-package undo-tree
   :ensure t
