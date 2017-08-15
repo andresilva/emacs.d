@@ -16,3 +16,8 @@
 ;; required for `use-package' :diminish
 ;; reduce modeline clutter
 (use-package diminish)
+
+;; start `server' if one isn't already running
+(use-package server
+  :config
+  (unless (server-running-p) (server-start)))
