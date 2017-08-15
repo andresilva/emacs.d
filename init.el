@@ -104,6 +104,15 @@
 (use-package general
   :ensure t
   :config
+  (general-define-key :keymaps 'ivy-minibuffer-map
+                      "C-j" 'ivy-next-line
+                      "C-k" 'ivy-previous-line
+                      "C-h" (kbd "DEL")
+                      "C-S-h" 'help-map
+                      "C-l" 'ivy-alt-done
+                      "TAB" 'ivy-alt-done
+                      "<escape>" 'minibuffer-keyboard-quit)
+
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
