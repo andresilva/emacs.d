@@ -40,6 +40,14 @@
   :ensure t
   :diminish undo-tree-mode)
 
+;; extensible vi layer
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1))
+
 ;; print init time
 (add-hook 'after-init-hook
           (lambda ()
