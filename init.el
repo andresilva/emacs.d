@@ -1,6 +1,12 @@
 ;; save start time
 (defconst start-time (current-time))
 
+;; reduce garbage collections during init
+(defconst init-gc-cons-threshold gc-cons-threshold)
+(setq gc-cons-threshold (* 128 1000 1000))
+(add-hook 'after-init-hook
+          (lambda () (setq gc-cons-threshold init-gc-cons-threshold)))
+
 ;;; setup `package'
 (require 'package)
 (setq package-enable-at-startup nil)
