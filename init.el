@@ -35,6 +35,11 @@
 (use-package better-defaults
   :ensure t)
 
+;; undo history as a tree
+(use-package undo-tree
+  :ensure t
+  :diminish undo-tree-mode)
+
 ;; print init time
 (add-hook 'after-init-hook
           (lambda ()
