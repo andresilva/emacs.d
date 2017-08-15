@@ -177,6 +177,7 @@
    "w=" 'balance-windows
    "ww" '!/alternate-window
 
+   "c" '!/comment-or-uncomment-region-or-line
    "g" 'magit-status
    "u" 'universal-argument
    ))
@@ -328,6 +329,15 @@ If the universal prefix argument is used then kill the buffer too."
   (if (equal '(4) arg)
       (kill-buffer-and-window)
     (delete-window)))
+
+(defun !/comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
 
 ;; print init time
 (add-hook 'after-init-hook
