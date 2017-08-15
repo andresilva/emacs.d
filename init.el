@@ -21,3 +21,7 @@
 (use-package server
   :config
   (unless (server-running-p) (server-start)))
+
+;; better emacs defaults
+(use-package better-defaults
+  :ensure t)
