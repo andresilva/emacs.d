@@ -78,6 +78,33 @@
   (use-package evil-magit
     :ensure t))
 
+;; convenient key definitions
+(use-package general
+  :ensure t
+  :config
+  (general-define-key
+   :states '(normal visual insert emacs)
+   :prefix "SPC"
+   :non-normal-prefix "M-SPC"
+   "SPC" '(counsel-M-x :which-key "M-x")
+
+   "f" '(:ignore t :which-key "files")
+   "ff" '(counsel-find-file :which-key "find-file")
+   "fs" 'save-buffer
+
+   "r" '(:ignore t :which-key "registers")
+   "rl" 'ivy-resume
+   "ry" 'counsel-yank-pop
+   "rm" 'counsel-mark-ring
+
+   "h" '(:ignore t :which-key "help")
+   "hi" '(counsel-info-lookup-symbol :which-key "describe-symbol")
+   "hf" '(counsel-describe-function :which-key "describe-function")
+   "hv" '(counsel-describe-variable :which-key "describe-variable")
+   "hk" 'describe-key
+
+   "gs" 'magit-status))
+
 ;; print init time
 (add-hook 'after-init-hook
           (lambda ()
