@@ -1,11 +1,11 @@
 ;; save start time
-(defconst start-time (current-time))
+(defconst !/start-time (current-time))
 
 ;; reduce garbage collections during init
-(defconst init-gc-cons-threshold gc-cons-threshold)
+(defconst !/initial-gc-cons-threshold gc-cons-threshold)
 (setq gc-cons-threshold (* 128 1000 1000))
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold init-gc-cons-threshold)))
+          (lambda () (setq gc-cons-threshold !/initial-gc-cons-threshold)))
 
 ;;; setup `package'
 (require 'package)
@@ -140,5 +140,5 @@
 (add-hook 'after-init-hook
           (lambda ()
             (let ((elapsed (float-time (time-subtract (current-time)
-                                                      start-time))))
+                                                      !/start-time))))
               (message "init finished [%.3fs]" elapsed))))
