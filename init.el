@@ -109,6 +109,14 @@
   :config
   (which-key-mode))
 
+;; semantic region expansion
+(use-package expand-region
+  :ensure t
+  :commands er/expand-region
+  :init
+  (setq expand-region-contract-fast-key "V"
+        expand-region-reset-fast-key "r"))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
@@ -180,6 +188,7 @@
    "c" '!/comment-or-uncomment-region-or-line
    "g" 'magit-status
    "u" 'universal-argument
+   "v" 'er/expand-region
    ))
 
 (defun !/alternate-buffer (&optional window)
