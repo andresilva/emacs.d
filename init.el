@@ -48,6 +48,13 @@
   :config
   (evil-mode 1))
 
+;; `M-x' enhancement
+(use-package smex
+  :ensure t
+  :defer t
+  :init
+  (setq smex-history-length 32))
+
 ;; generic completion frontend
 (use-package ivy
   :ensure t
