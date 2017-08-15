@@ -78,6 +78,13 @@
   (use-package evil-magit
     :ensure t))
 
+;; display available keybindings in popup
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-mode))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
