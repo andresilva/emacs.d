@@ -129,6 +129,9 @@
    "f" '(:ignore t :which-key "files")
    "ff" '(counsel-find-file :which-key "find-file")
    "fs" 'save-buffer
+   "fr" 'counsel-recentf
+   "fD" '!/delete-current-buffer-file
+   "fR" '!/rename-current-buffer-file
 
    "r" '(:ignore t :which-key "registers")
    "rl" 'ivy-resume
@@ -157,7 +160,7 @@ current window."
 
 (defun !/switch-to-scratch-buffer (&optional arg)
   "Switch to the `*scratch*' buffer, creating it first if needed.
-if prefix argument ARG is given, switch to it in an other, possibly new window."
+If prefix argument ARG is given, switch to it in an other, possibly new window."
   (interactive "P")
   (let ((exists (get-buffer "*scratch*")))
     (if arg
@@ -166,13 +169,93 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 
 (defun !/switch-to-messages-buffer (&optional arg)
   "Switch to the `*Messages*' buffer.
-if prefix argument ARG is given, switch to it in an other, possibly new window."
+If prefix argument ARG is given, switch to it in an other, possibly new window."
   (interactive "P")
   (with-current-buffer (messages-buffer)
     (goto-char (point-max))
     (if arg
         (switch-to-buffer-other-window (current-buffer))
       (switch-to-buffer (current-buffer)))))
+
+(defun !/package-used-p (package)
+  "Return `t' if PACKAGE is used (i.e. it is available), `nil' otherwise."
+  (when (require package nil 'noerror)
+    t))
+
+(defun !/delete-current-buffer-file ()
+  "Removes file connected to current buffer and kills buffer."
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (ido-kill-buffer)
+      (when (yes-or-no-p "Are you sure you want to delete this file? ")
+        (delete-file filename t)
+        (kill-buffer buffer)
+        (when (and (!/package-used-p 'projectile)
+                   (projectile-project-p))
+          (call-interactively #'projectile-invalidate-cache))
+        (message "File '%s' successfully removed" filename)))))
+
+(defun !/rename-current-buffer-file (&optional arg)
+  "Rename the current buffer and the file it is visiting. If the
+buffer isn't visiting a file, ask if it should be saved to a
+file, or just renamed. If called without a prefix argument, the
+prompt is initialized with the current filename."
+  (interactive "P")
+  (let* ((name (buffer-name))
+         (filename (buffer-file-name)))
+    (if (and filename (file-exists-p filename))
+        ;; the buffer is visiting a file
+        (let* ((dir (file-name-directory filename))
+               (new-name (read-file-name "New name: " (if arg dir filename))))
+          (cond ((get-buffer new-name)
+                 (error "A buffer named '%s' already exists!" new-name))
+                (t
+                 (let ((dir (file-name-directory new-name)))
+                   (when (and (not (file-exists-p dir))
+                              (yes-or-no-p
+                               (format "Create directory '%s'?" dir)))
+                     (make-directory dir t)))
+                 (rename-file filename new-name 1)
+                 (rename-buffer new-name)
+                 (set-visited-file-name new-name)
+                 (set-buffer-modified-p nil)
+                 (when (fboundp 'recentf-add-file)
+                   (recentf-add-file new-name)
+                   (recentf-remove-if-non-kept filename))
+                 (when (and (!/package-used-p 'projectile)
+                            (projectile-project-p))
+                   (call-interactively #'projectile-invalidate-cache))
+                 (message "File '%s' successfully renamed to '%s'"
+                          name (file-name-nondirectory new-name)))))
+      ;; the buffer is not visiting a file
+      (let ((key))
+        (while (not (memq key '(?s ?r)))
+          (setq key (read-key (propertize
+                               (format
+                                (concat "Buffer '%s' is not visiting a file: "
+                                        "[s]ave to file or [r]ename buffer?")
+                                name) 'face 'minibuffer-prompt)))
+          (cond ((eq key ?s)            ; save to file
+                 ;; this allows for saving a new empty (unmodified) buffer
+                 (unless (buffer-modified-p) (set-buffer-modified-p t))
+                 (save-buffer))
+                ((eq key ?r)            ; rename buffer
+                 (let ((new-name (read-string "New buffer name: ")))
+                   (while (get-buffer new-name)
+                     ;; ask to rename again, if the new buffer name exists
+                     (if (yes-or-no-p
+                          (format (concat "A buffer named '%s' already exists: "
+                                          "Rename again?") new-name))
+                         (setq new-name (read-string "New buffer name: "))
+                       (keyboard-quit)))
+                   (rename-buffer new-name)
+                   (message "Buffer '%s' successfully renamed to '%s'"
+                            name new-name)))
+                ;; ?\a = C-g, ?\e = Esc and C-[
+                ((memq key '(?\a ?\e)) (keyboard-quit))))))))
 
 ;; print init time
 (add-hook 'after-init-hook
