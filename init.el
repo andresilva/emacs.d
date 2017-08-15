@@ -1,3 +1,6 @@
+;; save start time
+(defconst start-time (current-time))
+
 ;;; setup `package'
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -25,3 +28,10 @@
 ;; better emacs defaults
 (use-package better-defaults
   :ensure t)
+
+;; print init time
+(add-hook 'after-init-hook
+          (lambda ()
+            (let ((elapsed (float-time (time-subtract (current-time)
+                                                      start-time))))
+              (message "init finished [%.3fs]" elapsed))))
