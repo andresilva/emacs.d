@@ -48,16 +48,31 @@
   :config
   (evil-mode 1))
 
+;; generic completion frontend
+(use-package ivy
+  :ensure t
+  :diminish ivy-mode
+  :init
+  (setq ivy-use-virtual-buffers t)
+  :config
+  (ivy-mode 1))
+
 ;; project interaction library
 (use-package projectile
   :ensure t
   :diminish projectile-mode
+  :init
+  (setq projectile-completion-system 'ivy)
   :config
-  (projectile-mode))
+  (projectile-mode)
+  (use-package counsel-projectile
+    :ensure t))
 
 ;; a git porcelain
 (use-package magit
   :ensure t
+  :init
+  (setq magit-completing-read-function 'ivy-completing-read)
   :commands magit-status
   :config
   (use-package evil-magit
