@@ -154,7 +154,23 @@
    "hv" '(counsel-describe-variable :which-key "describe-variable")
    "hk" 'describe-key
 
-   "gs" 'magit-status))
+   "w" '(:ignore t :which-key "windows")
+   "w TAB" '!/alternate-window
+   "w2" '!/layout-double-columns
+   "w3" '!/layout-triple-columns
+   "wb" '!/switch-to-minibuffer-window
+   "wd" '!/delete-window
+   "wo" 'other-frame
+   "ws" 'split-window-below
+   "w-" 'split-window-below
+   "wv" 'split-window-right
+   "w/" 'split-window-right
+   "w=" 'balance-windows
+   "ww" '!/alternate-window
+
+   "g" 'magit-status
+   "u" 'universal-argument
+   ))
 
 (defun !/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
@@ -167,6 +183,16 @@ current window."
      (cl-find-if (lambda (buffer)
                    (not (eq buffer current-buffer)))
                  (mapcar #'car (window-prev-buffers window))))))
+
+(defun !/alternate-window ()
+  "Switch back and forth between current and last window in the
+current frame."
+  (interactive)
+  (let (;; switch to first window previously shown in this frame
+        (prev-window (get-mru-window nil t t)))
+    ;; Check window was not found successfully
+    (unless prev-window (user-error "Last window not found."))
+    (select-window prev-window)))
 
 (defun !/switch-to-scratch-buffer (&optional arg)
   "Switch to the `*scratch*' buffer, creating it first if needed.
@@ -266,6 +292,33 @@ prompt is initialized with the current filename."
                             name new-name)))
                 ;; ?\a = C-g, ?\e = Esc and C-[
                 ((memq key '(?\a ?\e)) (keyboard-quit))))))))
+
+(defun !/layout-double-columns ()
+  "Set the window layout to double columns."
+  (interactive)
+  (delete-other-windows)
+  (split-window-right))
+
+(defun !/layout-triple-columns ()
+  "Set the window layout to triple columns."
+  (interactive)
+  (delete-other-windows)
+  (dotimes (i 2) (split-window-right))
+  (balance-windows))
+
+(defun !/switch-to-minibuffer-window ()
+  "Switch to minibuffer window (if active)."
+  (interactive)
+  (when (active-minibuffer-window)
+    (select-window (active-minibuffer-window))))
+
+(defun !/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
 
 ;; print init time
 (add-hook 'after-init-hook
