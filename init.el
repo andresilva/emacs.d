@@ -138,6 +138,14 @@
    "ry" 'counsel-yank-pop
    "rm" 'counsel-mark-ring
 
+   "p" '(:ignore t :which-key "projects")
+   "p SPC" 'counsel-projectile
+   "pb" 'counsel-projectile-switch-to-buffer
+   "pd" 'counsel-projectile-find-dir
+   "pp" 'counsel-projectile-switch-project
+   "pf" 'counsel-projectile-find-file
+   "ps" 'counsel-projectile-rg
+
    "h" '(:ignore t :which-key "help")
    "hi" '(counsel-info-lookup-symbol :which-key "describe-symbol")
    "hf" '(counsel-describe-function :which-key "describe-function")
