@@ -118,6 +118,13 @@
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
+   "TAB" '!/alternate-buffer
+
+   "b" '(:ignore t :which-key "buffers")
+   "bb" 'ivy-switch-buffer
+   "bd" 'kill-this-buffer
+   "bs" '!/switch-to-scratch-buffer
+   "bm" '!/switch-to-messages-buffer
 
    "f" '(:ignore t :which-key "files")
    "ff" '(counsel-find-file :which-key "find-file")
@@ -135,6 +142,37 @@
    "hk" 'describe-key
 
    "gs" 'magit-status))
+
+(defun !/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    ;; if no window is found in the windows history, `switch-to-buffer' will
+    ;; default to calling `other-buffer'.
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))
+
+(defun !/switch-to-scratch-buffer (&optional arg)
+  "Switch to the `*scratch*' buffer, creating it first if needed.
+if prefix argument ARG is given, switch to it in an other, possibly new window."
+  (interactive "P")
+  (let ((exists (get-buffer "*scratch*")))
+    (if arg
+        (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+      (switch-to-buffer (get-buffer-create "*scratch*")))))
+
+(defun !/switch-to-messages-buffer (&optional arg)
+  "Switch to the `*Messages*' buffer.
+if prefix argument ARG is given, switch to it in an other, possibly new window."
+  (interactive "P")
+  (with-current-buffer (messages-buffer)
+    (goto-char (point-max))
+    (if arg
+        (switch-to-buffer-other-window (current-buffer))
+      (switch-to-buffer (current-buffer)))))
 
 ;; print init time
 (add-hook 'after-init-hook
