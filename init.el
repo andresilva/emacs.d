@@ -48,6 +48,13 @@
   :config
   (evil-mode 1))
 
+;; project interaction library
+(use-package projectile
+  :ensure t
+  :diminish projectile-mode
+  :config
+  (projectile-mode))
+
 ;; print init time
 (add-hook 'after-init-hook
           (lambda ()
