@@ -55,6 +55,14 @@
   :config
   (projectile-mode))
 
+;; a git porcelain
+(use-package magit
+  :ensure t
+  :commands magit-status
+  :config
+  (use-package evil-magit
+    :ensure t))
+
 ;; print init time
 (add-hook 'after-init-hook
           (lambda ()
