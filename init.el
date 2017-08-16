@@ -92,6 +92,28 @@
   (use-package counsel-projectile
     :ensure t))
 
+;; tagged workspaces
+(use-package persp-mode
+  :ensure t
+  :init
+  (setq persp-nil-name "nil"
+        persp-is-ibc-as-f-supported nil
+        persp-reset-windows-on-nil-window-conf nil
+        persp-set-last-persp-for-new-frames nil
+        persp-auto-resume-time -1)
+  (add-hook 'after-init-hook
+            (lambda ()
+              (persp-mode 1)
+              (add-hook 'ivy-ignore-buffers #'!//layout-not-contains-buffer-p)
+              (setq ivy-sort-functions-alist
+                    (append ivy-sort-functions-alist
+                            '((persp-kill-buffer . nil)
+                              (persp-remove-buffer . nil)
+                              (persp-add-buffer . nil)
+                              (persp-switch . nil)
+                              (persp-window-switch . nil)
+                              (persp-frame-switch . nil)))))))
+
 ;; a git porcelain
 (use-package magit
   :ensure t
@@ -145,6 +167,10 @@
    "bs" '!/switch-to-scratch-buffer
    "bm" '!/switch-to-messages-buffer
 
+   "ba" 'persp-add-buffer
+   "br" 'persp-remove-buffer
+   "bB" '!/non-restricted-buffer-list-ivy
+
    "f" '(:ignore t :which-key "files")
    "ff" '(counsel-find-file :which-key "find-file")
    "fs" 'save-buffer
@@ -164,8 +190,15 @@
    "pp" 'counsel-projectile-switch-project
    "pf" 'counsel-projectile-find-file
    "ps" 'counsel-projectile-rg
+   "pl" '!/ivy-layout-switch-project
+
+   "l" '(:ignore t :which-key "layouts")
+   "ll" '(!/ivy-layouts :which-key "list-layouts")
+   "lc" '(persp-kill-without-buffers :which-key "close-layout")
+   "lk" '(persp-kill :which-key "kill-layout")
 
    "h" '(:ignore t :which-key "help")
+   "ha" '(counsel-apropos :which-key "apropos")
    "hi" '(counsel-info-lookup-symbol :which-key "describe-symbol")
    "hf" '(counsel-describe-function :which-key "describe-function")
    "hv" '(counsel-describe-variable :which-key "describe-variable")
@@ -173,8 +206,8 @@
 
    "w" '(:ignore t :which-key "windows")
    "w TAB" '!/alternate-window
-   "w2" '!/layout-double-columns
-   "w3" '!/layout-triple-columns
+   "w2" '!/window-layout-double-columns
+   "w3" '!/window-layout-triple-columns
    "wb" '!/switch-to-minibuffer-window
    "wd" '!/delete-window
    "wo" 'other-frame
@@ -232,7 +265,7 @@ If prefix argument ARG is given, switch to it in an other, possibly new window."
         (switch-to-buffer-other-window (current-buffer))
       (switch-to-buffer (current-buffer)))))
 
-(defun !/package-used-p (package)
+(defun !//package-used-p (package)
   "Return `t' if PACKAGE is used (i.e. it is available), `nil' otherwise."
   (when (require package nil 'noerror)
     t))
@@ -248,7 +281,7 @@ If prefix argument ARG is given, switch to it in an other, possibly new window."
       (when (yes-or-no-p "Are you sure you want to delete this file? ")
         (delete-file filename t)
         (kill-buffer buffer)
-        (when (and (!/package-used-p 'projectile)
+        (when (and (!//package-used-p 'projectile)
                    (projectile-project-p))
           (call-interactively #'projectile-invalidate-cache))
         (message "File '%s' successfully removed" filename)))))
@@ -280,7 +313,7 @@ prompt is initialized with the current filename."
                  (when (fboundp 'recentf-add-file)
                    (recentf-add-file new-name)
                    (recentf-remove-if-non-kept filename))
-                 (when (and (!/package-used-p 'projectile)
+                 (when (and (!//package-used-p 'projectile)
                             (projectile-project-p))
                    (call-interactively #'projectile-invalidate-cache))
                  (message "File '%s' successfully renamed to '%s'"
@@ -312,13 +345,13 @@ prompt is initialized with the current filename."
                 ;; ?\a = C-g, ?\e = Esc and C-[
                 ((memq key '(?\a ?\e)) (keyboard-quit))))))))
 
-(defun !/layout-double-columns ()
+(defun !/window-layout-double-columns ()
   "Set the window layout to double columns."
   (interactive)
   (delete-other-windows)
   (split-window-right))
 
-(defun !/layout-triple-columns ()
+(defun !/window-layout-triple-columns ()
   "Set the window layout to triple columns."
   (interactive)
   (delete-other-windows)
@@ -347,6 +380,38 @@ If the universal prefix argument is used then kill the buffer too."
         (setq beg (region-beginning) end (region-end))
       (setq beg (line-beginning-position) end (line-end-position)))
     (comment-or-uncomment-region beg end)))
+
+(defun !//layout-not-contains-buffer-p (buffer)
+  "Return non-nil if current layout doesn't contain BUFFER."
+  (not (persp-contain-buffer-p buffer)))
+
+(defun !/non-restricted-buffer-list-ivy ()
+  (interactive)
+  (let ((ivy-ignore-buffers (remove #'!//layout-not-contains-buffer-p ivy-ignore-buffers)))
+    (ivy-switch-buffer)))
+
+(defun !/ivy-layout-switch-project (arg)
+  (interactive "P")
+  (ivy-read "Switch to project layout: "
+            (if (projectile-project-p)
+                (cons (abbreviate-file-name (projectile-project-root))
+                      (projectile-relevant-known-projects))
+              projectile-known-projects)
+            :action (lambda (project)
+                      (let ((persp-reset-windows-on-nil-window-conf t))
+                        (persp-switch
+                         (file-name-nondirectory (directory-file-name (expand-file-name project))))
+                        (let ((projectile-completion-system 'ivy))
+                          (projectile-switch-project-by-name project))))))
+
+(defun !/ivy-layouts ()
+  (interactive)
+  (ivy-read "Layouts: "
+            (persp-names)
+            :caller '!/ivy-layouts
+            :action (lambda (name)
+                      (let ((persp-reset-windows-on-nil-window-conf t))
+                        (persp-switch name)))))
 
 ;; print init time
 (add-hook 'after-init-hook
