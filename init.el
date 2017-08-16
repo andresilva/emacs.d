@@ -114,6 +114,14 @@
                               (persp-window-switch . nil)
                               (persp-frame-switch . nil)))))))
 
+;; window numbering and switching
+(use-package winum
+  :ensure t
+  :init
+  (setq winum-keymap nil)
+  :config
+  (winum-mode))
+
 ;; a git porcelain
 (use-package magit
   :ensure t
@@ -160,6 +168,17 @@
    :non-normal-prefix "M-SPC"
    "SPC" '(counsel-M-x :which-key "M-x")
    "TAB" '!/alternate-buffer
+
+   "0" 'winum-select-window-0-or-10
+   "1" 'winum-select-window-1
+   "2" 'winum-select-window-2
+   "3" 'winum-select-window-3
+   "4" 'winum-select-window-4
+   "5" 'winum-select-window-5
+   "6" 'winum-select-window-6
+   "7" 'winum-select-window-7
+   "8" 'winum-select-window-8
+   "9" 'winum-select-window-9
 
    "b" '(:ignore t :which-key "buffers")
    "bb" 'ivy-switch-buffer
