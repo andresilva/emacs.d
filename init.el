@@ -3,13 +3,13 @@
 
 ;; reduce garbage collections during init
 (defconst !/initial-gc-cons-threshold gc-cons-threshold)
-(setq gc-cons-threshold (* 128 1000 1000))
+(setq-default gc-cons-threshold (* 128 1000 1000))
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold !/initial-gc-cons-threshold)))
+          (lambda () (setq-default gc-cons-threshold !/initial-gc-cons-threshold)))
 
 ;;; setup `package'
 (require 'package)
-(setq package-enable-at-startup nil)
+(setq-default package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
@@ -40,7 +40,7 @@
   :if (memq window-system '(mac ns))
   :ensure t
   :init
-  (setq exec-path-from-shell-check-startup-files nil)
+  (setq-default exec-path-from-shell-check-startup-files nil)
   :config
   (exec-path-from-shell-initialize))
 
@@ -53,7 +53,7 @@
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-C-i-jump nil)
+  (setq-default evil-want-C-i-jump nil)
   :config
   (evil-mode 1))
 
@@ -62,7 +62,7 @@
   :ensure t
   :defer t
   :init
-  (setq smex-history-length 32))
+  (setq-default smex-history-length 32))
 
 ;; fuzzy matching
 (use-package flx
@@ -74,10 +74,10 @@
   :ensure t
   :diminish ivy-mode
   :init
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
+  (setq-default
+   ivy-use-virtual-buffers t
+   ivy-initial-inputs-alist nil
+   ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   :config
   (ivy-mode 1))
 
@@ -86,7 +86,7 @@
   :ensure t
   :diminish projectile-mode
   :init
-  (setq projectile-completion-system 'ivy)
+  (setq-default projectile-completion-system 'ivy)
   :config
   (projectile-mode)
   (use-package counsel-projectile
@@ -96,29 +96,30 @@
 (use-package persp-mode
   :ensure t
   :init
-  (setq persp-nil-name "nil"
-        persp-is-ibc-as-f-supported nil
-        persp-reset-windows-on-nil-window-conf nil
-        persp-set-last-persp-for-new-frames nil
-        persp-auto-resume-time -1)
+  (setq-default
+   persp-nil-name "nil"
+   persp-is-ibc-as-f-supported nil
+   persp-reset-windows-on-nil-window-conf nil
+   persp-set-last-persp-for-new-frames nil
+   persp-auto-resume-time -1)
   (add-hook 'after-init-hook
             (lambda ()
               (persp-mode 1)
               (add-hook 'ivy-ignore-buffers #'!//layout-not-contains-buffer-p)
-              (setq ivy-sort-functions-alist
-                    (append ivy-sort-functions-alist
-                            '((persp-kill-buffer . nil)
-                              (persp-remove-buffer . nil)
-                              (persp-add-buffer . nil)
-                              (persp-switch . nil)
-                              (persp-window-switch . nil)
-                              (persp-frame-switch . nil)))))))
+              (setq-default
+               ivy-sort-functions-alist (append ivy-sort-functions-alist
+                                                '((persp-kill-buffer . nil)
+                                                  (persp-remove-buffer . nil)
+                                                  (persp-add-buffer . nil)
+                                                  (persp-switch . nil)
+                                                  (persp-window-switch . nil)
+                                                  (persp-frame-switch . nil)))))))
 
 ;; window numbering and switching
 (use-package winum
   :ensure t
   :init
-  (setq winum-keymap nil)
+  (setq-default winum-keymap nil)
   :config
   (winum-mode))
 
@@ -126,7 +127,7 @@
 (use-package magit
   :ensure t
   :init
-  (setq magit-completing-read-function 'ivy-completing-read)
+  (setq-default magit-completing-read-function 'ivy-completing-read)
   :commands magit-status
   :config
   (use-package evil-magit
@@ -144,7 +145,7 @@
   :ensure t
   :commands er/expand-region
   :init
-  (setq expand-region-contract-fast-key "V"
+  (setq-default expand-region-contract-fast-key "V"
         expand-region-reset-fast-key "r"))
 
 ;; convenient key definitions
