@@ -88,9 +88,12 @@
   :init
   (setq-default projectile-completion-system 'ivy)
   :config
-  (projectile-mode)
-  (use-package counsel-projectile
-    :ensure t))
+  (projectile-mode))
+
+;; `ivy' integration for `projectile'
+(use-package counsel-projectile
+  :ensure t
+  :after projectile)
 
 ;; tagged workspaces
 (use-package persp-mode
@@ -126,12 +129,14 @@
 ;; a git porcelain
 (use-package magit
   :ensure t
-  :init
-  (setq-default magit-completing-read-function 'ivy-completing-read)
   :commands magit-status
-  :config
-  (use-package evil-magit
-    :ensure t))
+  :init
+  (setq-default magit-completing-read-function 'ivy-completing-read))
+
+;; `evil' keys for `magit'
+(use-package evil-magit
+  :ensure t
+  :after magit)
 
 ;; display available keybindings in popup
 (use-package which-key
@@ -145,8 +150,9 @@
   :ensure t
   :commands er/expand-region
   :init
-  (setq-default expand-region-contract-fast-key "V"
-        expand-region-reset-fast-key "r"))
+  (setq-default
+   expand-region-contract-fast-key "V"
+   expand-region-reset-fast-key "r"))
 
 ;; convenient key definitions
 (use-package general
