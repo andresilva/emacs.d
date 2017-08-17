@@ -154,6 +154,22 @@
    expand-region-contract-fast-key "V"
    expand-region-reset-fast-key "r"))
 
+;; modern themes package
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-one t)
+  (doom-themes-visual-bell-config))
+
+;; visually distinguish virtual buffers
+(use-package solaire-mode
+  :ensure t
+  :commands (turn-on-solaire-mode)
+  :init
+  (add-hook 'after-change-major-mode-hook #'turn-on-solaire-mode)
+  :config
+  (solaire-mode-swap-bg))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
@@ -444,4 +460,5 @@ If the universal prefix argument is used then kill the buffer too."
           (lambda ()
             (let ((elapsed (float-time (time-subtract (current-time)
                                                       !/start-time))))
-              (message "init finished [%.3fs]" elapsed))))
+              (message "init finished [%.3fs]" elapsed)))
+          t)
