@@ -102,12 +102,19 @@
   :ensure t
   :commands magit-status)
 
-;; magit `evil' integration
+;; `evil' keys for `magit'
 (use-package evil-magit
   :ensure t
   :after magit
   :init
   (setq evil-magit-want-horizontal-movement t))
+
+;; display available keybindings in popup
+(use-package which-key
+  :ensure t
+  :diminish which-key-mode
+  :config
+  (which-key-mode))
 
 ;; convenient key definitions
 (use-package general
@@ -117,6 +124,7 @@
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
+ 
    "SPC" '(helm-M-x :which-key "M-x")
 
    ;; window numbers
