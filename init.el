@@ -82,6 +82,12 @@
   (require 'helm-config)
   (helm-mode 1))
 
+;; numbered window shortcuts
+(use-package window-numbering
+  :ensure t
+  :config
+  (window-numbering-mode))
+
 ;; project interaction library
 (use-package projectile
   :ensure t
@@ -112,6 +118,20 @@
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
    "SPC" '(helm-M-x :which-key "M-x")
+
+   ;; window numbers
+   "0" 'select-window-0
+   "1" 'select-window-1
+   "2" 'select-window-2
+   "3" 'select-window-3
+   "4" 'select-window-4
+   "5" 'select-window-5
+   "6" 'select-window-6
+   "7" 'select-window-7
+   "8" 'select-window-8
+   "9" 'select-window-9
+
+   ;; git
    "gs" 'magit-status))
 
 ;; load emacs customization settings
