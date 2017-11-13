@@ -180,6 +180,14 @@
 					 try-complete-lisp-symbol-partially
 					 try-complete-lisp-symbol))
 
+;; revert buffers automatically (also non-file buffers)
+(use-package autorevert
+  :diminish auto-revert-mode
+  :init
+  (setq global-auto-revert-non-file-buffers t)
+  :config
+  (global-auto-revert-mode t))
+
 ;; save recent files
 (use-package recentf
   :init
