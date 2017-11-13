@@ -121,6 +121,60 @@
   :config
   (which-key-mode))
 
+;; fancy mode-line icons
+(use-package all-the-icons
+  :ensure t)
+
+;; customize mode-line
+(defun !/modeline-segment-git-vc ()
+  (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
+    (concat
+     (propertize (format " %s" (all-the-icons-octicon "git-branch"))
+		 'face `(:height 1 :family ,(all-the-icons-octicon-family))
+		 'display '(raise 0))
+     (propertize (format " %s" branch)))))
+
+(defun !/modeline-segment-svn-vc ()
+  (let ((revision (cadr (split-string vc-mode "-"))))
+    (concat
+     (propertize (format " %s" (all-the-icons-faicon "cloud"))
+		 'face `(:height 1)
+		 'display '(raise 0))
+     (propertize (format " %s" revision) 'face `(:height 0.9)))))
+
+(defvar !/mode-line-vc
+  '(:eval (when vc-mode
+	    (cond
+	     ((string-match "Git[:-]" vc-mode) (!/modeline-segment-git-vc))
+	     ((string-match "SVN-" vc-mode) (!/modeline-segment-svn-vc))
+	     (t (format "%s" vc-mode))))
+	  face mode-line-directory)
+  "Formats the current directory.")
+
+(setq evil-mode-line-format '(before . mode-line-position))
+(setq-default mode-line-format
+	      (list
+	       '(:eval (propertize (format " %s" (window-numbering-get-number-string))))
+	       " "
+	       mode-line-mule-info
+	       mode-line-modified
+	       mode-line-frame-identification
+	       mode-line-buffer-identification
+	       "  "
+	       mode-line-position
+	       !/mode-line-vc
+	       "   "
+	       mode-line-modes))
+
+;; increase mode-line width
+(custom-set-faces
+ `(mode-line-inactive ((t (:background ,(face-attribute 'mode-line-inactive :background)
+				       :foreground ,(face-attribute 'mode-line-inactive :foreground)
+				       :box (:line-width 4 :color ,(face-attribute 'mode-line-inactive :background))))))
+ `(mode-line ((t (:background ,(face-attribute 'mode-line :background)
+			      :foreground ,(face-attribute 'mode-line :foreground)
+			      :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
