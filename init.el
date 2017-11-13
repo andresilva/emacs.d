@@ -62,7 +62,7 @@
   :init
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
-        `((".*" . ,temporary-file-directory)))
+	`((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-visualizer-diff t)
   :config
@@ -157,6 +157,16 @@
 ;; fancy mode-line icons
 (use-package all-the-icons
   :ensure t)
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; store `auto-save-list' backup file mapping in `savefile' dir
+(setq auto-save-list-file-prefix
+      (expand-file-name "auto-save-list/.saves-" !/savefile-dir))
 
 ;; disabled right fringe and small left fringe
 (when (fboundp 'fringe-mode)
