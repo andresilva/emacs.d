@@ -113,7 +113,9 @@
   :ensure t
   :diminish projectile-mode
   :init
-  (setq projectile-completion-system 'helm)
+  (setq projectile-completion-system 'helm
+	projectile-cache-file (expand-file-name "projectile.cache" !/savefile-dir)
+	projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir))
   :config
   (projectile-mode))
 
