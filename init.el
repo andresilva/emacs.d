@@ -68,6 +68,11 @@
   :config
   (evil-mode 1))
 
+;; `anzu' for `evil' mode
+(use-package evil-anzu
+  :ensure t
+  :after evil)
+
 ;; dark theme
 (use-package dracula-theme
   :ensure t
