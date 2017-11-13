@@ -247,6 +247,11 @@
   (add-to-list 'recentf-exclude '!/recentf-exclude-p)
   (recentf-mode +1))
 
+;; smoother scrolling
+(setq scroll-step 1
+      scroll-conservatively 10000
+      auto-window-vscroll nil)
+
 ;; disabled right fringe and small left fringe
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
