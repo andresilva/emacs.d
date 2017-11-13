@@ -188,6 +188,17 @@
   :config
   (global-auto-revert-mode t))
 
+;; clean up obsolete buffers
+(use-package midnight)
+
+;; meaningful names for buffers with the same name
+(use-package uniquify
+  :init
+  (setq uniquify-buffer-name-style 'forward)
+  (setq uniquify-separator "/")
+  ;; don't muck with special buffers
+  (setq uniquify-ignore-buffers-re "^\\*"))
+
 ;; `saveplace' remembers your location in a file when saving files
 (use-package saveplace
   :init
