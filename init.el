@@ -168,6 +168,18 @@
 (setq auto-save-list-file-prefix
       (expand-file-name "auto-save-list/.saves-" !/savefile-dir))
 
+;; setup `hippie-expand' expand functions
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+					 try-expand-dabbrev-all-buffers
+					 try-expand-dabbrev-from-kill
+					 try-complete-file-name-partially
+					 try-complete-file-name
+					 try-expand-all-abbrevs
+					 try-expand-list
+					 try-expand-line
+					 try-complete-lisp-symbol-partially
+					 try-complete-lisp-symbol))
+
 ;; disabled right fringe and small left fringe
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
@@ -239,6 +251,10 @@
 (use-package general
   :ensure t
   :config
+  (general-define-key
+   "M-/" 'hippie-expand
+   "C-;" 'hippie-expand)
+
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
