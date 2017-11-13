@@ -180,6 +180,15 @@
 					 try-complete-lisp-symbol-partially
 					 try-complete-lisp-symbol))
 
+;; disable startup screen
+(setq inhibit-startup-screen t)
+
+;; highlight current line
+(global-hl-line-mode 1)
+
+;; internationalization
+(prefer-coding-system 'utf-8)
+
 ;; revert buffers automatically (also non-file buffers)
 (use-package autorevert
   :diminish auto-revert-mode
