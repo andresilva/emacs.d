@@ -199,6 +199,15 @@
 			      :foreground ,(face-attribute 'mode-line :foreground)
 			      :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
 
+;; semantic region expansion
+(use-package expand-region
+  :ensure t
+  :commands er/expand-region
+  :init
+  (setq-default
+   expand-region-contract-fast-key "V"
+   expand-region-reset-fast-key "r"))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
@@ -223,7 +232,9 @@
    "9" 'select-window-9
 
    ;; git
-   "gs" 'magit-status))
+   "gs" 'magit-status
+
+   "v" 'er/expand-region))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
