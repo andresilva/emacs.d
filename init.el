@@ -180,6 +180,25 @@
 					 try-complete-lisp-symbol-partially
 					 try-complete-lisp-symbol))
 
+;; save recent files
+(use-package recentf
+  :init
+  (setq recentf-save-file (expand-file-name "recentf" !/savefile-dir)
+	recentf-max-saved-items 500
+	recentf-max-menu-items 15
+	;; disable recentf-cleanup on Emacs start, because it can cause
+	;; problems with remote files
+	recentf-auto-cleanup 'never)
+  (defun !/recentf-exclude-p (file)
+    "A predicate to decide whether to exclude FILE from recentf."
+    (let ((file-dir (file-truename (file-name-directory file))))
+      (-any-p (lambda (dir)
+		(string-prefix-p dir file-dir))
+	      (mapcar 'file-truename (list !/savefile-dir package-user-dir)))))
+  :config
+  (add-to-list 'recentf-exclude '!/recentf-exclude-p)
+  (recentf-mode +1))
+
 ;; disabled right fringe and small left fringe
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
