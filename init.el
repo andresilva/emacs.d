@@ -188,6 +188,26 @@
   :config
   (global-auto-revert-mode t))
 
+;; `saveplace' remembers your location in a file when saving files
+(use-package saveplace
+  :init
+  (setq save-place-file (expand-file-name "saveplace" !/savefile-dir))
+  ;; activate it for all buffers
+  (setq-default save-place t))
+
+;; `savehist' keeps track of some history
+(use-package savehist
+  :init
+  (setq savehist-additional-variables
+	;; search entries
+	'(search-ring regexp-search-ring extended-command-history)
+	;; save every minute
+	savehist-autosave-interval 60
+	;; keep the home clean
+	savehist-file (expand-file-name "savehist" !/savefile-dir))
+  :config
+  (savehist-mode +1))
+
 ;; save recent files
 (use-package recentf
   :init
