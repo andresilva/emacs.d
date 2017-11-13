@@ -141,6 +141,14 @@
 (use-package all-the-icons
   :ensure t)
 
+;; disabled right fringe and small left fringe
+(when (fboundp 'fringe-mode)
+  (fringe-mode '(4 . 0)))
+
+;; disable scrollbar
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+
 ;; customize mode-line
 (defun !/modeline-segment-git-vc ()
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
