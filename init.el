@@ -107,6 +107,22 @@
   :ensure t
   :commands magit-status)
 
+;; highlight uncommitted changes on the left side of the window
+(use-package git-gutter
+  :ensure t
+  :diminish git-gutter-mode
+  :init
+  (setq git-gutter:window-width 1
+	git-gutter:update-interval 2
+	git-gutter:modified-sign "│"
+	git-gutter:added-sign "│"
+	git-gutter:deleted-sign "│")
+  :config
+  (set-face-foreground 'git-gutter:modified "#ffb86c") ; dracula rainbow-5
+  (set-face-foreground 'git-gutter:added "#50fa7b") ; dracula rainbow-6
+  (set-face-foreground 'git-gutter:deleted "#ff5555") ; dracula rainbow-9
+  (global-git-gutter-mode t))
+
 ;; `evil' keys for `magit'
 (use-package evil-magit
   :ensure t
@@ -183,7 +199,7 @@
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
- 
+
    "SPC" '(helm-M-x :which-key "M-x")
 
    ;; window numbers
