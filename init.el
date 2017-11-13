@@ -58,7 +58,15 @@
 ;; undo history as a tree
 (use-package undo-tree
   :ensure t
-  :diminish undo-tree-mode)
+  :diminish undo-tree-mode
+  :init
+  ;; autosave the undo-tree history
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t)
+  (setq undo-tree-visualizer-diff t)
+  :config
+  (global-undo-tree-mode))
 
 ;; extensible vi layer
 (use-package evil
