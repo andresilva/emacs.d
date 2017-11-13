@@ -68,6 +68,13 @@
   :config
   (global-undo-tree-mode))
 
+;; unobtrusively trim trailing whitespace
+(use-package ws-butler
+  :ensure t
+  :diminish ws-butler-mode
+  :config
+  (ws-butler-global-mode))
+
 ;; extensible vi layer
 (use-package evil
   :ensure t
