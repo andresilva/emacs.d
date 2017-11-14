@@ -120,9 +120,10 @@
   :ensure t
   :diminish helm-mode
   :init
-  (setq helm-display-header-line nil
+  (setq helm-autoresize-max-height 30
+        helm-display-header-line nil
         helm-always-two-windows t
-        helm-split-window-in-side-p t
+        helm-split-window-inside-p t
         helm-move-to-line-cycle-in-source t
         helm-ff-search-library-in-sexp t
         helm-ff-file-name-history-use-recentf t)
