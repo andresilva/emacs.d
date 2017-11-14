@@ -20,7 +20,7 @@
 (defconst !/initial-gc-cons-threshold gc-cons-threshold)
 (setq gc-cons-threshold (* 128 1000 1000))
 (add-hook 'after-init-hook
-	  (lambda () (setq gc-cons-threshold !/initial-gc-cons-threshold)))
+          (lambda () (setq gc-cons-threshold !/initial-gc-cons-threshold)))
 
 ;;; setup `package'
 (require 'package)
@@ -74,7 +74,7 @@
   :init
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
-	`((".*" . ,temporary-file-directory)))
+        `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-visualizer-diff t)
   :config
@@ -120,22 +120,22 @@
   :diminish helm-mode
   :init
   (setq helm-display-header-line nil
-	helm-always-two-windows t
-	helm-split-window-in-side-p t
-	helm-move-to-line-cycle-in-source t
-	helm-ff-search-library-in-sexp t
-	helm-ff-file-name-history-use-recentf t)
+        helm-always-two-windows t
+        helm-split-window-in-side-p t
+        helm-move-to-line-cycle-in-source t
+        helm-ff-search-library-in-sexp t
+        helm-ff-file-name-history-use-recentf t)
   ;; enable fuzzy matching
   (setq helm-buffers-fuzzy-matching t
-	helm-completion-in-region-fuzzy-match t
-	helm-M-x-fuzzy-match t
-	helm-apropos-fuzzy-match t
-	helm-imenu-fuzzy-match t
-	helm-lisp-fuzzy-completion t
-	helm-locate-fuzzy-match t
-	helm-mode-fuzzy-match t
-	helm-recentf-fuzzy-match t
-	helm-semantic-fuzzy-match t)
+        helm-completion-in-region-fuzzy-match t
+        helm-M-x-fuzzy-match t
+        helm-apropos-fuzzy-match t
+        helm-imenu-fuzzy-match t
+        helm-lisp-fuzzy-completion t
+        helm-locate-fuzzy-match t
+        helm-mode-fuzzy-match t
+        helm-recentf-fuzzy-match t
+        helm-semantic-fuzzy-match t)
   :config
   (require 'helm-config)
   (helm-mode 1)
@@ -154,8 +154,8 @@
   :diminish projectile-mode
   :init
   (setq projectile-completion-system 'helm
-	projectile-cache-file (expand-file-name "projectile.cache" !/savefile-dir)
-	projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir))
+        projectile-cache-file (expand-file-name "projectile.cache" !/savefile-dir)
+        projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir))
   :config
   (projectile-mode))
 
@@ -178,10 +178,10 @@
   :diminish git-gutter-mode
   :init
   (setq git-gutter:window-width 1
-	git-gutter:update-interval 2
-	git-gutter:modified-sign "│"
-	git-gutter:added-sign "│"
-	git-gutter:deleted-sign "│")
+        git-gutter:update-interval 2
+        git-gutter:modified-sign "│"
+        git-gutter:added-sign "│"
+        git-gutter:deleted-sign "│")
   :config
   (set-face-foreground 'git-gutter:modified "#ffb86c") ; dracula rainbow-5
   (set-face-foreground 'git-gutter:added "#50fa7b") ; dracula rainbow-6
@@ -218,15 +218,15 @@
 
 ;; setup `hippie-expand' expand functions
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
-					 try-expand-dabbrev-all-buffers
-					 try-expand-dabbrev-from-kill
-					 try-complete-file-name-partially
-					 try-complete-file-name
-					 try-expand-all-abbrevs
-					 try-expand-list
-					 try-expand-line
-					 try-complete-lisp-symbol-partially
-					 try-complete-lisp-symbol))
+                                         try-expand-dabbrev-all-buffers
+                                         try-expand-dabbrev-from-kill
+                                         try-complete-file-name-partially
+                                         try-complete-file-name
+                                         try-expand-all-abbrevs
+                                         try-expand-list
+                                         try-expand-line
+                                         try-complete-lisp-symbol-partially
+                                         try-complete-lisp-symbol))
 
 ;; disable startup screen
 (setq inhibit-startup-screen t)
@@ -267,12 +267,12 @@
 (use-package savehist
   :init
   (setq savehist-additional-variables
-	;; search entries
-	'(search-ring regexp-search-ring extended-command-history)
-	;; save every minute
-	savehist-autosave-interval 60
-	;; keep the home clean
-	savehist-file (expand-file-name "savehist" !/savefile-dir))
+        ;; search entries
+        '(search-ring regexp-search-ring extended-command-history)
+        ;; save every minute
+        savehist-autosave-interval 60
+        ;; keep the home clean
+        savehist-file (expand-file-name "savehist" !/savefile-dir))
   :config
   (savehist-mode +1))
 
@@ -280,17 +280,17 @@
 (use-package recentf
   :init
   (setq recentf-save-file (expand-file-name "recentf" !/savefile-dir)
-	recentf-max-saved-items 500
-	recentf-max-menu-items 15
-	;; disable recentf-cleanup on Emacs start, because it can cause
-	;; problems with remote files
-	recentf-auto-cleanup 'never)
+        recentf-max-saved-items 500
+        recentf-max-menu-items 15
+        ;; disable recentf-cleanup on Emacs start, because it can cause
+        ;; problems with remote files
+        recentf-auto-cleanup 'never)
   (defun !/recentf-exclude-p (file)
     "A predicate to decide whether to exclude FILE from recentf."
     (let ((file-dir (file-truename (file-name-directory file))))
       (-any-p (lambda (dir)
-		(string-prefix-p dir file-dir))
-	      (mapcar 'file-truename (list !/savefile-dir package-user-dir)))))
+                (string-prefix-p dir file-dir))
+              (mapcar 'file-truename (list !/savefile-dir package-user-dir)))))
   :config
   (add-to-list 'recentf-exclude '!/recentf-exclude-p)
   (recentf-mode +1))
@@ -309,50 +309,50 @@
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
     (concat
      (propertize (format " %s" (all-the-icons-octicon "git-branch"))
-		 'face `(:height 1 :family ,(all-the-icons-octicon-family))
-		 'display '(raise 0))
+                 'face `(:height 1 :family ,(all-the-icons-octicon-family))
+                 'display '(raise 0))
      (propertize (format " %s" branch)))))
 
 (defun !/modeline-segment-svn-vc ()
   (let ((revision (cadr (split-string vc-mode "-"))))
     (concat
      (propertize (format " %s" (all-the-icons-faicon "cloud"))
-		 'face `(:height 1)
-		 'display '(raise 0))
+                 'face `(:height 1)
+                 'display '(raise 0))
      (propertize (format " %s" revision) 'face `(:height 0.9)))))
 
 (defvar !/mode-line-vc
   '(:eval (when vc-mode
-	    (cond
-	     ((string-match "Git[:-]" vc-mode) (!/modeline-segment-git-vc))
-	     ((string-match "SVN-" vc-mode) (!/modeline-segment-svn-vc))
-	     (t (format "%s" vc-mode))))
-	  face mode-line-directory)
+            (cond
+             ((string-match "Git[:-]" vc-mode) (!/modeline-segment-git-vc))
+             ((string-match "SVN-" vc-mode) (!/modeline-segment-svn-vc))
+             (t (format "%s" vc-mode))))
+          face mode-line-directory)
   "Formats the current directory.")
 
 (setq evil-mode-line-format '(before . mode-line-position))
 (setq-default mode-line-format
-	      (list
-	       '(:eval (propertize (format " %s" (window-numbering-get-number-string))))
-	       " "
-	       mode-line-mule-info
-	       mode-line-modified
-	       mode-line-frame-identification
-	       mode-line-buffer-identification
-	       "  "
-	       mode-line-position
-	       !/mode-line-vc
-	       "   "
-	       mode-line-modes))
+              (list
+               '(:eval (propertize (format " %s" (window-numbering-get-number-string))))
+               " "
+               mode-line-mule-info
+               mode-line-modified
+               mode-line-frame-identification
+               mode-line-buffer-identification
+               "  "
+               mode-line-position
+               !/mode-line-vc
+               "   "
+               mode-line-modes))
 
 ;; increase mode-line width
 (custom-set-faces
  `(mode-line-inactive ((t (:background ,(face-attribute 'mode-line-inactive :background)
-				       :foreground ,(face-attribute 'mode-line-inactive :foreground)
-				       :box (:line-width 4 :color ,(face-attribute 'mode-line-inactive :background))))))
+                                       :foreground ,(face-attribute 'mode-line-inactive :foreground)
+                                       :box (:line-width 4 :color ,(face-attribute 'mode-line-inactive :background))))))
  `(mode-line ((t (:background ,(face-attribute 'mode-line :background)
-			      :foreground ,(face-attribute 'mode-line :foreground)
-			      :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
+                              :foreground ,(face-attribute 'mode-line :foreground)
+                              :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
 
 ;; enhanced `list-packages'
 (use-package paradox
@@ -387,16 +387,16 @@
    "C-;" 'hippie-expand)
 
   (general-define-key :keymaps 'minibuffer-local-map
-		      "<escape>" 'keyboard-escape-quit)
+                      "<escape>" 'keyboard-escape-quit)
 
   (general-define-key :keymaps 'helm-map
-		      "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
-		      "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
-		      "C-z" 'helm-select-action ;; list actions using C-z
-		      "C-j" 'helm-next-line
-		      "C-k" 'helm-previous-line
-		      "C-l" (kbd "RET")
-		      "<escape>" 'helm-keyboard-quit)
+                      "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
+                      "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
+                      "C-z" 'helm-select-action ;; list actions using C-z
+                      "C-j" 'helm-next-line
+                      "C-k" 'helm-previous-line
+                      "C-l" (kbd "RET")
+                      "<escape>" 'helm-keyboard-quit)
 
   (general-define-key
    :states '(normal visual insert emacs evilified)
@@ -470,8 +470,8 @@
 
 ;; print init time
 (add-hook 'after-init-hook
-	  (lambda ()
-	    (let ((elapsed (float-time (time-subtract (current-time)
-						      !/start-time))))
-	      (message "init finished [%.3fs]" elapsed)))
-	  t)
+          (lambda ()
+            (let ((elapsed (float-time (time-subtract (current-time)
+                                                      !/start-time))))
+              (message "init finished [%.3fs]" elapsed)))
+          t)
