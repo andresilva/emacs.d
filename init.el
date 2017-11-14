@@ -372,12 +372,17 @@
    "M-/" 'hippie-expand
    "C-;" 'hippie-expand)
 
+  (general-define-key :keymaps 'minibuffer-local-map
+		      "<escape>" 'keyboard-escape-quit)
+
   (general-define-key :keymaps 'helm-map
 		      "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
 		      "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
 		      "C-z" 'helm-select-action ;; list actions using C-z
 		      "C-j" 'helm-next-line
-		      "C-k" 'helm-previous-line)
+		      "C-k" 'helm-previous-line
+		      "C-l" (kbd "RET")
+		      "<escape>" 'helm-keyboard-quit)
 
   (general-define-key
    :states '(normal visual insert emacs evilified)
