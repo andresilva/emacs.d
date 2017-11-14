@@ -41,6 +41,10 @@
 ;; reduce modeline clutter
 (use-package diminish)
 
+;; better emacs defaults
+(use-package better-defaults
+  :ensure t)
+
 ;; start `server' if one isn't already running
 (use-package server
   :config
@@ -291,10 +295,6 @@
 ;; disabled right fringe and small left fringe
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
-
-;; disable scrollbar
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
 
 ;; customize mode-line
 (defun !/modeline-segment-git-vc ()
