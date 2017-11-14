@@ -410,6 +410,12 @@
   :ensure t
   :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
 
+;; `yaml' mode
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
+         ("Procfile\\'" . yaml-mode)))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
