@@ -364,6 +364,12 @@
    expand-region-contract-fast-key "V"
    expand-region-reset-fast-key "r"))
 
+;; highlight TODO keywords
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
