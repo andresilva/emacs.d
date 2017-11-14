@@ -102,9 +102,26 @@
 (use-package helm
   :ensure t
   :diminish helm-mode
+  :init
+  (setq helm-split-window-in-side-p t
+	helm-move-to-line-cycle-in-source t
+	helm-ff-search-library-in-sexp t
+	helm-ff-file-name-history-use-recentf t)
+  ;; enable fuzzy matching
+  (setq helm-buffers-fuzzy-matching t
+	helm-completion-in-region-fuzzy-match t
+	helm-M-x-fuzzy-match t
+	helm-apropos-fuzzy-match t
+	helm-imenu-fuzzy-match t
+	helm-lisp-fuzzy-completion t
+	helm-locate-fuzzy-match t
+	helm-mode-fuzzy-match t
+	helm-recentf-fuzzy-match t
+	helm-semantic-fuzzy-match t)
   :config
   (require 'helm-config)
-  (helm-mode 1))
+  (helm-mode 1)
+  (helm-autoresize-mode 1))
 
 ;; numbered window shortcuts
 (use-package window-numbering
@@ -115,6 +132,7 @@
 ;; project interaction library
 (use-package projectile
   :ensure t
+  :after helm
   :diminish projectile-mode
   :init
   (setq projectile-completion-system 'helm
@@ -341,6 +359,13 @@
   (general-define-key
    "M-/" 'hippie-expand
    "C-;" 'hippie-expand)
+
+  (general-define-key :keymaps 'helm-map
+		      "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
+		      "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
+		      "C-z" 'helm-select-action ;; list actions using C-z
+		      "C-j" 'helm-next-line
+		      "C-k" 'helm-previous-line)
 
   (general-define-key
    :states '(normal visual insert emacs evilified)
