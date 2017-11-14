@@ -379,6 +379,11 @@
   :config
   (global-hl-todo-mode))
 
+;; `scala' programming mode
+(use-package scala-mode
+  :ensure t
+  :mode ("\\.\\(scala\\|sbt\\)\\'" . scala-mode))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
