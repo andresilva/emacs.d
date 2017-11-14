@@ -316,6 +316,15 @@
 			      :foreground ,(face-attribute 'mode-line :foreground)
 			      :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
 
+;; enhanced `list-packages'
+(use-package paradox
+  :ensure t
+  :commands paradox-list-packages
+  :init
+  (setq paradox-github-token t)
+  :config
+  (evilified-state-evilify paradox-menu-mode paradox-menu-mode-map))
+
 ;; semantic region expansion
 (use-package expand-region
   :ensure t
