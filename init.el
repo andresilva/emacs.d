@@ -403,10 +403,48 @@
    "8" 'select-window-8
    "9" 'select-window-9
 
+   "b" '(:ignore t :which-key "buffers")
+   "bb" 'helm-mini
+   "bB" 'helm-buffers-list
+   "bd" 'kill-this-buffer
+
    "c" 'evilnc-comment-or-uncomment-lines
    ";" 'evilnc-comment-or-uncomment-lines
 
-   ;; git
+   "f" '(:ignore t :which-key "files")
+   "ff" '(helm-find-files :which-key "find-files")
+   "fs" 'save-buffer
+   "fr" 'helm-recentf
+
+   "r" '(:ignore t :which-key "registers")
+   "rl" 'helm-resume
+   "ry" 'helm-show-kill-ring
+   "rm" 'helm-all-mark-rings
+
+   "p" '(:ignore t :which-key "projects")
+   "p SPC" 'helm-projectile
+   "pb" 'helm-projectile-switch-to-buffer
+   "pd" 'helm-projectile-find-dir
+   "pp" 'helm-projectile-switch-project
+   "pf" 'helm-projectile-find-file
+   "ps" 'helm-projectile-ag
+
+   "h" '(:ignore t :which-key "help")
+   "ha" '(helm-apropos :which-key "apropos")
+   "hi" '(helm-info-at-point :which-key "describe-symbol")
+   "hf" 'describe-function
+   "hv" 'describe-variable
+   "hk" 'describe-key
+
+   "w" '(:ignore t :which-key "windows")
+   "wo" 'other-frame
+   "ws" 'split-window-below
+   "w-" 'split-window-below
+   "wv" 'split-window-right
+   "w/" 'split-window-right
+   "w=" 'balance-windows
+
+   "g" '(:ignore t :which-key "git")
    "gs" 'magit-status
 
    "u" 'universal-argument
