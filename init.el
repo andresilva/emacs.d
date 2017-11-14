@@ -83,6 +83,10 @@
   :config
   (evil-mode 1))
 
+;; add minimal Vim keys to arbitrary modes
+(use-package evil-evilified-state
+  :after evil)
+
 ;; `anzu' for `evil' mode
 (use-package evil-anzu
   :ensure t
@@ -330,7 +334,7 @@
    "C-;" 'hippie-expand)
 
   (general-define-key
-   :states '(normal visual insert emacs)
+   :states '(normal visual insert emacs evilified)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
 
