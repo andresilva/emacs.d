@@ -315,6 +315,22 @@
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
 
+;; set default fonts
+(use-package spacemacs-fonts-support
+  :config
+  (spacemacs/set-default-font
+   '("Source Code Pro"
+     :size 13
+     :weight normal
+     :width normal))
+
+  (when (memq window-system '(mac ns))
+    ;; Use the OS X Emoji font for Emoticons
+    (when (fboundp 'set-fontset-font)
+      (set-fontset-font "fontset-default"
+                        '(#x1F600 . #x1F64F)
+                        (font-spec :name "Apple Color Emoji") nil 'prepend))))
+
 ;; customize mode-line
 (defun !/modeline-segment-git-vc ()
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
