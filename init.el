@@ -92,6 +92,10 @@
   :ensure t
   :after evil)
 
+;; comment code efficiently
+(use-package evil-nerd-commenter
+  :ensure t)
+
 ;; dark theme
 (use-package dracula-theme
   :ensure t
@@ -167,9 +171,7 @@
 ;; `evil' keys for `magit'
 (use-package evil-magit
   :ensure t
-  :after magit
-  :init
-  (setq evil-magit-want-horizontal-movement t))
+  :after magit)
 
 ;; display available keybindings in popup
 (use-package which-key
@@ -375,7 +377,7 @@
    "SPC" '(helm-M-x :which-key "M-x")
 
    ;; window numbers
-   "0" 'select-window-0
+   "0" 'select-window-0-or-10
    "1" 'select-window-1
    "2" 'select-window-2
    "3" 'select-window-3
@@ -386,9 +388,13 @@
    "8" 'select-window-8
    "9" 'select-window-9
 
+   "c" 'evilnc-comment-or-uncomment-lines
+   ";" 'evilnc-comment-or-uncomment-lines
+
    ;; git
    "gs" 'magit-status
 
+   "u" 'universal-argument
    "v" 'er/expand-region))
 
 ;; load emacs customization settings
