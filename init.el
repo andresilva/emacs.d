@@ -106,7 +106,8 @@
 
 ;; comment code efficiently
 (use-package evil-nerd-commenter
-  :ensure t)
+  :ensure t
+  :commands evilnc-comment-or-uncomment-lines)
 
 ;; dark theme
 (use-package dracula-theme
