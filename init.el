@@ -107,7 +107,9 @@
   :ensure t
   :diminish helm-mode
   :init
-  (setq helm-split-window-in-side-p t
+  (setq helm-display-header-line nil
+	helm-always-two-windows t
+	helm-split-window-in-side-p t
 	helm-move-to-line-cycle-in-source t
 	helm-ff-search-library-in-sexp t
 	helm-ff-file-name-history-use-recentf t)
@@ -144,6 +146,14 @@
 	projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir))
   :config
   (projectile-mode))
+
+(use-package helm-projectile
+  :ensure t
+  :after projectile
+  :init
+  (setq helm-projectile-fuzzy-match t)
+  :config
+  (helm-projectile-on))
 
 ;; the best git client ever
 (use-package magit
