@@ -143,6 +143,13 @@
   (helm-mode 1)
   (helm-autoresize-mode 1))
 
+;; fuzzier matching for helm
+(use-package helm-flx
+  :ensure t
+  :after helm
+  :config
+  (helm-flx-mode +1))
+
 ;; numbered window shortcuts
 (use-package window-numbering
   :ensure t
