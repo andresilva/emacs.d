@@ -126,7 +126,10 @@
         helm-split-window-inside-p t
         helm-move-to-line-cycle-in-source t
         helm-ff-search-library-in-sexp t
-        helm-ff-file-name-history-use-recentf t)
+        helm-ff-file-name-history-use-recentf t
+        helm-comp-read-mode-line ""
+        helm-read-file-name-mode-line-string ""
+        helm-mode-line-string "")
   ;; enable fuzzy matching
   (setq helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
