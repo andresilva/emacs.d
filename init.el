@@ -261,6 +261,8 @@
 (use-package saveplace
   :init
   (setq save-place-file (expand-file-name "saveplace" !/savefile-dir))
+  :config
+  (save-place-mode +1)
   ;; activate it for all buffers
   (setq-default save-place t))
 
