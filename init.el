@@ -43,7 +43,15 @@
 
 ;; better emacs defaults
 (use-package better-defaults
-  :ensure t)
+  :ensure t
+  :config
+  (setq visible-bell nil)
+  ;; disable bell for commands
+  (setq ring-bell-function
+        (lambda ()
+          (unless (memq this-command
+                        '(isearch-abort abort-recursive-edit exit-minibuffer keyboard-quit helm-keyboard-quit keyboard-escape-quit))
+            (ding)))))
 
 ;; start `server' if one isn't already running
 (use-package server
