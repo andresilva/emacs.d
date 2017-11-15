@@ -171,6 +171,7 @@
   :config
   (projectile-mode))
 
+;; `projectile' integration for `helm'
 (use-package helm-projectile
   :ensure t
   :after projectile
@@ -178,6 +179,12 @@
   (setq helm-projectile-fuzzy-match t)
   :config
   (helm-projectile-on))
+
+;; `helm' interface for `ag'
+(use-package helm-ag
+  :ensure t
+  :after helm-projectile
+  :commands (helm-projectile-ag helm-ag))
 
 ;; the best git client ever
 (use-package magit
