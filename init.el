@@ -97,7 +97,9 @@
 
 ;; add minimal Vim keys to arbitrary modes
 (use-package evil-evilified-state
-  :after evil)
+  :after evil
+  :config
+  (evilified-state-evilify special-mode special-mode-map))
 
 ;; `anzu' for `evil' mode
 (use-package evil-anzu
