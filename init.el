@@ -426,6 +426,12 @@
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
          ("Procfile\\'" . yaml-mode)))
 
+;; interactive lisp macro expansion
+(use-package macrostep
+  :ensure t
+  :diminish macrostep-mode
+  :commands macrostep-expand)
+
 ;; convenient key definitions
 (use-package general
   :ensure t
@@ -434,17 +440,33 @@
    "M-/" 'hippie-expand
    "C-;" 'hippie-expand)
 
-  (general-define-key :keymaps 'minibuffer-local-map
-                      "<escape>" 'keyboard-escape-quit)
+  (general-define-key
+   :keymaps 'minibuffer-local-map
+   "<escape>" 'keyboard-escape-quit)
 
-  (general-define-key :keymaps 'helm-map
-                      "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
-                      "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
-                      "C-z" 'helm-select-action ;; list actions using C-z
-                      "C-j" 'helm-next-line
-                      "C-k" 'helm-previous-line
-                      "C-l" (kbd "RET")
-                      "<escape>" 'helm-keyboard-quit)
+  (general-define-key
+   :keymaps 'helm-map
+   "<tab>" 'helm-execute-persistent-action ;; rebind tab to run persistent action
+   "C-i" 'helm-execute-persistent-action ;; make TAB works in terminal
+   "C-z" 'helm-select-action ;; list actions using C-z
+   "C-j" 'helm-next-line
+   "C-k" 'helm-previous-line
+   "C-l" (kbd "RET")
+   "<escape>" 'helm-keyboard-quit)
+
+  (general-define-key
+   :keymaps 'emacs-lisp-mode-map
+   :states '(normal visual insert emacs evilified)
+   :prefix ","
+   :non-normal-prefix "M-,"
+   "e" '(:ignore t :which-key "emacs-lisp")
+   "er" 'eval-region
+   "ee" 'macrostep-expand)
+
+  (general-define-key
+   :keymaps 'macrostep-keymap
+   :states 'normal
+   "q" 'macrostep-collapse-all)
 
   (general-define-key
    :states '(normal visual insert emacs evilified)
