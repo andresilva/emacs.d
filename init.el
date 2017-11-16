@@ -390,6 +390,10 @@
           face mode-line-directory)
   "Formats the current directory.")
 
+(defvar !/mode-line-persp
+  '(:eval (when (get-current-persp)
+            (propertize (format "[%s] " (persp-name (get-current-persp)))))))
+
 (setq evil-mode-line-format '(before . mode-line-position))
 (setq-default mode-line-format
               (list
@@ -401,6 +405,8 @@
                mode-line-buffer-identification
                "  "
                mode-line-position
+               "  "
+               !/mode-line-persp
                !/mode-line-vc
                "   "
                mode-line-modes))
