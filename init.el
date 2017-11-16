@@ -524,6 +524,7 @@
    "hk" 'describe-key
 
    "w" '(:ignore t :which-key "windows")
+   "wd" '!/delete-window
    "wo" 'other-frame
    "ws" 'split-window-below
    "w-" 'split-window-below
@@ -536,6 +537,14 @@
 
    "u" 'universal-argument
    "v" 'er/expand-region))
+
+(defun !/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
