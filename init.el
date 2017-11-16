@@ -201,7 +201,10 @@
   (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
 
 ;; `persp-mode' integration with `helm'
-(use-package helm-persp-bridge-v2)
+(use-package helm-persp-bridge-v2
+  :init
+  ;; this is needed to make sure `helm-source-recentf' is defined
+  (require 'helm-for-files))
 
 ;; `persp-mode' integration with `projectile'
 (use-package persp-projectile-auto-persp)
@@ -518,9 +521,13 @@
    "9" 'select-window-9
 
    "b" '(:ignore t :which-key "buffers")
-   "bb" 'helm-mini
-   "bB" 'helm-buffers-list
+   "bb" 'helm-persp-mini
+   "bB" 'helm-mini
+   "bl" 'helm-buffers-list
    "bd" 'kill-this-buffer
+
+   "ba" 'persp-add-buffer
+   "br" 'persp-remove-buffer
 
    "c" 'evilnc-comment-or-uncomment-lines
    ";" 'evilnc-comment-or-uncomment-lines
@@ -542,6 +549,11 @@
    "pp" 'helm-projectile-switch-project
    "pf" 'helm-projectile-find-file
    "ps" 'helm-projectile-ag
+
+   "l" '(:ignore t :which-key "layouts")
+   "ll" '(persp-switch :which-key "list-layouts")
+   "lc" '(persp-kill-without-buffers :which-key "close-layout")
+   "lk" '(persp-kill :which-key "kill-layout")
 
    "h" '(:ignore t :which-key "help")
    "ha" '(helm-apropos :which-key "apropos")

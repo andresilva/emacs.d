@@ -30,9 +30,8 @@
                                     (alist-get 'hook state))
                                 state
                               (push (cons 'persp-name
-                                          (concat "p) "
-                                                  (with-current-buffer (alist-get 'buffer state)
-                                                    (projectile-project-name))))
+                                          (with-current-buffer (alist-get 'buffer state)
+                                            (projectile-project-name)))
                                     state)
                               state))
                         :on-match
