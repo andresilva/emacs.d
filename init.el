@@ -189,6 +189,23 @@
   :after helm-projectile
   :commands (helm-projectile-ag helm-ag))
 
+;; perspectives for emacs
+(use-package persp-mode
+  :ensure t
+  :diminish persp-mode
+  :init
+  (setq wg-morph-on nil ;; switch off animation
+        persp-auto-resume-time -1
+        persp-autokill-buffer-on-remove 'kill-weak
+        persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
+  (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
+
+;; `persp-mode' integration with `helm'
+(use-package helm-persp-bridge-v2)
+
+;; `persp-mode' integration with `projectile'
+(use-package persp-projectile-auto-persp)
+
 ;; the best git client ever
 (use-package magit
   :ensure t
