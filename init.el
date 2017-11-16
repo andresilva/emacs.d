@@ -228,8 +228,8 @@
   (set-face-foreground 'git-gutter:modified "#ffb86c") ; dracula rainbow-5
   (set-face-foreground 'git-gutter:added "#50fa7b") ; dracula rainbow-6
   (set-face-foreground 'git-gutter:deleted "#ff5555") ; dracula rainbow-9
-  (add-to-list 'git-gutter:update-hooks 'magit-post-refresh-hook)
   (add-to-list 'git-gutter:update-hooks 'focus-in-hook)
+  (add-hook 'magit-post-refresh-hook 'git-gutter:update-all-windows)
   (global-git-gutter-mode t))
 
 ;; `evil' keys for `magit'
