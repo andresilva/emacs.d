@@ -435,6 +435,16 @@
   :diminish macrostep-mode
   :commands macrostep-expand)
 
+;; `rust' programming mode
+(use-package rust-mode
+  :ensure t
+  :mode ("\\.rs\\'" . rust-mode))
+
+;; needed for `cargo' files
+(use-package toml-mode
+  :ensure t
+  :mode ("\\.toml\\'" . toml-mode))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
