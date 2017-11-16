@@ -99,7 +99,8 @@
 (use-package evil-evilified-state
   :after evil
   :config
-  (evilified-state-evilify special-mode special-mode-map))
+  (evilified-state-evilify special-mode special-mode-map)
+  (evilified-state-evilify help-mode help-mode-map))
 
 ;; `anzu' for `evil' mode
 (use-package evil-anzu
