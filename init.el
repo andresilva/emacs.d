@@ -616,24 +616,15 @@
    "fD" '!/delete-current-buffer-file
    "fR" '!/rename-current-buffer-file
 
-   "r" '(:ignore t :which-key "registers")
-   "rl" 'helm-resume
-   "ry" 'helm-show-kill-ring
-   "rm" 'helm-all-mark-rings
+   "g" '(:ignore t :which-key "git")
+   "gs" 'magit-status
 
-   "p" '(:ignore t :which-key "projects")
-   "p SPC" 'helm-projectile
-   "pb" 'helm-projectile-switch-to-buffer
-   "pd" 'helm-projectile-find-dir
-   "pp" 'helm-projectile-switch-project
-   "pf" 'helm-projectile-find-file
-   "ps" '!/helm-project-do-rg
-   "pl" '!/helm-layout-switch-project
-
-   "s" '(:ignore t :which-key "search")
-   "sf" 'helm-find
-   "ss" '!/helm-files-do-rg
-   "sp" '!/helm-project-do-rg
+   "h" '(:ignore t :which-key "help")
+   "ha" '(helm-apropos :which-key "apropos")
+   "hi" '(helm-info-at-point :which-key "describe-symbol")
+   "hf" 'describe-function
+   "hv" 'describe-variable
+   "hk" 'describe-key
 
    "l" '(:ignore t :which-key "layouts")
    "l TAB" '(!/alternate-layout :which-key "alternate-layout")
@@ -645,12 +636,24 @@
    "lba" 'persp-add-buffer
    "lbr" 'persp-remove-buffer
 
-   "h" '(:ignore t :which-key "help")
-   "ha" '(helm-apropos :which-key "apropos")
-   "hi" '(helm-info-at-point :which-key "describe-symbol")
-   "hf" 'describe-function
-   "hv" 'describe-variable
-   "hk" 'describe-key
+   "p" '(:ignore t :which-key "projects")
+   "p SPC" 'helm-projectile
+   "pb" 'helm-projectile-switch-to-buffer
+   "pd" 'helm-projectile-find-dir
+   "pp" 'helm-projectile-switch-project
+   "pf" 'helm-projectile-find-file
+   "ps" '!/helm-project-do-rg
+   "pl" '!/helm-layout-switch-project
+
+   "r" '(:ignore t :which-key "registers")
+   "rl" 'helm-resume
+   "ry" 'helm-show-kill-ring
+   "rm" 'helm-all-mark-rings
+
+   "s" '(:ignore t :which-key "search")
+   "sf" 'helm-find
+   "ss" '!/helm-files-do-rg
+   "sp" '!/helm-project-do-rg
 
    "w" '(:ignore t :which-key "windows")
    "w TAB" '!/alternate-window
@@ -665,9 +668,6 @@
    "w/" 'split-window-right
    "w=" 'balance-windows
    "ww" '!/alternate-window
-
-   "g" '(:ignore t :which-key "git")
-   "gs" 'magit-status
 
    "u" 'universal-argument
    "v" 'er/expand-region))
