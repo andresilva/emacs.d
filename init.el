@@ -438,6 +438,11 @@
                               :foreground ,(face-attribute 'mode-line :foreground)
                               :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
 
+;; zoom frame font size
+(use-package zoom-frm
+  :ensure t
+  :commands zoom-frm-in zoom-frm-out zoom-frm-unzoom)
+
 ;; enhanced `list-packages'
 (use-package paradox
   :ensure t
@@ -670,7 +675,13 @@
    "ww" '!/alternate-window
 
    "u" 'universal-argument
-   "v" 'er/expand-region))
+   "v" 'er/expand-region
+
+   "z" '(:ignore t :which-key "zoom")
+   "z+" 'zoom-frm-in
+   "z=" 'zoom-frm-in
+   "z-" 'zoom-frm-out
+   "z0" 'zoom-frm-unzoom))
 
 (defun !/alternate-buffer (&optional window)
   "Switch back and forth between current and last buffer in the
