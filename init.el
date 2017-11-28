@@ -459,6 +459,11 @@
   :config
   (global-hl-todo-mode))
 
+;; `markdown' mode
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . markdown-mode))
+
 ;; `scala' programming mode
 (use-package scala-mode
   :ensure t
