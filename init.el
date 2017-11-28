@@ -606,9 +606,8 @@
    "bB" 'helm-mini
    "bl" 'helm-buffers-list
    "bd" 'kill-this-buffer
-
-   "ba" 'persp-add-buffer
-   "br" 'persp-remove-buffer
+   "bs" '!/switch-to-scratch-buffer
+   "bm" '!/switch-to-messages-buffer
 
    "c" 'evilnc-comment-or-uncomment-lines
    ";" 'evilnc-comment-or-uncomment-lines
@@ -633,9 +632,13 @@
 
    "l" '(:ignore t :which-key "layouts")
    "l TAB" '(!/alternate-layout :which-key "alternate-layout")
+   "ln" '(persp-add-new :which-key "new-layout")
    "ll" '(persp-switch :which-key "list-layouts")
    "lc" '(persp-kill-without-buffers :which-key "close-layout")
    "lk" '(persp-kill :which-key "kill-layout")
+   "lb" '(:ignore t :which-key "layout buffers")
+   "lba" 'persp-add-buffer
+   "lbr" 'persp-remove-buffer
 
    "h" '(:ignore t :which-key "help")
    "ha" '(helm-apropos :which-key "apropos")
@@ -683,14 +686,6 @@ current frame."
     (unless prev-window (user-error "Last window not found."))
     (select-window prev-window)))
 
-(defun !/delete-window (&optional arg)
-  "Delete the current window.
-If the universal prefix argument is used then kill the buffer too."
-  (interactive "P")
-  (if (equal '(4) arg)
-      (kill-buffer-and-window)
-    (delete-window)))
-
 (defun !/alternate-layout ()
   "Switch back and forth between current and last layout in the
 current frame."
@@ -699,6 +694,33 @@ current frame."
               (gethash !/persp-last-selected-perspective
                        *persp-hash* 'non-existent))
     (persp-frame-switch !/persp-last-selected-perspective)))
+
+(defun !/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
+
+(defun !/switch-to-scratch-buffer (&optional arg)
+  "Switch to the `*scratch*' buffer, creating it first if needed.
+If prefix argument ARG is given, switch to it in an other, possibly new window."
+  (interactive "P")
+  (let ((exists (get-buffer "*scratch*")))
+    (if arg
+        (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+      (switch-to-buffer (get-buffer-create "*scratch*")))))
+
+(defun !/switch-to-messages-buffer (&optional arg)
+  "Switch to the `*Messages*' buffer.
+If prefix argument ARG is given, switch to it in an other, possibly new window."
+  (interactive "P")
+  (with-current-buffer (messages-buffer)
+    (goto-char (point-max))
+    (if arg
+        (switch-to-buffer-other-window (current-buffer))
+      (switch-to-buffer (current-buffer)))))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
