@@ -211,6 +211,7 @@
   :diminish persp-mode
   :init
   (setq wg-morph-on nil ;; switch off animation
+        persp-add-buffer-on-after-change-major-mode t
         persp-auto-resume-time -1
         persp-autokill-buffer-on-remove 'kill-weak
         persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
@@ -222,13 +223,6 @@
   (defun !//persp-save-last-selected-perspective (persp _)
     (setq !//persp-last-selected-perspective persp-last-persp-name))
   (advice-add 'persp-activate :before #'!//persp-save-last-selected-perspective))
-
-;; `persp-mode' integration with `helm'
-(use-package helm-persp-bridge-v2
-  :after helm persp-mode
-  :init
-  ;; this is needed to make sure `helm-source-recentf' is defined
-  (require 'helm-for-files))
 
 ;; the best git client ever
 (use-package magit
@@ -605,7 +599,7 @@
    "9" 'winum-select-window-9
 
    "b" '(:ignore t :which-key "buffers")
-   "bb" 'helm-persp-mini
+   "bb" '!/helm-persp-mini
    "bB" 'helm-mini
    "bl" 'helm-buffers-list
    "bd" 'kill-this-buffer
@@ -854,6 +848,12 @@ If the universal prefix argument is used then kill the buffer too."
                     (let ((projectile-completion-system 'helm))
                       (projectile-switch-project-by-name project)))))))
    :buffer "*Helm Projectile Layouts*"))
+
+(defun !/helm-persp-mini ()
+  "As `helm-mini' but restricts visible buffers by perspective."
+  (interactive)
+  (with-persp-buffer-list ()
+                          (helm-mini)))
 
 (defun !/helm-files-do-rg (&optional dir)
   "Search in files with `rg'."
