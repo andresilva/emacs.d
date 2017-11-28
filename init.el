@@ -480,6 +480,17 @@
   :config
   (editorconfig-mode 1))
 
+;; emacs support for the Language Server Protocol
+(use-package lsp-mode
+  :ensure t)
+
+;; `company' backend for `lsp-mode'
+(use-package company-lsp
+  :ensure t
+  :after company lsp-mode
+  :init
+  (push 'company-lsp company-backends))
+
 ;; `markdown' mode
 (use-package markdown-mode
   :ensure t
@@ -507,7 +518,20 @@
   :ensure t
   :mode ("\\.rs\\'" . rust-mode))
 
-;; needed for `cargo' files
+;; `lsp-mode' client using the Rust Language Server
+(use-package lsp-rust
+  :ensure t
+  :after lsp-mode
+  :init
+  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
+  (add-hook 'rust-mode-hook #'lsp-rust-enable)
+  :config
+  (setq lsp-rust--handlers
+        '(("rustDocument/diagnosticsBegin" . (lambda (_w _p)))
+          ("rustDocument/diagnosticsEnd" . (lambda (w _p)))
+          ("rustDocument/beginBuild" . (lambda (w _p))))))
+
+;; `toml' support for `cargo' files
 (use-package toml-mode
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
