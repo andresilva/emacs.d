@@ -363,6 +363,9 @@
 (when (fboundp 'fringe-mode)
   (fringe-mode '(4 . 0)))
 
+;; follow symlinks without asking
+(setq vc-follow-symlinks t)
+
 ;; set default fonts
 (use-package spacemacs-fonts-support
   :config
