@@ -107,7 +107,13 @@
   :after evil
   :config
   (evilified-state-evilify special-mode special-mode-map)
-  (evilified-state-evilify help-mode help-mode-map))
+  (evilified-state-evilify help-mode help-mode-map)
+  (evilified-state-evilify messages-buffer-mode messages-buffer-mode-map)
+  ;; reload messages buffer mode to force new keymap
+  (add-hook 'after-init-hook
+            (lambda ()
+              (with-current-buffer "*Messages*"
+                (messages-buffer-mode)))))
 
 ;; `anzu' for `evil' mode
 (use-package evil-anzu
@@ -208,7 +214,7 @@
         persp-auto-resume-time -1
         persp-autokill-buffer-on-remove 'kill-weak
         persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
-  (add-hook 'after-init-hook #'(lambda () (persp-mode 1)))
+  (add-hook 'after-init-hook (lambda () (persp-mode 1)))
   :config
   (defvar !//persp-last-selected-perspective nil
     "Previously selected perspective.")
