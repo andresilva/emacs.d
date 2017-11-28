@@ -216,12 +216,11 @@
         persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
   (add-hook 'after-init-hook (lambda () (persp-mode 1)))
   :config
-  (defvar !//persp-last-selected-perspective nil
+  (defvar !//persp-last-selected-perspective persp-nil-name
     "Previously selected perspective.")
 
   (defun !//persp-save-last-selected-perspective (persp _)
-    (unless (and (equal (persp-name persp) persp-last-persp-name) !//persp-last-selected-perspective)
-      (setq !//persp-last-selected-perspective persp-last-persp-name)))
+    (setq !//persp-last-selected-perspective persp-last-persp-name))
   (advice-add 'persp-activate :before #'!//persp-save-last-selected-perspective))
 
 ;; `persp-mode' integration with `helm'
@@ -703,7 +702,7 @@ current frame."
   (unless (eq 'non-existent
               (gethash !//persp-last-selected-perspective
                        *persp-hash* 'non-existent))
-    (persp-frame-switch !//persp-last-selected-perspective)))
+    (persp-switch !//persp-last-selected-perspective)))
 
 (defun !/switch-to-scratch-buffer (&optional arg)
   "Switch to the `*scratch*' buffer, creating it first if needed.
