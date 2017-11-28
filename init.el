@@ -165,10 +165,12 @@
   (helm-flx-mode +1))
 
 ;; numbered window shortcuts
-(use-package window-numbering
+(use-package winum
   :ensure t
+  :init
+  (setq-default winum-keymap nil)
   :config
-  (window-numbering-mode))
+  (winum-mode))
 
 ;; project interaction library
 (use-package projectile
@@ -418,7 +420,7 @@
 (setq evil-mode-line-format '(before . mode-line-position))
 (setq-default mode-line-format
               (list
-               '(:eval (propertize (format " %s" (window-numbering-get-number-string))))
+               '(:eval (propertize (format " %s" (winum-get-number-string))))
                " "
                mode-line-mule-info
                mode-line-modified
@@ -590,16 +592,16 @@
    "TAB" '!/alternate-buffer
 
    ;; window numbers
-   "0" 'select-window-0-or-10
-   "1" 'select-window-1
-   "2" 'select-window-2
-   "3" 'select-window-3
-   "4" 'select-window-4
-   "5" 'select-window-5
-   "6" 'select-window-6
-   "7" 'select-window-7
-   "8" 'select-window-8
-   "9" 'select-window-9
+   "0" 'winum-select-window-0-or-10
+   "1" 'winum-select-window-1
+   "2" 'winum-select-window-2
+   "3" 'winum-select-window-3
+   "4" 'winum-select-window-4
+   "5" 'winum-select-window-5
+   "6" 'winum-select-window-6
+   "7" 'winum-select-window-7
+   "8" 'winum-select-window-8
+   "9" 'winum-select-window-9
 
    "b" '(:ignore t :which-key "buffers")
    "bb" 'helm-persp-mini
