@@ -587,6 +587,7 @@
    :non-normal-prefix "M-SPC"
 
    "SPC" '(helm-M-x :which-key "M-x")
+   "TAB" '!/alternate-buffer
 
    ;; window numbers
    "0" 'select-window-0-or-10
@@ -631,7 +632,7 @@
    "ps" 'helm-projectile-ag
 
    "l" '(:ignore t :which-key "layouts")
-   "l TAB" '(!/switch-to-last-perspective :which-key "last-selected-layout")
+   "l TAB" '(!/alternate-layout :which-key "alternate-layout")
    "ll" '(persp-switch :which-key "list-layouts")
    "lc" '(persp-kill-without-buffers :which-key "close-layout")
    "lk" '(persp-kill :which-key "kill-layout")
@@ -644,6 +645,7 @@
    "hk" 'describe-key
 
    "w" '(:ignore t :which-key "windows")
+   "w TAB" '!/alternate-window
    "wd" '!/delete-window
    "wo" 'other-frame
    "ws" 'split-window-below
@@ -651,12 +653,35 @@
    "wv" 'split-window-right
    "w/" 'split-window-right
    "w=" 'balance-windows
+   "ww" '!/alternate-window
 
    "g" '(:ignore t :which-key "git")
    "gs" 'magit-status
 
    "u" 'universal-argument
    "v" 'er/expand-region))
+
+(defun !/alternate-buffer (&optional window)
+  "Switch back and forth between current and last buffer in the
+current window."
+  (interactive)
+  (let ((current-buffer (window-buffer window)))
+    ;; if no window is found in the windows history, `switch-to-buffer' will
+    ;; default to calling `other-buffer'.
+    (switch-to-buffer
+     (cl-find-if (lambda (buffer)
+                   (not (eq buffer current-buffer)))
+                 (mapcar #'car (window-prev-buffers window))))))
+
+(defun !/alternate-window ()
+  "Switch back and forth between current and last window in the
+current frame."
+  (interactive)
+  (let (;; switch to first window previously shown in this frame
+        (prev-window (get-mru-window nil t t)))
+    ;; Check window was not found successfully
+    (unless prev-window (user-error "Last window not found."))
+    (select-window prev-window)))
 
 (defun !/delete-window (&optional arg)
   "Delete the current window.
@@ -666,8 +691,9 @@ If the universal prefix argument is used then kill the buffer too."
       (kill-buffer-and-window)
     (delete-window)))
 
-(defun !/switch-to-last-perspective ()
-  "Open the previously selected perspective, if it exists."
+(defun !/alternate-layout ()
+  "Switch back and forth between current and last layout in the
+current frame."
   (interactive)
   (unless (eq 'non-existent
               (gethash !/persp-last-selected-perspective
