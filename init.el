@@ -452,6 +452,10 @@
   :config
   (evilified-state-evilify paradox-menu-mode paradox-menu-mode-map))
 
+;; show argument list/type information in the modeline
+(use-package eldoc
+  :diminish eldoc-mode)
+
 ;; in-buffer completion
 (use-package company
   :ensure t
@@ -524,6 +528,15 @@
   :ensure t
   :mode ("\\.rs\\'" . rust-mode))
 
+;; code completion for `rust'
+(use-package racer
+  :ensure t
+  :after rust-mode
+  :diminish racer-mode
+  :init
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
+
 ;; `lsp-mode' client using the Rust Language Server
 (use-package lsp-rust
   :ensure t
@@ -579,6 +592,15 @@
    "e" '(:ignore t :which-key "emacs-lisp")
    "er" 'eval-region
    "ee" 'macrostep-expand)
+
+  (general-define-key
+   :keymaps 'rust-mode-map
+   :states '(normal visual insert emacs evilified)
+   :prefix ","
+   :non-normal-prefix "M-,"
+   "." 'racer-find-definition
+   "," 'pop-tag-mark
+   "d" 'racer-describe)
 
   (general-define-key
    :keymaps 'macrostep-keymap
