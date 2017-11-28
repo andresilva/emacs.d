@@ -487,7 +487,8 @@
 
 ;; emacs support for the Language Server Protocol
 (use-package lsp-mode
-  :ensure t)
+  :ensure t
+  :disabled t)
 
 ;; `company' backend for `lsp-mode'
 (use-package company-lsp
@@ -526,6 +527,7 @@
 ;; `lsp-mode' client using the Rust Language Server
 (use-package lsp-rust
   :ensure t
+  :disabled t
   :after lsp-mode
   :init
   (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
