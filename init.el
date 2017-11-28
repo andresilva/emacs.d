@@ -67,6 +67,13 @@
   :config
   (exec-path-from-shell-initialize))
 
+;; setup modifier keys on macOS
+(when (memq window-system '(mac ns))
+  (setq mac-right-option-modifier nil)
+  (setq mac-command-modifier 'super)
+  (setq mac-option-modifier 'meta)
+  (setq ns-function-modifier 'hyper))
+
 ;; undo history as a tree
 (use-package undo-tree
   :ensure t
