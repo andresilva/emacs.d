@@ -447,6 +447,17 @@
   :config
   (evilified-state-evilify paradox-menu-mode paradox-menu-mode-map))
 
+;; in-buffer completion
+(use-package company
+  :ensure t
+  :diminish company-mode
+  :init
+  (setq company-minimum-prefix-length 2
+        company-selection-wrap-around t
+        company-tooltip-align-annotations t)
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
+
 ;; semantic region expansion
 (use-package expand-region
   :ensure t
@@ -515,6 +526,12 @@
    "C-k" 'helm-previous-line
    "C-l" (kbd "RET")
    "<escape>" 'helm-keyboard-quit)
+
+  (general-define-key
+   :keymaps 'company-active-map
+   "C-j" 'company-select-next
+   "C-k" 'company-select-previous
+   "C-l" 'company-complete-selection)
 
   (general-define-key
    :keymaps 'emacs-lisp-mode-map
