@@ -198,7 +198,15 @@
         persp-auto-resume-time -1
         persp-autokill-buffer-on-remove 'kill-weak
         persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
-  (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
+  (add-hook 'after-init-hook #'(lambda () (persp-mode 1)))
+  :config
+  (defvar !/persp-last-selected-perspective nil
+    "Previously selected perspective.")
+
+  (defun !/persp-save-last-selected-perspective (persp _)
+    (unless (and (equal (persp-name persp) persp-last-persp-name) !/persp-last-selected-perspective)
+      (setq !/persp-last-selected-perspective persp-last-persp-name)))
+  (advice-add 'persp-activate :before #'!/persp-save-last-selected-perspective))
 
 ;; `persp-mode' integration with `helm'
 (use-package helm-persp-bridge-v2
@@ -557,6 +565,7 @@
    "ps" 'helm-projectile-ag
 
    "l" '(:ignore t :which-key "layouts")
+   "l TAB" '(!/switch-to-last-perspective :which-key "last-selected-layout")
    "ll" '(persp-switch :which-key "list-layouts")
    "lc" '(persp-kill-without-buffers :which-key "close-layout")
    "lk" '(persp-kill :which-key "kill-layout")
@@ -590,6 +599,14 @@ If the universal prefix argument is used then kill the buffer too."
   (if (equal '(4) arg)
       (kill-buffer-and-window)
     (delete-window)))
+
+(defun !/switch-to-last-perspective ()
+  "Open the previously selected perspective, if it exists."
+  (interactive)
+  (unless (eq 'non-existent
+              (gethash !/persp-last-selected-perspective
+                       *persp-hash* 'non-existent))
+    (persp-frame-switch !/persp-last-selected-perspective)))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
