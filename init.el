@@ -473,6 +473,13 @@
   :config
   (global-hl-todo-mode))
 
+;; use project-defined editor settings
+(use-package editorconfig
+  :ensure t
+  :diminish editorconfig-mode
+  :config
+  (editorconfig-mode 1))
+
 ;; `markdown' mode
 (use-package markdown-mode
   :ensure t
