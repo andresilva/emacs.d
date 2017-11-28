@@ -208,13 +208,13 @@
         persp-save-dir (expand-file-name "persp-confs/" !/savefile-dir))
   (add-hook 'after-init-hook #'(lambda () (persp-mode 1)))
   :config
-  (defvar !/persp-last-selected-perspective nil
+  (defvar !//persp-last-selected-perspective nil
     "Previously selected perspective.")
 
-  (defun !/persp-save-last-selected-perspective (persp _)
-    (unless (and (equal (persp-name persp) persp-last-persp-name) !/persp-last-selected-perspective)
-      (setq !/persp-last-selected-perspective persp-last-persp-name)))
-  (advice-add 'persp-activate :before #'!/persp-save-last-selected-perspective))
+  (defun !//persp-save-last-selected-perspective (persp _)
+    (unless (and (equal (persp-name persp) persp-last-persp-name) !//persp-last-selected-perspective)
+      (setq !//persp-last-selected-perspective persp-last-persp-name)))
+  (advice-add 'persp-activate :before #'!//persp-save-last-selected-perspective))
 
 ;; `persp-mode' integration with `helm'
 (use-package helm-persp-bridge-v2
@@ -347,14 +347,14 @@
         ;; disable recentf-cleanup on Emacs start, because it can cause
         ;; problems with remote files
         recentf-auto-cleanup 'never)
-  (defun !/recentf-exclude-p (file)
+  (defun !//recentf-exclude-p (file)
     "A predicate to decide whether to exclude FILE from recentf."
     (let ((file-dir (file-truename (file-name-directory file))))
       (-any-p (lambda (dir)
                 (string-prefix-p dir file-dir))
               (mapcar 'file-truename (list !/savefile-dir package-user-dir)))))
   :config
-  (add-to-list 'recentf-exclude '!/recentf-exclude-p)
+  (add-to-list 'recentf-exclude '!//recentf-exclude-p)
   (recentf-mode +1))
 
 ;; smoother scrolling
@@ -386,7 +386,7 @@
                         (font-spec :name "Apple Color Emoji") nil 'prepend))))
 
 ;; customize mode-line
-(defun !/modeline-segment-git-vc ()
+(defun !//modeline-segment-git-vc ()
   (let ((branch (mapconcat 'concat (cdr (split-string vc-mode "[:-]")) "-")))
     (concat
      (propertize (format " %s" (all-the-icons-octicon "git-branch"))
@@ -394,7 +394,7 @@
                  'display '(raise 0))
      (propertize (format " %s" branch)))))
 
-(defun !/modeline-segment-svn-vc ()
+(defun !//modeline-segment-svn-vc ()
   (let ((revision (cadr (split-string vc-mode "-"))))
     (concat
      (propertize (format " %s" (all-the-icons-faicon "cloud"))
@@ -402,16 +402,16 @@
                  'display '(raise 0))
      (propertize (format " %s" revision) 'face `(:height 0.9)))))
 
-(defvar !/mode-line-vc
+(defvar !//mode-line-vc
   '(:eval (when vc-mode
             (cond
-             ((string-match "Git[:-]" vc-mode) (!/modeline-segment-git-vc))
-             ((string-match "SVN-" vc-mode) (!/modeline-segment-svn-vc))
+             ((string-match "Git[:-]" vc-mode) (!//modeline-segment-git-vc))
+             ((string-match "SVN-" vc-mode) (!//modeline-segment-svn-vc))
              (t (format "%s" vc-mode))))
           face mode-line-directory)
   "Formats the current directory.")
 
-(defvar !/mode-line-persp
+(defvar !//mode-line-persp
   '(:eval (when (get-current-persp)
             (propertize (format "[%s] " (persp-name (get-current-persp)))))))
 
@@ -427,8 +427,8 @@
                "  "
                mode-line-position
                "  "
-               !/mode-line-persp
-               !/mode-line-vc
+               !//mode-line-persp
+               !//mode-line-vc
                "   "
                mode-line-modes))
 
@@ -691,9 +691,9 @@ current frame."
 current frame."
   (interactive)
   (unless (eq 'non-existent
-              (gethash !/persp-last-selected-perspective
+              (gethash !//persp-last-selected-perspective
                        *persp-hash* 'non-existent))
-    (persp-frame-switch !/persp-last-selected-perspective)))
+    (persp-frame-switch !//persp-last-selected-perspective)))
 
 (defun !/delete-window (&optional arg)
   "Delete the current window.
