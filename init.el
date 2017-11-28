@@ -203,7 +203,7 @@
 (use-package helm-ag
   :ensure t
   :after helm-projectile
-  :commands (helm-projectile-ag helm-ag))
+  :commands helm-do-ag)
 
 ;; perspectives for emacs
 (use-package persp-mode
@@ -633,8 +633,13 @@
    "pd" 'helm-projectile-find-dir
    "pp" 'helm-projectile-switch-project
    "pf" 'helm-projectile-find-file
-   "ps" 'helm-projectile-ag
+   "ps" '!/helm-project-do-rg
    "pl" '!/helm-layout-switch-project
+
+   "s" '(:ignore t :which-key "search")
+   "sf" 'helm-find
+   "ss" '!/helm-files-do-rg
+   "sp" '!/helm-project-do-rg
 
    "l" '(:ignore t :which-key "layouts")
    "l TAB" '(!/alternate-layout :which-key "alternate-layout")
@@ -849,6 +854,23 @@ If the universal prefix argument is used then kill the buffer too."
                     (let ((projectile-completion-system 'helm))
                       (projectile-switch-project-by-name project)))))))
    :buffer "*Helm Projectile Layouts*"))
+
+(defun !/helm-files-do-rg (&optional dir)
+  "Search in files with `rg'."
+  (interactive)
+  ;; --line-number forces line numbers (disabled by default on windows)
+  ;; no --vimgrep because it adds column numbers that wgrep can't handle
+  ;; see https://github.com/syl20bnr/spacemacs/pull/8065
+  (let ((helm-ag-base-command "rg --smart-case --no-heading --color never --line-number --max-columns 150"))
+    (helm-do-ag dir)))
+
+(defun !/helm-project-do-rg ()
+  "Search in current project with `rg'."
+  (interactive)
+  (let ((dir (projectile-project-root)))
+    (if dir
+        (!/helm-files-do-rg dir)
+      (message "error: Not in a project."))))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
