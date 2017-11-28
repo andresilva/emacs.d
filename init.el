@@ -117,6 +117,7 @@
 ;; comment code efficiently
 (use-package evil-nerd-commenter
   :ensure t
+  :after evil
   :commands evilnc-comment-or-uncomment-lines)
 
 ;; dark theme
@@ -184,7 +185,7 @@
 ;; `projectile' integration for `helm'
 (use-package helm-projectile
   :ensure t
-  :after projectile
+  :after helm projectile
   :init
   (setq helm-projectile-fuzzy-match t)
   :config
@@ -217,12 +218,14 @@
 
 ;; `persp-mode' integration with `helm'
 (use-package helm-persp-bridge-v2
+  :after helm persp-mode
   :init
   ;; this is needed to make sure `helm-source-recentf' is defined
   (require 'helm-for-files))
 
 ;; `persp-mode' integration with `projectile'
-(use-package persp-projectile-auto-persp)
+(use-package persp-projectile-auto-persp
+  :after projectile persp-mode)
 
 ;; the best git client ever
 (use-package magit
@@ -250,7 +253,7 @@
 ;; `evil' keys for `magit'
 (use-package evil-magit
   :ensure t
-  :after magit)
+  :after evil magit)
 
 ;; display available keybindings in popup
 (use-package which-key
