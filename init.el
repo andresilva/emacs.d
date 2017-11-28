@@ -635,6 +635,7 @@
    "pp" 'helm-projectile-switch-project
    "pf" 'helm-projectile-find-file
    "ps" 'helm-projectile-ag
+   "pl" '!/helm-layout-switch-project
 
    "l" '(:ignore t :which-key "layouts")
    "l TAB" '(!/alternate-layout :which-key "alternate-layout")
@@ -829,6 +830,26 @@ If the universal prefix argument is used then kill the buffer too."
   (interactive)
   (when (active-minibuffer-window)
     (select-window (active-minibuffer-window))))
+
+(defun !/helm-layout-switch-project (arg)
+  (interactive "P")
+  (helm
+   :sources
+   (helm-build-in-buffer-source "*Helm Switch Project Layout*"
+     :data (lambda ()
+             (if (projectile-project-p)
+                 (cons (abbreviate-file-name (projectile-project-root))
+                       (projectile-relevant-known-projects))
+               projectile-known-projects))
+     :fuzzy-match helm-projectile-fuzzy-match
+     :mode-line helm-read-file-name-mode-line-string
+     :action '(("Switch to Project Perspective" .
+                (lambda (project)
+                  (let ((persp-reset-windows-on-nil-window-conf t))
+                    (persp-switch (file-name-nondirectory (directory-file-name project)))
+                    (let ((projectile-completion-system 'helm))
+                      (projectile-switch-project-by-name project)))))))
+   :buffer "*Helm Projectile Layouts*"))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
