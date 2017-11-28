@@ -651,6 +651,9 @@
 
    "w" '(:ignore t :which-key "windows")
    "w TAB" '!/alternate-window
+   "w2" '!/window-layout-double-columns
+   "w3" '!/window-layout-triple-columns
+   "wb" '!/switch-to-minibuffer-window
    "wd" '!/delete-window
    "wo" 'other-frame
    "ws" 'split-window-below
@@ -696,14 +699,6 @@ current frame."
               (gethash !//persp-last-selected-perspective
                        *persp-hash* 'non-existent))
     (persp-frame-switch !//persp-last-selected-perspective)))
-
-(defun !/delete-window (&optional arg)
-  "Delete the current window.
-If the universal prefix argument is used then kill the buffer too."
-  (interactive "P")
-  (if (equal '(4) arg)
-      (kill-buffer-and-window)
-    (delete-window)))
 
 (defun !/switch-to-scratch-buffer (&optional arg)
   "Switch to the `*scratch*' buffer, creating it first if needed.
@@ -803,6 +798,33 @@ prompt is initialized with the current filename."
                             name new-name)))
                 ;; ?\a = C-g, ?\e = Esc and C-[
                 ((memq key '(?\a ?\e)) (keyboard-quit))))))))
+
+(defun !/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
+
+(defun !/window-layout-double-columns ()
+  "Set the window layout to double columns."
+  (interactive)
+  (delete-other-windows)
+  (split-window-right))
+
+(defun !/window-layout-triple-columns ()
+  "Set the window layout to triple columns."
+  (interactive)
+  (delete-other-windows)
+  (dotimes (i 2) (split-window-right))
+  (balance-windows))
+
+(defun !/switch-to-minibuffer-window ()
+  "Switch to minibuffer window (if active)."
+  (interactive)
+  (when (active-minibuffer-window)
+    (select-window (active-minibuffer-window))))
 
 ;; load emacs customization settings
 (if (file-exists-p custom-file)
