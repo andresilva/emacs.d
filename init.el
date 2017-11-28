@@ -231,10 +231,6 @@
   ;; this is needed to make sure `helm-source-recentf' is defined
   (require 'helm-for-files))
 
-;; `persp-mode' integration with `projectile'
-(use-package persp-projectile-auto-persp
-  :after projectile persp-mode)
-
 ;; the best git client ever
 (use-package magit
   :ensure t
