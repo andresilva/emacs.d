@@ -220,7 +220,7 @@
   (defvar !//persp-last-selected-perspective persp-nil-name
     "Previously selected perspective.")
 
-  (defun !//persp-save-last-selected-perspective (persp _)
+  (defun !//persp-save-last-selected-perspective (_ _ &optional _)
     (setq !//persp-last-selected-perspective persp-last-persp-name))
   (advice-add 'persp-activate :before #'!//persp-save-last-selected-perspective))
 
