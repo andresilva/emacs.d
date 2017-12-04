@@ -559,6 +559,63 @@
   :ensure t
   :mode ("\\.toml\\'" . toml-mode))
 
+(use-package org
+  :mode ("\\.\\(org\\|org_archive\\|txt\\)\\'" . org-mode)
+  :init
+  (setq
+   ;; log time when task is finished
+   org-log-done 'time
+   ;; create a logbook entry
+   org-log-into-drawer t
+   ;; org directory and agenda files
+   org-directory "~/org"
+   org-agenda-files (quote ("~/org/todo.org"
+                            "~/org/projects"
+                            "~/org/journal"))
+   ;; include numeric filenames in regexp (for journal files)
+   org-agenda-file-regexp "'\\`[^.].*\\.org'\\|[0-9]+"
+   ;; org keywords and faces
+   org-todo-keywords (quote
+                      ((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)")
+                       (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELED(c@/!)")))
+   ;; dracula-themed faces
+   org-todo-keyword-faces (quote
+                           (("TODO" :foreground "#ff5555" :weight bold)
+                            ("STARTED" :foreground "#8be9fd" :weight bold)
+                            ("DONE" :foreground "#50fa7b" :weight bold)
+                            ("WAITING" :foreground "#ffb86c" :weight bold)
+                            ("HOLD" :foreground "#bd93f9" :weight bold)
+                            ("CANCELED" :foreground "#50fa7b" :weight bold)))
+   ;; state triggers
+   org-todo-state-tags-triggers (quote
+                                 (("CANCELED" ("CANCELED" . t))
+                                  ("WAITING"  ("WAITING"  . t))
+                                  ("HOLD"     ("WAITING"  . t) ("HOLD" . t))
+                                  (done       ("WAITING")      ("HOLD"))
+                                  ("TODO"     ("WAITING")      ("CANCELED") ("HOLD"))
+                                  ("STARTED"  ("WAITING")      ("CANCELED") ("HOLD"))
+                                  ("DONE"     ("WAITING")      ("CANCELED") ("HOLD"))))
+   ;; use fast todo selection
+   org-use-fast-todo-selection t
+   org-treat-S-cursor-todo-selection-as-state-change nil
+   ;; handle empty lines
+   org-cycle-separator-lines 0
+   org-blank-before-new-entry (quote ((heading)
+                                      (plain-list-item . auto)))
+   ;; targets complete directly with ido
+   org-outline-path-complete-in-steps nil
+   ;; use ido for both buffer and file completion and ido-everywhere to t
+   org-completion-use-ido t)
+  :config
+  (set-face-attribute 'org-level-1 nil :height 1.0)
+  (set-face-attribute 'org-level-2 nil :height 1.0))
+
+(use-package org-bullets
+  :ensure t
+  :after org
+  :init
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
 ;; convenient key definitions
 (use-package general
   :ensure t
