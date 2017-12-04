@@ -438,6 +438,9 @@
                               :foreground ,(face-attribute 'mode-line :foreground)
                               :box (:line-width 4 :color ,(face-attribute 'mode-line :background)))))))
 
+;; display the current column in mode-line
+(setq column-number-mode t)
+
 ;; zoom frame font size
 (use-package zoom-frm
   :ensure t
