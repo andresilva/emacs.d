@@ -442,6 +442,9 @@
 ;; display the current column in mode-line
 (setq column-number-mode t)
 
+;; set tab size to 4
+(setq-default tab-width 4)
+
 ;; zoom frame font size
 (use-package zoom-frm
   :commands zoom-frm-in zoom-frm-out zoom-frm-unzoom)
