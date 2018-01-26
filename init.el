@@ -626,6 +626,10 @@
    "C-;" 'hippie-expand)
 
   (general-define-key
+   :keymaps 'magit-status-mode-map
+   "SPC" nil)
+
+  (general-define-key
    :keymaps 'minibuffer-local-map
    "<escape>" 'keyboard-escape-quit)
 
