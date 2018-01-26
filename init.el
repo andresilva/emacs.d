@@ -444,7 +444,6 @@
 
 ;; zoom frame font size
 (use-package zoom-frm
-  :ensure t
   :commands zoom-frm-in zoom-frm-out zoom-frm-unzoom)
 
 ;; enhanced `list-packages'
