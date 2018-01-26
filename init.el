@@ -442,6 +442,9 @@
 ;; display the current column in mode-line
 (setq column-number-mode t)
 
+;; set default width to 100 columns
+(setq-default fill-column 100)
+
 ;; set tab size to 4
 (setq-default tab-width 4)
 
