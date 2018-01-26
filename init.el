@@ -39,7 +39,8 @@
 
 ;; required for `use-package' :diminish
 ;; reduce modeline clutter
-(use-package diminish)
+(use-package diminish
+  :ensure t)
 
 ;; better emacs defaults
 (use-package better-defaults
