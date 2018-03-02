@@ -526,6 +526,11 @@
   :mode (("\\.\\(yml\\|yaml\\)\\'" . yaml-mode)
          ("Procfile\\'" . yaml-mode)))
 
+;; `solidity' mode
+(use-package solidity-mode
+  :ensure t
+  :mode ("\\.sol\\'" . solidity-mode))
+
 ;; interactive lisp macro expansion
 (use-package macrostep
   :ensure t
