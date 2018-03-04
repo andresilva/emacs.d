@@ -531,6 +531,11 @@
   :ensure t
   :mode ("\\.sol\\'" . solidity-mode))
 
+;; `json' mode
+(use-package json-mode
+  :ensure t
+  :mode ("\\.json\\'" . json-mode))
+
 ;; interactive lisp macro expansion
 (use-package macrostep
   :ensure t
