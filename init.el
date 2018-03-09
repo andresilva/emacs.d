@@ -575,13 +575,7 @@
   :disabled t
   :after lsp-mode
   :init
-  (setq lsp-rust-rls-command '("rustup" "run" "nightly" "rls"))
-  (add-hook 'rust-mode-hook #'lsp-rust-enable)
-  :config
-  (setq lsp-rust--handlers
-        '(("rustDocument/diagnosticsBegin" . (lambda (_w _p)))
-          ("rustDocument/diagnosticsEnd" . (lambda (w _p)))
-          ("rustDocument/beginBuild" . (lambda (w _p))))))
+  (add-hook 'rust-mode-hook #'lsp-rust-enable))
 
 ;; `toml' support for `cargo' files
 (use-package toml-mode
