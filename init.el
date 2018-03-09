@@ -430,6 +430,8 @@
                "   "
                mode-line-modes))
 
+(set-face-background 'modeline-inactive "#373844")
+
 ;; increase mode-line width
 (custom-set-faces
  `(mode-line-inactive ((t (:background ,(face-attribute 'mode-line-inactive :background)
