@@ -454,6 +454,12 @@
 (use-package zoom-frm
   :commands zoom-frm-in zoom-frm-out zoom-frm-unzoom)
 
+;; file tree
+(use-package neotree
+  :ensure t
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+
 ;; enhanced `list-packages'
 (use-package paradox
   :ensure t
