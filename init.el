@@ -567,7 +567,7 @@
   :diminish racer-mode
   :init
   (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+  (add-hook 'racer-mode-hook (lambda () (setq eldoc-documentation-function nil))))
 
 ;; `lsp-mode' client using the Rust Language Server
 (use-package lsp-rust
