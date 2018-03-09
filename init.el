@@ -544,6 +544,11 @@
   :diminish macrostep-mode
   :commands macrostep-expand)
 
+;; interact with HTTP APIs
+(use-package restclient
+  :ensure t
+  :mode ("\\.http\\'" . restclient-mode))
+
 ;; `rust' programming mode
 (use-package rust-mode
   :ensure t
