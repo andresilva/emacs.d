@@ -648,7 +648,7 @@
    "C-;" 'hippie-expand)
 
   (general-define-key
-   :keymaps 'magit-status-mode-map
+   :keymaps '(magit-status-mode-map magit-diff-mode-map)
    "SPC" nil)
 
   (general-define-key
