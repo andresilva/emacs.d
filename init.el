@@ -558,6 +558,11 @@
   :ensure t
   :mode ("\\.sol\\'" . solidity-mode))
 
+;; `go' mode
+(use-package go-mode
+  :ensure t
+  :mode ("\\.go\\'" . go-mode))
+
 ;; `json' mode
 (use-package json-mode
   :ensure t
