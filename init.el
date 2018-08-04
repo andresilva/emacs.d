@@ -147,7 +147,8 @@
         helm-ff-file-name-history-use-recentf t
         helm-comp-read-mode-line ""
         helm-read-file-name-mode-line-string ""
-        helm-mode-line-string "")
+        helm-mode-line-string ""
+        helm-adaptive-history-file (expand-file-name "helm-adaptive-history" !/savefile-dir))
   ;; enable fuzzy matching
   (setq helm-buffers-fuzzy-matching t
         helm-completion-in-region-fuzzy-match t
@@ -162,7 +163,8 @@
   :config
   (require 'helm-config)
   (helm-mode 1)
-  (helm-autoresize-mode 1))
+  (helm-autoresize-mode 1)
+  (helm-adaptive-mode 1))
 
 ;; fuzzier matching for helm
 (use-package helm-flx
