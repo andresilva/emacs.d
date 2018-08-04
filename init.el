@@ -563,6 +563,19 @@
   :ensure t
   :mode ("\\.go\\'" . go-mode))
 
+;; `typescript' mode
+(use-package typescript-mode
+  :ensure t
+  :mode ("\\.ts\\'" . typescript-mode))
+
+;; `typescript' IDE integration with `tsserver'
+(use-package tide
+  :ensure t
+  :after typescript-mode
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save)))
+
 ;; `javascript' mode
 (use-package js2-mode
   :ensure t
