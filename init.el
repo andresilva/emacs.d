@@ -449,7 +449,7 @@
                "   "
                mode-line-modes))
 
-(set-face-background 'modeline-inactive "#373844")
+(set-face-background 'mode-line-inactive "#373844")
 
 ;; increase mode-line width
 (custom-set-faces
