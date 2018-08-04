@@ -189,7 +189,8 @@
   :init
   (setq projectile-completion-system 'helm
         projectile-cache-file (expand-file-name "projectile.cache" !/savefile-dir)
-        projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir))
+        projectile-known-projects-file (expand-file-name "projectile-bookmarks.eld" !/savefile-dir)
+        projectile-enable-caching t)
   :config
   (projectile-mode))
 
@@ -230,7 +231,15 @@
 ;; the best git client ever
 (use-package magit
   :ensure t
-  :commands magit-status)
+  :commands magit-status
+  :config
+  (defun !/projectile-invalidate-cache (&rest _args)
+    ;; We ignore the args to `magit-checkout'.
+    (projectile-invalidate-cache nil))
+  (advice-add 'magit-checkout
+              :after #'!/projectile-invalidate-cache)
+  (advice-add 'magit-branch-and-checkout ; This is `b c'.
+              :after #'!/projectile-invalidate-cache))
 
 ;; highlight uncommitted changes on the left side of the window
 (use-package git-gutter
