@@ -563,6 +563,17 @@
   :ensure t
   :mode ("\\.go\\'" . go-mode))
 
+;; `javascript' mode
+(use-package js2-mode
+  :ensure t
+  :mode ("\\.js\\'" . js2-mode)
+  :init
+  (setq js2-strict-trailing-comma-warning nil)
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (make-local-variable 'js-indent-level)
+              (setq js-indent-level 2))))
+
 ;; `json' mode
 (use-package json-mode
   :ensure t
