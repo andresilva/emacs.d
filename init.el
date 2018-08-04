@@ -813,6 +813,7 @@
    "pf" 'helm-projectile-find-file
    "ps" '!/helm-project-do-rg
    "pl" '!/helm-layout-switch-project
+   "pi" 'projectile-invalidate-cache
 
    "r" '(:ignore t :which-key "registers")
    "rl" 'helm-resume
