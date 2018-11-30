@@ -232,6 +232,8 @@
 (use-package magit
   :ensure t
   :commands magit-status
+  :init
+  (setq magit-section-visibility-indicator nil)
   :config
   (defun !/projectile-invalidate-cache (&rest _args)
     ;; We ignore the args to `magit-checkout'.
