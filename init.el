@@ -16,11 +16,11 @@
 (defconst !/custom-file (expand-file-name "custom.el" user-emacs-directory))
 (setq custom-file !/custom-file)
 
-;; reduce garbage collections during init
-(defconst !/initial-gc-cons-threshold gc-cons-threshold)
+;; increase base garbace collection threshold and reduce garbage collections during init
+(defconst !/gc-cons-threshold 20000000)
 (setq gc-cons-threshold (* 128 1000 1000))
 (add-hook 'after-init-hook
-          (lambda () (setq gc-cons-threshold !/initial-gc-cons-threshold)))
+          (lambda () (setq gc-cons-threshold !/gc-cons-threshold)))
 
 ;;; setup `package'
 (require 'package)
