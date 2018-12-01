@@ -62,11 +62,12 @@
 ;; configure `exec-path' from shell
 (use-package exec-path-from-shell
   :ensure t
-  :if (memq window-system '(mac ns))
   :init
   (setq exec-path-from-shell-check-startup-files nil)
   :config
-  (exec-path-from-shell-initialize))
+  (exec-path-from-shell-initialize)
+  (exec-path-from-shell-copy-env "SSH_AGENT_PID")
+  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
 
 ;; setup modifier keys on macOS
 (when (memq window-system '(mac ns))
