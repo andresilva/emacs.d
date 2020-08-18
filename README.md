@@ -1,3 +1,5 @@
+## ⚠️ I have stopped using and maintaning my own config and instead use the awesome [doom-emacs](https://github.com/hlissner/doom-emacs) with some minor customizations.
+
 # emacs.d
 
 This is my Emacs config. I use this mainly on macOS with GNU Emacs 25.
